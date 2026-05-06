@@ -1,0 +1,388 @@
+{
+  "generatedAt": "2026-05-04T05:31:10.500Z",
+  "fileCount": 76,
+  "totalRows": 814,
+  "totalReviewRows": 181,
+  "results": [
+    {
+      "file": "가야대학교_회계부분감사_정리표.csv",
+      "totalRows": 2,
+      "reviewRows": 0
+    },
+    {
+      "file": "감리교신학대학교_회계부분감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 1
+    },
+    {
+      "file": "건양사이버대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 1
+    },
+    {
+      "file": "경복대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 1
+    },
+    {
+      "file": "경북전문대학교_회계부분감사_정리표.csv",
+      "totalRows": 5,
+      "reviewRows": 1
+    },
+    {
+      "file": "계명대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 8
+    },
+    {
+      "file": "고구려대학교_회계부분감사_정리표.csv",
+      "totalRows": 21,
+      "reviewRows": 2
+    },
+    {
+      "file": "고려대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 1
+    },
+    {
+      "file": "국제사이버대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 0
+    },
+    {
+      "file": "김포대학교_회계부분감사_정리표.csv",
+      "totalRows": 12,
+      "reviewRows": 2
+    },
+    {
+      "file": "남부대학교_회계부분감사_정리표.csv",
+      "totalRows": 22,
+      "reviewRows": 9
+    },
+    {
+      "file": "대경대학교_회계부분감사_정리표.csv",
+      "totalRows": 10,
+      "reviewRows": 1
+    },
+    {
+      "file": "대구과학대학교_회계부분감사_정리표.csv",
+      "totalRows": 14,
+      "reviewRows": 3
+    },
+    {
+      "file": "대구대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 0
+    },
+    {
+      "file": "대구예술대학교_회계부분감사_정리표.csv",
+      "totalRows": 2,
+      "reviewRows": 1
+    },
+    {
+      "file": "대덕대학교_회계부분감사_정리표.csv",
+      "totalRows": 19,
+      "reviewRows": 4
+    },
+    {
+      "file": "대원대학교_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 0
+    },
+    {
+      "file": "덕성여자대학교_회계부분감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 0
+    },
+    {
+      "file": "동국대학교_회계부분감사_정리표.csv",
+      "totalRows": 28,
+      "reviewRows": 2
+    },
+    {
+      "file": "동아방송예술대학교_회계부분감사_정리표.csv",
+      "totalRows": 5,
+      "reviewRows": 0
+    },
+    {
+      "file": "동의과학대학교_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 3
+    },
+    {
+      "file": "루터대학교_회계부분감사_정리표.csv",
+      "totalRows": 10,
+      "reviewRows": 1
+    },
+    {
+      "file": "명지대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 1
+    },
+    {
+      "file": "목포가톨릭대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 1
+    },
+    {
+      "file": "목포과학대학교_회계부분감사_정리표.csv",
+      "totalRows": 2,
+      "reviewRows": 1
+    },
+    {
+      "file": "배화여자대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 1
+    },
+    {
+      "file": "백석대학교_회계부분감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 1
+    },
+    {
+      "file": "부산가톨릭대학교_회계부분감사_정리표.csv",
+      "totalRows": 13,
+      "reviewRows": 7
+    },
+    {
+      "file": "상명대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 1
+    },
+    {
+      "file": "서울장신대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 7
+    },
+    {
+      "file": "서정대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 1
+    },
+    {
+      "file": "선학유피대학원대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 2
+    },
+    {
+      "file": "성서대학교_회계부분감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 1
+    },
+    {
+      "file": "성신여자대학교_회계부분감사_정리표.csv",
+      "totalRows": 21,
+      "reviewRows": 7
+    },
+    {
+      "file": "세명대학교_회계부분감사_정리표.csv",
+      "totalRows": 15,
+      "reviewRows": 2
+    },
+    {
+      "file": "세한대학교_회계부분감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 1
+    },
+    {
+      "file": "송곡대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 0
+    },
+    {
+      "file": "송원대학교_회계부분감사_정리표.csv",
+      "totalRows": 15,
+      "reviewRows": 4
+    },
+    {
+      "file": "송호대학교_회계부분감사_정리표.csv",
+      "totalRows": 13,
+      "reviewRows": 1
+    },
+    {
+      "file": "수원가톨릭대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 1
+    },
+    {
+      "file": "수원과학대학교_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 2
+    },
+    {
+      "file": "숙명여자대학교_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 1
+    },
+    {
+      "file": "순천제일대학교_회계부분감사_정리표.csv",
+      "totalRows": 29,
+      "reviewRows": 12
+    },
+    {
+      "file": "신성대학교_회계부분감사_정리표.csv",
+      "totalRows": 32,
+      "reviewRows": 5
+    },
+    {
+      "file": "신안산대학교_회계부분감사_정리표.csv",
+      "totalRows": 28,
+      "reviewRows": 7
+    },
+    {
+      "file": "아세아연합신학대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 2
+    },
+    {
+      "file": "에스라성경대학원대학교_회계부분감사_정리표.csv",
+      "totalRows": 5,
+      "reviewRows": 1
+    },
+    {
+      "file": "영남외국어대학_회계부분감사_정리표.csv",
+      "totalRows": 12,
+      "reviewRows": 3
+    },
+    {
+      "file": "영진사이버대학교_회계부분감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 0
+    },
+    {
+      "file": "예명대학원대학교_회계부분감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 1
+    },
+    {
+      "file": "예원예술대학교_회계부분감사_정리표.csv",
+      "totalRows": 14,
+      "reviewRows": 2
+    },
+    {
+      "file": "용인대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 2
+    },
+    {
+      "file": "우송대학교_회계부분감사_정리표.csv",
+      "totalRows": 20,
+      "reviewRows": 3
+    },
+    {
+      "file": "유한대학교_회계부분감사_정리표.csv",
+      "totalRows": 10,
+      "reviewRows": 3
+    },
+    {
+      "file": "인제대학교_회계부분감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 3
+    },
+    {
+      "file": "전주기전대학교_회계부분감사_정리표.csv",
+      "totalRows": 28,
+      "reviewRows": 13
+    },
+    {
+      "file": "전주비전대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 4
+    },
+    {
+      "file": "진주보건대학교_회계부분감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 4
+    },
+    {
+      "file": "창신대학교_회계부분감사_정리표.csv",
+      "totalRows": 24,
+      "reviewRows": 7
+    },
+    {
+      "file": "총신대학교_회계부분감사_정리표.csv",
+      "totalRows": 14,
+      "reviewRows": 3
+    },
+    {
+      "file": "춘해보건대학교_회계부분감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 5
+    },
+    {
+      "file": "케이씨대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 3
+    },
+    {
+      "file": "포항공과대학교_회계부분감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 1
+    },
+    {
+      "file": "한국골프대학교_회계부분감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 0
+    },
+    {
+      "file": "한국관광대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 4
+    },
+    {
+      "file": "한국복지사이버대학_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 1
+    },
+    {
+      "file": "한국상담대학원대학교_회계부분감사_정리표.csv",
+      "totalRows": 4,
+      "reviewRows": 1
+    },
+    {
+      "file": "한국열린사이버대학교_회계부분감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 3
+    },
+    {
+      "file": "한국외국어대학교_회계부분감사_정리표.csv",
+      "totalRows": 2,
+      "reviewRows": 0
+    },
+    {
+      "file": "한림성심대학교_회계부분감사_정리표.csv",
+      "totalRows": 1,
+      "reviewRows": 0
+    },
+    {
+      "file": "한서대학교_회계부분감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 0
+    },
+    {
+      "file": "한성대학교_회계부분감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 1
+    },
+    {
+      "file": "한세대학교_회계부분감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 1
+    },
+    {
+      "file": "호원대학교_회계부분감사_정리표.csv",
+      "totalRows": 15,
+      "reviewRows": 0
+    },
+    {
+      "file": "화신사이버대학교_회계부분감사_정리표.csv",
+      "totalRows": 3,
+      "reviewRows": 1
+    },
+    {
+      "file": "횃불트리니티신학대학원대학교_회계부분감사_정리표.csv",
+      "totalRows": 2,
+      "reviewRows": 1
+    }
+  ]
+}

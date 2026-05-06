@@ -1,0 +1,25 @@
+[
+  {
+    "id": "180528+대구가톨릭대+종합감사+결과+및+처분내용.pdf",
+    "institution": "대구가톨릭대학교",
+    "institutionKind": "사립대학",
+    "type": "종합감사",
+    "region": "미상",
+    "year": 2026,
+    "auditDate": "미상",
+    "status": "OCR 실패",
+    "severity": "medium",
+    "summary": "OCR 실패: Upstage error(401): {\"error\":{\"message\":\"API key suspended due to insufficient credit. Register your payment method at https://console.upstage.ai/billing to continue.\",\"type\":\"invalid_request_error\",\"param\":\"\",\"code\":\"api_key_is_not_allowed\"}}",
+    "findings": [
+      {
+        "title": "OCR 오류",
+        "detail": "Upstage error(401): {\"error\":{\"message\":\"API key suspended due to insufficient credit. Register your payment method at https://console.upstage.ai/billing to continue.\",\"type\":\"invalid_request_error\",\"param\":\"\",\"code\":\"api_key_is_not_allowed\"}}"
+      }
+    ],
+    "fileName": "180528+대구가톨릭대+종합감사+결과+및+처분내용.pdf",
+    "filePath": "C:\\antigravity\\audit_files\\180528+대구가톨릭대+종합감사+결과+및+처분내용.pdf",
+    "fileSize": 341083,
+    "lastWriteTime": "2026-04-10T06:47:56.867Z",
+    "source": "upstage-failed"
+  }
+]

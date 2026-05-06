@@ -1,0 +1,8 @@
+node_modules/
+.npm-cache/
+edge-profile/
+*.log
+server.out.log
+server.err.log
+.env
+test.pdf

@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-05-04T05:31:10.091Z",
+  "fileCount": 9,
+  "totalRows": 156,
+  "totalReviewRows": 79,
+  "results": [
+    {
+      "file": "강동대학교_재무감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 3
+    },
+    {
+      "file": "국제대학교_재무감사_정리표.csv",
+      "totalRows": 5,
+      "reviewRows": 0
+    },
+    {
+      "file": "동강대학교_재무감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 1
+    },
+    {
+      "file": "서울여자간호대학교_재무감사_정리표.csv",
+      "totalRows": 16,
+      "reviewRows": 0
+    },
+    {
+      "file": "성균관대학교_재무감사_정리표.csv",
+      "totalRows": 5,
+      "reviewRows": 2
+    },
+    {
+      "file": "울산대학교_재무감사_정리표.csv",
+      "totalRows": 81,
+      "reviewRows": 52
+    },
+    {
+      "file": "원광대학교_재무감사_정리표.csv",
+      "totalRows": 7,
+      "reviewRows": 4
+    },
+    {
+      "file": "전남과학대학교_재무감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 7
+    },
+    {
+      "file": "중앙대학교_재무감사_정리표.csv",
+      "totalRows": 18,
+      "reviewRows": 10
+    }
+  ]
+}

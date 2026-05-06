@@ -1,0 +1,482 @@
+[
+  {
+    "institution": "고려대학교",
+    "type": "회계부분감사",
+    "fileName": "고려대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1PfJx_PZaEHXRbZfDGZHIANn4vCrf2dvd/view?usp=sharing"
+  },
+  {
+    "institution": "동아방송예술대학교",
+    "type": "회계부분감사",
+    "fileName": "동아방송예술대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1DRpar7FnTbpZJssQG1Pucjjv7ZLWqrVx/view?usp=sharing"
+  },
+  {
+    "institution": "국제사이버대학교",
+    "type": "회계부분감사",
+    "fileName": "국제사이버대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/12h5egk-lVahh2PZ2zChjuSF2fvTUg7NI/view?usp=sharing"
+  },
+  {
+    "institution": "국제대학교",
+    "type": "재무감사",
+    "fileName": "국제대학교_재무감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/15gITUDGzoenOimxw_p2EWel-Gmb5rIMZ/view?usp=sharing"
+  },
+  {
+    "institution": "유원대학교",
+    "type": "종합감사",
+    "fileName": "유원대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1_DXCqyF5GfmqHC2bGE8STww5Vzj4vg1H/view?usp=sharing"
+  },
+  {
+    "institution": "농협대학교",
+    "type": "종합감사",
+    "fileName": "농협대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1kS9F2GkBIycC877T820pNbRkbtIQ1b5-/view?usp=sharing"
+  },
+  {
+    "institution": "광주가톨릭대학교",
+    "type": "종합감사",
+    "fileName": "광주가톨릭대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1pLYMtwixYKDR8jq91EGxqCaMvGD4CLxo/view?usp=sharing"
+  },
+  {
+    "institution": "전주기전대학교",
+    "type": "회계부분감사",
+    "fileName": "전주기전대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1MS1dDhahAg2CGd2RqdI7_n7NFC83TeZm/view?usp=sharing"
+  },
+  {
+    "institution": "동원과학기술대학교",
+    "type": "종합감사",
+    "fileName": "동원과학기술대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1p2hi1aggKjIgihuFIZs_Hnn0BCwR-lr5/view?usp=sharing"
+  },
+  {
+    "institution": "예명대학원대학교",
+    "type": "회계부분감사",
+    "fileName": "예명대학원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Ztv7Le1W6SO9Wpzh2K5gjObAKULbZMf4/view?usp=sharing"
+  },
+  {
+    "institution": "명지대학교",
+    "type": "종합감사",
+    "fileName": "명지대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1ADLXPG33uCf7BAAoGoF01FXf-ST5Av7Q/view?usp=sharing"
+  },
+  {
+    "institution": "명지대학교",
+    "type": "회계부분감사",
+    "fileName": "명지대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1jtRPEygkSxsdkcodMwd3o9X3YAp3q8dv/view?usp=sharing"
+  },
+  {
+    "institution": "상명대학교",
+    "type": "종합감사",
+    "fileName": "상명대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1wedURX-iSojKx2X_-Wb8RRcY2GyA0-BA/view?usp=sharing"
+  },
+  {
+    "institution": "서울신학대학교",
+    "type": "종합감사",
+    "fileName": "서울신학대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/15E3UUCo1mDDZHIvuxGfwotZvq8V8x2p6/view?usp=sharing"
+  },
+  {
+    "institution": "서정대학교",
+    "type": "회계부분감사",
+    "fileName": "서정대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1c_Y21vgWZ8ttsyqmdNQxBtscdiYqvQhT/view?usp=sharing"
+  },
+  {
+    "institution": "차의과학대학교",
+    "type": "종합감사",
+    "fileName": "차의과학대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1GKl_eokSJaH1JiqVI00SwDHZOeueHCPa/view?usp=sharing"
+  },
+  {
+    "institution": "송원대학교",
+    "type": "회계부분감사",
+    "fileName": "송원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1exb2KmhxZG48-xWjVA8DXIjxvkLc-ngV/view?usp=sharing"
+  },
+  {
+    "institution": "송호대학교",
+    "type": "회계부분감사",
+    "fileName": "송호대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Z7TGoV7xpR5hl4DZEkAUJV2TTPMaYhjg/view?usp=sharing"
+  },
+  {
+    "institution": "순천제일대학교",
+    "type": "회계부분감사",
+    "fileName": "순천제일대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1HlWEinbwZXlLfz5tIzFU7d8odJ_GHgmU/view?usp=sharing"
+  },
+  {
+    "institution": "강동대학교",
+    "type": "재무감사",
+    "fileName": "강동대학교_재무감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/14jIZUS8NGEFFa6QoW-9GTmVtmA8GYl99/view?usp=sharing"
+  },
+  {
+    "institution": "중앙승가대학교",
+    "type": "종합감사",
+    "fileName": "중앙승가대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1IdbnsUAezOzdW6qn3zlJSKNAxOmUC0MX/view?usp=sharing"
+  },
+  {
+    "institution": "고구려대학교",
+    "type": "회계부분감사",
+    "fileName": "고구려대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1bIBToF8T0jV5EMHKcTWGQjJlYLDilt6v/view?usp=sharing"
+  },
+  {
+    "institution": "에스라성경대학원대학교",
+    "type": "회계부분감사",
+    "fileName": "에스라성경대학원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1gU3FeNnASsKUDY6jZ1v8mtrHkq8P6_Fq/view?usp=sharing"
+  },
+  {
+    "institution": "영남신학대학교",
+    "type": "종합감사",
+    "fileName": "영남신학대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1eXrx9Kfe1NDlFQ57BGv1I2QbfDPpyB_l/view?usp=sharing"
+  },
+  {
+    "institution": "영진사이버대학교",
+    "type": "회계부분감사",
+    "fileName": "영진사이버대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1CDytwrqCF0wqLK2hRrzSrR9W7qu7Z_Sq/view?usp=sharing"
+  },
+  {
+    "institution": "한국상담대학원대학교",
+    "type": "회계부분감사",
+    "fileName": "한국상담대학원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1u9zpf-dYl--lPeBVGNZ39Y0mfRaws_Cz/view?usp=sharing"
+  },
+  {
+    "institution": "울산대학교",
+    "type": "재무감사",
+    "fileName": "울산대학교_재무감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/18S7CThz37TqHKb6vGS9hoZtsekmpdnDT/view?usp=sharing"
+  },
+  {
+    "institution": "서울여자간호대학교",
+    "type": "종합감사",
+    "fileName": "서울여자간호대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1rJTuh2dpToPey9iVl2H6NW4oHhgFKd4_/view?usp=sharing"
+  },
+  {
+    "institution": "한국복지사이버대학교",
+    "type": "회계부분감사",
+    "fileName": "한국복지사이버대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1gs6KgDGHZZLn6oK2LVsE_gA-ouSmBJ9O/view?usp=sharing"
+  },
+  {
+    "institution": "인제대학교",
+    "type": "회계부분감사",
+    "fileName": "인제대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1aMcn8NLTWFc0wyIWtQoJqI_yDpsUmheb/view?usp=sharing"
+  },
+  {
+    "institution": "극동대학교",
+    "type": "종합감사",
+    "fileName": "극동대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1K6EbCBj_m30p9JbWx1761SGKVDlzlWAl/view?usp=sharing"
+  },
+  {
+    "institution": "장로회신학대학교",
+    "type": "종합감사",
+    "fileName": "장로회신학대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Hh3tcAROEKy3YZj_GUnKB66rY-COmV9g/view?usp=sharing"
+  },
+  {
+    "institution": "호원대학교",
+    "type": "회계부분감사",
+    "fileName": "호원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1-xttC10syNZ3CGEfQgkOIUtQ4ereHJdy/view?usp=sharing"
+  },
+  {
+    "institution": "조선간호대학교",
+    "type": "종합감사",
+    "fileName": "조선간호대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/10xNVNSNzZwOZd28FhqWzeZnq68BlAtOF/view?usp=sharing"
+  },
+  {
+    "institution": "대경대학교",
+    "type": "회계부분감사",
+    "fileName": "대경대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/19prMczRwow4Np9AruwR5YEHKgDgoVVq7/view?usp=sharing"
+  },
+  {
+    "institution": "대전가톨릭대학교",
+    "type": "종합감사",
+    "fileName": "대전가톨릭대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1M5dmblQK_1nwUIfvxlnjJ2mrwUpzshyy/view?usp=sharing"
+  },
+  {
+    "institution": "춘해보건대학교",
+    "type": "회계부분감사",
+    "fileName": "춘해보건대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1ypVqwR5iO-rZgvaeh2GfiymhebtcE-N_/view?usp=sharing"
+  },
+  {
+    "institution": "신성대학교",
+    "type": "회계부분감사",
+    "fileName": "신성대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/19KV_tap0ynPkbk5VNIaCJImlvaqnGFh5/view?usp=sharing"
+  },
+  {
+    "institution": "포항공과대학교",
+    "type": "회계부분감사",
+    "fileName": "포항공과대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/13t68ulHDvyWlB01Y5ZhNmLdsdBKWyjPm/view?usp=sharing"
+  },
+  {
+    "institution": "포항대학교",
+    "type": "회계부분감사",
+    "fileName": "포항대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/13t68ulHDvyWlB01Y5ZhNmLdsdBKWyjPm/view?usp=sharing"
+  },
+  {
+    "institution": "진주보건대학교",
+    "type": "회계부분감사",
+    "fileName": "진주보건대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1QnHM0vs46ycgbUNmbuqysCLycJb4NvfV/view?usp=sharing"
+  },
+  {
+    "institution": "한국골프대학교",
+    "type": "회계부분감사",
+    "fileName": "한국골프대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1bw4TFE7-ulmot3lwzN0J2ie9ZWTrc-6S/view?usp=sharing"
+  },
+  {
+    "institution": "케이씨대학교",
+    "type": "회계부분감사",
+    "fileName": "케이씨대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1SJCX-ruQ2Tu2GYra81sRVMuL-I-yq7sX/view?usp=sharing"
+  },
+  {
+    "institution": "경기과학기술대학교",
+    "type": "종합감사",
+    "fileName": "경기과학기술대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Gl-Df2TVGMbINJl-ZNtsuaQ6CY-zOvtd/view?usp=sharing"
+  },
+  {
+    "institution": "한세대학교",
+    "type": "회계부분감사",
+    "fileName": "한세대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1uoeR1rlOYRR_hlcsnoT5XkhxRYF7UJEM/view?usp=sharing"
+  },
+  {
+    "institution": "호남신학대학교",
+    "type": "종합감사",
+    "fileName": "호남신학대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/18GcnIgaQiO2aQQvikx72KHfZDYE8JO_1/view?usp=sharing"
+  },
+  {
+    "institution": "화신사이버대학교",
+    "type": "회계부분감사",
+    "fileName": "화신사이버대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1kKxhwPS_yos1-fblRKO6wC0gDD7usAh6/view?usp=sharing"
+  },
+  {
+    "institution": "수원대학교",
+    "type": "종합감사",
+    "fileName": "수원대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1ab7XNVU7hKPM6u4b7Vydads0T8VIWdsD/view?usp=sharing"
+  },
+  {
+    "institution": "김포대학교",
+    "type": "종합감사",
+    "fileName": "김포대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Qsxjrhlg1RzyyvS61kYj1l6uZaAFuCn7/view?usp=sharing"
+  },
+  {
+    "institution": "고구려대학교",
+    "type": "특정감사",
+    "fileName": "고구려대학교_특정감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1ldtfVrb60O91LWHMe0fWArd-gOM9COtS/view?usp=sharing"
+  },
+  {
+    "institution": "청강문화산업대학교",
+    "type": "종합감사",
+    "fileName": "청강문화산업대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1uPapuIXCNGwR54dO7JRrf-GBLoeuEx3O/view?usp=sharing"
+  },
+  {
+    "institution": "대구가톨릭대학교",
+    "type": "종합감사",
+    "fileName": "대구가톨릭대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1ybqbqpzCRaQdO1-Ld2xC-jFgLsT5e50k/view?usp=sharing"
+  },
+  {
+    "institution": "경복대학교",
+    "type": "회계부분감사",
+    "fileName": "경복대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/15Z3W0aExO4gTI9jV2Fz-aGUyKYH2aj0L/view?usp=sharing"
+  },
+  {
+    "institution": "경북전문대학교",
+    "type": "회계부분감사",
+    "fileName": "경북전문대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1G4wEe-eqxqF0cN1U4JiZMU5hUneG9cBZ/view?usp=sharing"
+  },
+  {
+    "institution": "계명대학교",
+    "type": "회계부분감사",
+    "fileName": "계명대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1imizXZ1W_008DOBrCEDBjAUeuxtwDOTR/view?usp=sharing"
+  },
+  {
+    "institution": "수원가톨릭대학교",
+    "type": "회계부분감사",
+    "fileName": "수원가톨릭대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1oQTmpUhVF_vjsbp-uv9Zz-n5W0x18Nhc/view?usp=sharing"
+  },
+  {
+    "institution": "상명대학교",
+    "type": "회계부분감사",
+    "fileName": "상명대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1DK0X8qeWdZSvh7e8jqKeK21CpYpEbwV7/view?usp=sharing"
+  },
+  {
+    "institution": "대구예술대학교",
+    "type": "회계부분감사",
+    "fileName": "대구예술대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1am8G5hmerp5ETDD8_dtcRQkFb9sueU5T/view?usp=sharing"
+  },
+  {
+    "institution": "목포과학대학교",
+    "type": "회계부분감사",
+    "fileName": "목포과학대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1_rN2fmlaNP6Vi7WczUDXY1qa1bXaPmzh/view?usp=sharing"
+  },
+  {
+    "institution": "대구과학대학교",
+    "type": "회계부분감사",
+    "fileName": "대구과학대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Sni30UwLdOA64Rp-Tp9cvBmut1QBeQrV/view?usp=sharing"
+  },
+  {
+    "institution": "선학유피대학원대학교",
+    "type": "회계부분감사",
+    "fileName": "선학유피대학원대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1HguPPXQZDQXM3TmjjOOD_NJjhUrW_2Oe/view?usp=sharing"
+  },
+  {
+    "institution": "감리교신학대학교",
+    "type": "회계부분감사",
+    "fileName": "감리교신학대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1L9e5nzbIA_8v4ZCzyap4tNyK3O56WbrI/view?usp=sharing"
+  },
+  {
+    "institution": "한국관광대학교",
+    "type": "회계부분감사",
+    "fileName": "한국관광대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1EHk2YIWIDwSK5VAPPoEzTYJI136gGly9/view?usp=sharing"
+  },
+  {
+    "institution": "건양대학교",
+    "type": "종합감사",
+    "fileName": "건양대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/13H5wXaEt3dX-lahFFMx7-7rLldt3Bwz_/view?usp=sharing"
+  },
+  {
+    "institution": "건양사이버대학교",
+    "type": "회계부분감사",
+    "fileName": "건양사이버대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/11uZoVOUZVtvftuXHAvcXCkHaEHK_i_oY/view?usp=sharing"
+  },
+  {
+    "institution": "경동대학교",
+    "type": "종합감사",
+    "fileName": "경동대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1E9YpyOoEBoZ9ctGqkEYFSmfTTPi_UorN/view?usp=sharing"
+  },
+  {
+    "institution": "영남외국어대학",
+    "type": "회계부분감사",
+    "fileName": "영남외국어대학_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1XWKkvFkqL-82SCBiil9XWOq4NjjOJU4B/view?usp=sharing"
+  },
+  {
+    "institution": "경희대학교",
+    "type": "종합감사",
+    "fileName": "경희대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1rW_HYdGeWGVKVKPiguN7tlceuLyfkdvv/view?usp=sharing"
+  },
+  {
+    "institution": "고려대학교",
+    "type": "종합감사",
+    "fileName": "고려대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1LmXKvBN1YrT0v__olxl51kFocLL2GJI1/view?usp=sharing"
+  },
+  {
+    "institution": "수원과학대학교",
+    "type": "회계부분감사",
+    "fileName": "수원과학대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1PNm9SsWR4-93ZProaaVUIePNVYfsv0OZ/view?usp=sharing"
+  },
+  {
+    "institution": "목포가톨릭대학교",
+    "type": "회계부분감사",
+    "fileName": "목포가톨릭대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1aADEzsLa8iD_kVisMZJsXOCSyHXPcxPw/view?usp=sharing"
+  },
+  {
+    "institution": "서울장신대학교",
+    "type": "회계부분감사",
+    "fileName": "서울장신대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1L7-UPFr9gzFxu8HiCmlj2j6GWdp-gS1r/view?usp=sharing"
+  },
+  {
+    "institution": "광운대학교",
+    "type": "종합감사",
+    "fileName": "광운대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1aEH1gVSxOcS6gYlZVfcc8aa4x5PFu_sD/view?usp=sharing"
+  },
+  {
+    "institution": "구미대학교",
+    "type": "종합감사",
+    "fileName": "구미대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1rdyaOCwpISEqXJZjuPcqcAIv7vi0SKvs/view?usp=sharing"
+  },
+  {
+    "institution": "김포대학교",
+    "type": "회계부분감사",
+    "fileName": "김포대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1DPJ_1ISDhJdx_1gtr4iK8kpivvYBKXIr/view?usp=sharing"
+  },
+  {
+    "institution": "단국대학교",
+    "type": "종합감사",
+    "fileName": "단국대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1rslwyf0vESL6hH8F-dKy8Xae0Zjhe5sg/view?usp=sharing"
+  },
+  {
+    "institution": "용인대학교",
+    "type": "회계부분감사",
+    "fileName": "용인대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1wf0lTXcHT8tHdrdzWnzvtsB3f-l5gUhR/view?usp=sharing"
+  },
+  {
+    "institution": "가야대학교",
+    "type": "회계부분감사",
+    "fileName": "가야대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1Oe1Ixu_Xz6ZccunAgN5-PM1x_bxd7zB2/view?usp=sharing"
+  },
+  {
+    "institution": "세종대학교",
+    "type": "종합감사",
+    "fileName": "세종대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1zTYM9baHT_dkg5t2__n2NvUaF0_fYC79/view?usp=sharing"
+  },
+  {
+    "institution": "세명대학교",
+    "type": "종합감사",
+    "fileName": "세명대학교_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1cD0Dd99CRZmp_oyNLgfioHzxm6jx_n7Z/view?usp=sharing"
+  }
+]

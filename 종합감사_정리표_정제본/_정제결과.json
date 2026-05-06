@@ -1,0 +1,258 @@
+{
+  "generatedAt": "2026-05-04T05:31:10.386Z",
+  "fileCount": 50,
+  "totalRows": 2552,
+  "totalReviewRows": 904,
+  "results": [
+    {
+      "file": "건양대학교_종합감사_정리표.csv",
+      "totalRows": 51,
+      "reviewRows": 43
+    },
+    {
+      "file": "경기과학기술대학교_종합감사_정리표.csv",
+      "totalRows": 19,
+      "reviewRows": 1
+    },
+    {
+      "file": "경동대학교_종합감사_정리표.csv",
+      "totalRows": 43,
+      "reviewRows": 0
+    },
+    {
+      "file": "경일대학교_종합감사_정리표.csv",
+      "totalRows": 43,
+      "reviewRows": 3
+    },
+    {
+      "file": "경주대학교_종합감사_정리표.csv",
+      "totalRows": 18,
+      "reviewRows": 7
+    },
+    {
+      "file": "경희대학교_종합감사_정리표.csv",
+      "totalRows": 55,
+      "reviewRows": 1
+    },
+    {
+      "file": "고려대학교_종합감사_정리표.csv",
+      "totalRows": 38,
+      "reviewRows": 2
+    },
+    {
+      "file": "광운대학교_종합감사_정리표.csv",
+      "totalRows": 33,
+      "reviewRows": 3
+    },
+    {
+      "file": "광주가톨릭대학교_종합감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 3
+    },
+    {
+      "file": "구미대학교_종합감사_정리표.csv",
+      "totalRows": 37,
+      "reviewRows": 0
+    },
+    {
+      "file": "군산간호대학교_종합감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 2
+    },
+    {
+      "file": "극동대학교_종합감사_정리표.csv",
+      "totalRows": 13,
+      "reviewRows": 2
+    },
+    {
+      "file": "김포대학교_종합감사_정리표.csv",
+      "totalRows": 28,
+      "reviewRows": 1
+    },
+    {
+      "file": "남서울대학교_종합감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 3
+    },
+    {
+      "file": "농협대학교_종합감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 2
+    },
+    {
+      "file": "단국대학교_종합감사_정리표.csv",
+      "totalRows": 451,
+      "reviewRows": 278
+    },
+    {
+      "file": "대구가톨릭대_종합감사_정리표.csv",
+      "totalRows": 48,
+      "reviewRows": 3
+    },
+    {
+      "file": "대전가톨릭대학교_종합감사_정리표.csv",
+      "totalRows": 9,
+      "reviewRows": 1
+    },
+    {
+      "file": "대전보건대학교_종합감사_정리표.csv",
+      "totalRows": 38,
+      "reviewRows": 3
+    },
+    {
+      "file": "대진대학교_종합감사_정리표.csv",
+      "totalRows": 25,
+      "reviewRows": 2
+    },
+    {
+      "file": "동서대학교_종합감사_정리표.csv",
+      "totalRows": 52,
+      "reviewRows": 1
+    },
+    {
+      "file": "동원과학기술대학교_종합감사_정리표.csv",
+      "totalRows": 11,
+      "reviewRows": 2
+    },
+    {
+      "file": "명지대학교_종합감사_정리표.csv",
+      "totalRows": 34,
+      "reviewRows": 5
+    },
+    {
+      "file": "명지대학교_종합감사_정리표_cleaned.csv",
+      "totalRows": 34,
+      "reviewRows": 5
+    },
+    {
+      "file": "백석문화대학교_종합감사_정리표.csv",
+      "totalRows": 41,
+      "reviewRows": 1
+    },
+    {
+      "file": "백석예술대학교_종합감사_정리표.csv",
+      "totalRows": 19,
+      "reviewRows": 0
+    },
+    {
+      "file": "백제예술대학교_종합감사_정리표.csv",
+      "totalRows": 42,
+      "reviewRows": 1
+    },
+    {
+      "file": "부산외국어대학교_종합감사_정리표.csv",
+      "totalRows": 31,
+      "reviewRows": 1
+    },
+    {
+      "file": "상명대학교_종합감사_정리표.csv",
+      "totalRows": 30,
+      "reviewRows": 4
+    },
+    {
+      "file": "서강대학교_종합감사_정리표.csv",
+      "totalRows": 53,
+      "reviewRows": 3
+    },
+    {
+      "file": "서영대학교_종합감사_정리표.csv",
+      "totalRows": 210,
+      "reviewRows": 112
+    },
+    {
+      "file": "서울신학대학교_종합감사_정리표.csv",
+      "totalRows": 14,
+      "reviewRows": 2
+    },
+    {
+      "file": "선린대학교_종합감사_정리표.csv",
+      "totalRows": 38,
+      "reviewRows": 3
+    },
+    {
+      "file": "세명대학교_종합감사_정리표.csv",
+      "totalRows": 34,
+      "reviewRows": 1
+    },
+    {
+      "file": "세종대학교_종합감사_정리표.csv",
+      "totalRows": 44,
+      "reviewRows": 1
+    },
+    {
+      "file": "수원대학교_종합감사_정리표.csv",
+      "totalRows": 38,
+      "reviewRows": 0
+    },
+    {
+      "file": "수원여자대학교_종합감사_정리표.csv",
+      "totalRows": 50,
+      "reviewRows": 29
+    },
+    {
+      "file": "연세대학교_종합감사_정리표.csv",
+      "totalRows": 86,
+      "reviewRows": 7
+    },
+    {
+      "file": "영남신학대학교_종합감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 2
+    },
+    {
+      "file": "영산대학교_종합감사_정리표.csv",
+      "totalRows": 41,
+      "reviewRows": 1
+    },
+    {
+      "file": "웅지세무대학교_종합감사_정리표.csv",
+      "totalRows": 496,
+      "reviewRows": 339
+    },
+    {
+      "file": "유원대학교_종합감사_정리표.csv",
+      "totalRows": 35,
+      "reviewRows": 7
+    },
+    {
+      "file": "장로회신학대학교_종합감사_정리표.csv",
+      "totalRows": 12,
+      "reviewRows": 0
+    },
+    {
+      "file": "조선간호대학교_종합감사_정리표.csv",
+      "totalRows": 10,
+      "reviewRows": 1
+    },
+    {
+      "file": "중부대학교_종합감사_정리표.csv",
+      "totalRows": 6,
+      "reviewRows": 0
+    },
+    {
+      "file": "중앙승가대학교_종합감사_정리표.csv",
+      "totalRows": 17,
+      "reviewRows": 6
+    },
+    {
+      "file": "차의과학대학교_종합감사_정리표.csv",
+      "totalRows": 23,
+      "reviewRows": 4
+    },
+    {
+      "file": "청강문화산업대학교_종합감사_정리표.csv",
+      "totalRows": 12,
+      "reviewRows": 5
+    },
+    {
+      "file": "호남신학대학교_종합감사_정리표.csv",
+      "totalRows": 8,
+      "reviewRows": 0
+    },
+    {
+      "file": "홍익대학교_종합감사_정리표.csv",
+      "totalRows": 41,
+      "reviewRows": 1
+    }
+  ]
+}

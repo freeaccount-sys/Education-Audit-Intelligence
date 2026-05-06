@@ -1,0 +1,16 @@
+[
+  {
+    "id": "audit-001",
+    "institution": "대구가톨릭대학교",
+    "type": "종합감사",
+    "fileName": "대구가톨릭대_종합감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+  },
+  {
+    "id": "audit-002",
+    "institution": "예시대학교",
+    "type": "회계부분감사",
+    "fileName": "예시대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+  }
+]

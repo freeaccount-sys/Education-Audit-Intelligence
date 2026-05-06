@@ -1,0 +1,20 @@
+{
+  "name": "moe-audit-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Batch OCR utilities for Ministry of Education private university audit PDFs",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check app.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.6.205"
+  }
+}

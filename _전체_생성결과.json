@@ -1,0 +1,974 @@
+{
+  "generatedAt": "2026-05-04T05:31:04.127Z",
+  "total": 138,
+  "success": 135,
+  "failed": 3,
+  "results": [
+    {
+      "institution": "대구가톨릭대학교",
+      "fileName": "180528+대구가톨릭대+종합감사+결과+및+처분내용.pdf",
+      "status": "ok",
+      "message": "rows=48",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\대구가톨릭대_종합감사_정리표.csv"
+    },
+    {
+      "institution": "서영대학교",
+      "fileName": "[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf",
+      "status": "ok",
+      "message": "rows=210",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\서영대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "수원대학교",
+      "fileName": "[붙임1]+학교법인+고운학원+및+수원대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=38",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\수원대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "김포대학교",
+      "fileName": "[붙임1]+학교법인+김포대학+및+김포대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=28",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\김포대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "고구려대학교",
+      "fileName": "[붙임1]+학교법인+아신학원+및+고구려대학교+특정감사+처분서_홈페이지+공개★★.pdf",
+      "status": "ok",
+      "message": "rows=14",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\특정감사_정리표\\고구려대학교_특정감사_정리표.csv"
+    },
+    {
+      "institution": "군산간호대학교",
+      "fileName": "[붙임]+학교법인+경암학원+및+군산간호대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\군산간호대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "고려대학교",
+      "fileName": "[붙임]+학교법인+고려중앙학원+및+고려대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\고려대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동아방송예술대학교",
+      "fileName": "[붙임]+학교법인+공산학원+및+동아방송예술대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=5",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\동아방송예술대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "국제사이버대학교",
+      "fileName": "[붙임]+학교법인+광동학원+및+국제사이버대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\국제사이버대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "국제대학교",
+      "fileName": "[붙임]+학교법인+국제대학교+및+국제대학교+재무감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=5",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\국제대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "유원대학교",
+      "fileName": "[붙임]+학교법인+금강학원+및+유원대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=35",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\유원대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "농협대학교",
+      "fileName": "[붙임]+학교법인+농협학원+및+농협대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\농협대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "광주가톨릭대학교",
+      "fileName": "[붙임]+학교법인+대건학당+및+광주가톨릭대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\광주가톨릭대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "전주기전대학교",
+      "fileName": "[붙임]+학교법인+덕삼학원+및+전주기전대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=28",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\전주기전대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동원과학기술대학교",
+      "fileName": "[붙임]+학교법인+동원교육재단+및+동원과학기술대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\동원과학기술대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "예명대학원대학교",
+      "fileName": "[붙임]+학교법인+레마학원+및+예명대학원대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\예명대학원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "명지대학교",
+      "fileName": "[붙임]+학교법인+명지학원+및+명지대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=34",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\명지대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "명지대학교",
+      "fileName": "[붙임]+학교법인+명지학원+및+명지대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\명지대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "상명대학교",
+      "fileName": "[붙임]+학교법인+상명학원+및+상명대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=30",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\상명대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "서울신학대학교",
+      "fileName": "[붙임]+학교법인+서울신학대학교+및+서울신학대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=14",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\서울신학대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "서정대학교",
+      "fileName": "[붙임]+학교법인+서정학원+및+서정대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\서정대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "차의과학대학교",
+      "fileName": "[붙임]+학교법인+성광학원+및+차의과학대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=23",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\차의과학대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "송원대학교",
+      "fileName": "[붙임]+학교법인+송원대학교+및+송원대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=15",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\송원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "송호대학교",
+      "fileName": "[붙임]+학교법인+송호학원+및+송호대학교+회계부분+감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=13",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\송호대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "순천제일대학교",
+      "fileName": "[붙임]+학교법인+순천성심학원+및+순천제일대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=29",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\순천제일대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "강동대학교",
+      "fileName": "[붙임]+학교법인+숭희학원+및+강동대학교+재무감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\강동대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "중앙승가대학교",
+      "fileName": "[붙임]+학교법인+승가학원+및+중앙승가대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=17",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\중앙승가대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "고구려대학교",
+      "fileName": "[붙임]+학교법인+아신학원+및+고구려대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=21",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\고구려대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "에스라성경대학원대학교",
+      "fileName": "[붙임]+학교법인+에스라성경학원+및+에스라성경대학원대학교+회계부분감사+결과+공개.pdf",
+      "status": "ok",
+      "message": "rows=5",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\에스라성경대학원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "영남신학대학교",
+      "fileName": "[붙임]+학교법인+영남신학대학교+및+영남신학대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\영남신학대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "영진사이버대학교",
+      "fileName": "[붙임]+학교법인+영진교육재단+및+영진사이버대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\영진사이버대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한국상담대학원대학교",
+      "fileName": "[붙임]+학교법인+우천학원+및+한국상담대학원대학교+회계부분감사+결과+공개.pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국상담대학원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "울산대학교",
+      "fileName": "[붙임]+학교법인+울산공업학원+및+울산대학교+재무감사+결과+보고서(배포판).pdf",
+      "status": "ok",
+      "message": "rows=81",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\울산대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "서울여자간호대학교",
+      "fileName": "[붙임]+학교법인+의담학회+및+서울여자간호대학교+재무감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\서울여자간호대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "한국복지사이버대학",
+      "fileName": "[붙임]+학교법인+이후학원+및+한국복지사이버대학+회계부분감사+결과+공개.pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국복지사이버대학_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "인제대학교",
+      "fileName": "[붙임]+학교법인+인제학원+및+인제대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\인제대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "극동대학교",
+      "fileName": "[붙임]+학교법인+일현학원+및+극동대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=13",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\극동대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "장로회신학대학교",
+      "fileName": "[붙임]+학교법인+장로회신학대학교+및+장로회신학대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=12",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\장로회신학대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "호원대학교",
+      "fileName": "[붙임]+학교법인+정은학원+및+호원대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=15",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\호원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "조선간호대학교",
+      "fileName": "[붙임]+학교법인+조선대학교+및+조선간호대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=10",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\조선간호대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "대경대학교",
+      "fileName": "[붙임]+학교법인+중암학원+및+대경대학교+회계부분감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=10",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대경대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대전가톨릭대학교",
+      "fileName": "[붙임]+학교법인+천주교대전교구대지학원+및+대전가톨릭대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\대전가톨릭대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "춘해보건대학교",
+      "fileName": "[붙임]+학교법인+춘해학원+및+춘해보건대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\춘해보건대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "신성대학교",
+      "fileName": "[붙임]+학교법인+태촌학원+및+신성대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=32",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\신성대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "포항공과대학교",
+      "fileName": "[붙임]+학교법인+포항공과대학교+및+포항공과대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\포항공과대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "포항대학교",
+      "fileName": "[붙임]+학교법인+포항대학교+및+포항대학교+회계부분감사+결과.pdf",
+      "status": "failed",
+      "message": "연번/지적사항/처분 블록을 찾지 못했습니다.",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\포항대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "진주보건대학교",
+      "fileName": "[붙임]+학교법인+한가람학원+및+진주보건대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\진주보건대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한국골프대학교",
+      "fileName": "[붙임]+학교법인+한국골프대학교+및+한국골프대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국골프대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "케이씨대학교",
+      "fileName": "[붙임]+학교법인+한국그리스도의교회학원+및+케이씨대학교+회계부분감사결과.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\케이씨대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "경기과학기술대학교",
+      "fileName": "[붙임]+학교법인+한국산업기술대학+및+경기과학기술대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=19",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\경기과학기술대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "한세대학교",
+      "fileName": "[붙임]+학교법인+한세대학교+및+한세대학교+회계부분감사+처분서.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한세대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "호남신학대학교",
+      "fileName": "[붙임]+학교법인+호남신학대학교+및+호남신학대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\호남신학대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "화신사이버대학교",
+      "fileName": "[붙임]+학교법인+화신학원+및+화신사이버대학교+회계부분감사+결과+공개.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\화신사이버대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "청강문화산업대학교",
+      "fileName": "[홈페이지+탑재]+청강문화산업대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=12",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\청강문화산업대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "경복대학교",
+      "fileName": "붙임]학교법인+경복대학교+및+경복대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\경복대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "경북전문대학교",
+      "fileName": "붙임]학교법인+경영교육재단+및+경북전문대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=5",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\경북전문대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "계명대학교",
+      "fileName": "붙임]학교법인+계명대학교+및+계명대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\계명대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "수원가톨릭대학교",
+      "fileName": "붙임]학교법인+광암학원+및+수원가톨릭대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\수원가톨릭대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "상명대학교",
+      "fileName": "붙임]학교법인+상명학원+및+상명대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\상명대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대구예술대학교",
+      "fileName": "붙임]학교법인+세기학원+및+대구예술대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=2",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대구예술대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "목포과학대학교",
+      "fileName": "붙임]학교법인+영신학원+및+목포과학대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=2",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\목포과학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대구과학대학교",
+      "fileName": "붙임]학교법인+한별학숙+및+대구과학대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=14",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대구과학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "선학유피대학원대학교",
+      "fileName": "첨부]학교법인+청심학원+및+선학유피대학원대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\선학유피대학원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "감리교신학대학교",
+      "fileName": "학교법인+감리교신학원+및+감리교신학대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\감리교신학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한국관광대학교",
+      "fileName": "학교법인+거영학원+및+한국관광대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국관광대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "건양대학교",
+      "fileName": "학교법인+건양교육재단+및+건양대학교+종합감사+결과+전문(공개본).pdf",
+      "status": "ok",
+      "message": "rows=51",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\건양대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "건양사이버대학교",
+      "fileName": "학교법인+건양학원+및+건양사이버대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=3",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\건양사이버대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "경동대학교",
+      "fileName": "학교법인+경동대학교+및+경동대학교+종합감사+결과+처분서+전문+공개.pdf",
+      "status": "ok",
+      "message": "rows=43",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\경동대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "영남외국어대학",
+      "fileName": "학교법인+경북학원+및+영남외국어대학+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=12",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\영남외국어대학_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "경희대학교",
+      "fileName": "학교법인+경희학원+및+경희대학교+종합감사+결과+전문(공개본).pdf",
+      "status": "ok",
+      "message": "rows=55",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\경희대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "고려대학교",
+      "fileName": "학교법인+고려중앙학원+및+고려대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=38",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\고려대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "수원과학대학교",
+      "fileName": "학교법인+고운학원+및+수원과학대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\수원과학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "목포가톨릭대학교",
+      "fileName": "학교법인+골롬반학원+및+목포가톨릭대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\목포가톨릭대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "서울장신대학교",
+      "fileName": "학교법인+광명학원+및+서울장신대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\서울장신대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "광운대학교",
+      "fileName": "학교법인+광운학원+및+광운대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=33",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\광운대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "구미대학교",
+      "fileName": "학교법인+구미교육재단+및+구미대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=37",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\구미대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "김포대학교",
+      "fileName": "학교법인+김포대학+및+김포대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=12",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\김포대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "단국대학교",
+      "fileName": "학교법인+단국대학+및+단국대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=451",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\단국대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "용인대학교",
+      "fileName": "학교법인+단호학원+및+용인대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\용인대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "가야대학교",
+      "fileName": "학교법인+대구학원+및+가야대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=2",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\가야대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "세종대학교",
+      "fileName": "학교법인+대양학원+및+세종대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=44",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\세종대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "세명대학교",
+      "fileName": "학교법인+대원교육재단+및+세명대학교+종합감사+결과+처분서+전문+공개.pdf",
+      "status": "ok",
+      "message": "rows=34",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\세명대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "세명대학교",
+      "fileName": "학교법인+대원교육재단+및+세명대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=15",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\세명대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대진대학교",
+      "fileName": "학교법인+대진대학교+및+대진대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=25",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\대진대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "총신대학교",
+      "fileName": "학교법인+대한예수교장로회+총신대학교+및+총신대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=14",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\총신대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "덕성여자대학교",
+      "fileName": "학교법인+덕성학원+및+덕성여자대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\덕성여자대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동국대학교",
+      "fileName": "학교법인+동국대학교+및+동국대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=28",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\동국대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동서대학교",
+      "fileName": "학교법인+동서학원+및+동서대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=52",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\동서대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "여주대학교",
+      "fileName": "학교법인+동신교육재단+및+여주대학교+회계부분감사+결과.pdf",
+      "status": "failed",
+      "message": "연번/지적사항/처분 블록을 찾지 못했습니다.",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\여주대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한국외국어대학교",
+      "fileName": "학교법인+동원육영회+및+한국외국어대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=2",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국외국어대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동의과학대학교",
+      "fileName": "학교법인+동의학원+및+동의과학대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\동의과학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "루터대학교",
+      "fileName": "학교법인+루터교학원+및+루터대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=10",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\루터대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대원대학교",
+      "fileName": "학교법인+민송학원+및+대원대학교+회계부분감사+결과(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "배화여자대학교",
+      "fileName": "학교법인+배화학원+및+배화여자대학교+회계부분감사+처분서_홈페이지.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\배화여자대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "백석대학교",
+      "fileName": "학교법인+백석대학교+및+백석대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\백석대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "백석문화대학교",
+      "fileName": "학교법인+백석대학교,+백석대학교+및+백석문화대학교+종합감사+결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=41",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\백석문화대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "백제예술대학교",
+      "fileName": "학교법인+백암학원+및+백제예술대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=42",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\백제예술대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "삼육보건대학교",
+      "fileName": "학교법인+삼육학원+및+삼육보건대학교+회계부분감사+결과.pdf",
+      "status": "failed",
+      "message": "연번/지적사항/처분 블록을 찾지 못했습니다.",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\삼육보건대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "서강대학교",
+      "fileName": "학교법인+서강대학교+및+서강대학교+종합감사+결과+전문+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=53",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\서강대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "백석예술대학교",
+      "fileName": "학교법인+서울백석학원+및+백석예술대학교+종합감사결과+처분서.pdf",
+      "status": "ok",
+      "message": "rows=19",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\백석예술대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "성균관대학교",
+      "fileName": "학교법인+성균관대학+및+성균관대학교+재무감사+결과+보고서(공개본)_★.pdf",
+      "status": "ok",
+      "message": "rows=5",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\성균관대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "부산가톨릭대학교",
+      "fileName": "학교법인+성모학원+및+부산가톨릭대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=13",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\부산가톨릭대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "성신여자대학교",
+      "fileName": "학교법인+성신학원+및+성신여자대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=21",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\성신여자대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "영산대학교",
+      "fileName": "학교법인+성심학원+및+영산대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=41",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\영산대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "남서울대학교",
+      "fileName": "학교법인+성암학원+및+남서울대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\남서울대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "부산외국어대학교",
+      "fileName": "학교법인+성지학원+및+부산외국어대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=31",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\부산외국어대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "송곡대학교",
+      "fileName": "학교법인+송곡학원+및+송곡대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\송곡대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "수원여자대학교",
+      "fileName": "학교법인+수원인제학원+및+수원여자대학교+종합감사+결과+보고서.pdf",
+      "status": "ok",
+      "message": "rows=50",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\수원여자대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "숙명여자대학교",
+      "fileName": "학교법인+숙명학원+및+숙명여자대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=4",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\숙명여자대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "신안산대학교",
+      "fileName": "학교법인+순효학원+및+신안산대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=28",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\신안산대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "전주비전대학교",
+      "fileName": "학교법인+신동아학원+및+전주비전대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\전주비전대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "아세아연합신학대학교",
+      "fileName": "학교법인+아세아연합신학대학원+및++아세아연합신학대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\아세아연합신학대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "연세대학교",
+      "fileName": "학교법인+연세대학교+및+연세대학교+종합감사+결과+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=86",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\연세대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "한국열린사이버대학교",
+      "fileName": "학교법인+열린학원+및+한국열린사이버대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한국열린사이버대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대구대학교",
+      "fileName": "학교법인+영광학원+및+대구대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대구대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "세한대학교",
+      "fileName": "학교법인+영신학원+및+세한대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=8",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\세한대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "예원예술대학교",
+      "fileName": "학교법인+예원예술대학교+및+예원예술대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=14",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\예원예술대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "우송대학교",
+      "fileName": "학교법인+우송학원+및+우송대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=20",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\우송대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "남부대학교",
+      "fileName": "학교법인+우암학원+및+남부대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=22",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\남부대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "전남과학대학교",
+      "fileName": "학교법인+우암학원+및+전남과학대학교+재무감사+결과+보고서(공개본).pdf",
+      "status": "ok",
+      "message": "rows=11",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\전남과학대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "웅지세무대학교",
+      "fileName": "학교법인+웅지학원+및+웅지세무대학교+종합감사+결과+보고서.hwpx.pdf",
+      "status": "ok",
+      "message": "rows=496",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\웅지세무대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "원광대학교",
+      "fileName": "학교법인+원광학원+및+원광대학교+재무감사+결과+보고서(배포판).pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\원광대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "경주대학교",
+      "fileName": "학교법인+원석학원+및+경주대학교+종합감사+홈페이지+공개.pdf",
+      "status": "ok",
+      "message": "rows=18",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\경주대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "유한대학교",
+      "fileName": "학교법인+유한학원+및++유한대학교+회계부분+감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=10",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\유한대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "선린대학교",
+      "fileName": "학교법인+인산교육재단+및+선린대학교+종합감사+결과+전문+공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=38",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\선린대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "한림성심대학교",
+      "fileName": "학교법인+일송학원+및+한림성심대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=1",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한림성심대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "경일대학교",
+      "fileName": "학교법인+일청학원+및+경일대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=43",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\경일대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "중부대학교",
+      "fileName": "학교법인+중부학원+및+중부대학교+종합감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=6",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\중부대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "중앙대학교",
+      "fileName": "학교법인+중앙대학교+및+중앙대학교+재무감사+결과+보고서(공개본)_★.pdf",
+      "status": "ok",
+      "message": "rows=18",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\중앙대학교_재무감사_정리표.csv"
+    },
+    {
+      "institution": "대덕대학교",
+      "fileName": "학교법인+창성학원+및+대덕대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=19",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\대덕대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "창신대학교",
+      "fileName": "학교법인+창신대학교+및+창신대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=24",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\창신대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "대전보건대학교",
+      "fileName": "학교법인+청운학원+및+대전보건대학교+종합감사+결과(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=38",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\대전보건대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "성서대학교",
+      "fileName": "학교법인+한국복음주의학원+및+성서대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\성서대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한성대학교",
+      "fileName": "학교법인+한성학원+및+한성대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=9",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한성대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "한서대학교",
+      "fileName": "학교법인+함주학원+및+한서대학교+회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=16",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\한서대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "홍익대학교",
+      "fileName": "학교법인+홍익학원+및+홍익대학교+종합감사+결과+전문공개(홈페이지).pdf",
+      "status": "ok",
+      "message": "rows=41",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\종합감사_정리표\\홍익대학교_종합감사_정리표.csv"
+    },
+    {
+      "institution": "횃불트리니티신학대학원대학교",
+      "fileName": "학교법인+횃불학원+및+횃불트리니티신학대학원대학교++회계부분감사+결과.pdf",
+      "status": "ok",
+      "message": "rows=2",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\회계부분감사_정리표\\횃불트리니티신학대학원대학교_회계부분감사_정리표.csv"
+    },
+    {
+      "institution": "동강대학교",
+      "fileName": "학교법인+후성학원+및+동강대학교+재무감사+결과(공개용).pdf",
+      "status": "ok",
+      "message": "rows=7",
+      "outputCsv": "C:\\antigravity\\교육부 감사 결과\\재무감사_정리표\\동강대학교_재무감사_정리표.csv"
+    }
+  ]
+}
