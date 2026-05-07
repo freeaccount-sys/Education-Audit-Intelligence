@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-05-06T05:08:33.917Z",
+  "source": "audit-index.json",
+  "note": "Upstage OCR 배치 재처리 우선순위 목록",
+  "items": [
+    {
+      "institution": "경주대학교",
+      "type": "종합감사",
+      "fileName": "학교법인+원석학원+및+경주대학교+종합감사+홈페이지+공개.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\학교법인+원석학원+및+경주대학교+종합감사+홈페이지+공개.pdf"
+    },
+    {
+      "institution": "남서울대학교",
+      "type": "종합감사",
+      "fileName": "학교법인+성암학원+및+남서울대학교+종합감사+결과.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\학교법인+성암학원+및+남서울대학교+종합감사+결과.pdf"
+    },
+    {
+      "institution": "서영대학교",
+      "type": "종합감사",
+      "fileName": "[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf"
+    },
+    {
+      "institution": "서울신학대학교",
+      "type": "종합감사",
+      "fileName": "[붙임]+학교법인+서울신학대학교+및+서울신학대학교+종합감사+결과+처분서.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[붙임]+학교법인+서울신학대학교+및+서울신학대학교+종합감사+결과+처분서.pdf"
+    },
+    {
+      "institution": "수원대학교",
+      "type": "종합감사",
+      "fileName": "[붙임1]+학교법인+고운학원+및+수원대학교+종합감사+결과+공개(홈페이지).pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[붙임1]+학교법인+고운학원+및+수원대학교+종합감사+결과+공개(홈페이지).pdf"
+    },
+    {
+      "institution": "영남신학대학교",
+      "type": "종합감사",
+      "fileName": "[붙임]+학교법인+영남신학대학교+및+영남신학대학교+종합감사+결과.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[붙임]+학교법인+영남신학대학교+및+영남신학대학교+종합감사+결과.pdf"
+    },
+    {
+      "institution": "유원대학교",
+      "type": "종합감사",
+      "fileName": "[붙임]+학교법인+금강학원+및+유원대학교+종합감사+결과.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[붙임]+학교법인+금강학원+및+유원대학교+종합감사+결과.pdf"
+    },
+    {
+      "institution": "중부대학교",
+      "type": "종합감사",
+      "fileName": "학교법인+중부학원+및+중부대학교+종합감사+결과.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\학교법인+중부학원+및+중부대학교+종합감사+결과.pdf"
+    },
+    {
+      "institution": "청강문화산업대학교",
+      "type": "종합감사",
+      "fileName": "[홈페이지+탑재]+청강문화산업대학교+종합감사+결과.pdf",
+      "filePath": "C:\\antigravity\\audit_files\\[홈페이지+탑재]+청강문화산업대학교+종합감사+결과.pdf"
+    }
+  ]
+}

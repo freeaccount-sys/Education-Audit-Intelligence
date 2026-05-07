@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>사학기관 감사결과 대시보드</title>
+    <title>교육부 사립 고등교육기관 감사결과 대시보드</title>
     <meta
       name="description"
-      content="교육부 사학기관 감사결과를 기관별로 요약하고 검색할 수 있는 대시보드"
+      content="교육부 사립 고등교육기관 감사결과를 기관별로 요약하고 검색할 수 있는 대시보드"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,68 +18,67 @@
   </head>
   <body>
     <div class="shell">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="brand-mark">감</div>
-          <div>
-            <p class="eyebrow">Education Audit Intelligence</p>
-            <h1>사학기관 감사결과</h1>
-          </div>
-        </div>
-
-        <section class="panel">
-          <h2>필터</h2>
-          <label class="field">
-            <span>검색</span>
-            <input id="searchInput" type="search" placeholder="대학명, 법인명, 지적사항" />
-          </label>
-
-          <label class="field">
-            <span>감사구분</span>
-            <select id="typeFilter">
-              <option value="all">전체</option>
-              <option value="종합감사">종합감사</option>
-              <option value="회계부분감사">회계부분감사</option>
-              <option value="재무감사">재무감사</option>
-              <option value="특정감사">특정감사</option>
-            </select>
-          </label>
-
-
-
-          <label class="field">
-            <span>연도</span>
-            <select id="yearFilter">
-              <option value="all">전체</option>
-            </select>
-          </label>
-
-          <label class="check-field">
-            <input id="includeFailedToggle" type="checkbox" />
-            <span>OCR 실패 건 포함</span>
-          </label>
-        </section>
-
-        <section class="panel upload-panel">
-          <h2>데이터 불러오기</h2>
-          <p>감사결과 JSON 파일을 업로드하면 대시보드가 즉시 갱신됩니다.</p>
-          <button id="loadIndexButton" class="primary-button" type="button">audit-index.json 불러오기</button>
-          <label class="upload-button" for="fileInput">JSON 업로드</label>
-          <input id="fileInput" type="file" accept="application/json" />
-          <button id="resetButton" class="secondary-button" type="button">샘플 데이터로 복원</button>
-        </section>
-
-        <section class="panel notes">
-          <h2>자동 정리 규칙</h2>
-          <ul>
-            <li>기관별 핵심 지적사항 요약</li>
-            <li>중대도별 건수 집계</li>
-            <li>시정 권고와 재발 방지 포인트 추출</li>
-          </ul>
-        </section>
-      </aside>
-
       <main class="content">
+        <section class="dashboard-top">
+          <div class="brand">
+            <div class="brand-mark">감</div>
+            <div>
+              <p class="eyebrow">Education Audit Intelligence</p>
+              <h1>교육부 사립 고등교육기관 감사결과</h1>
+            </div>
+          </div>
+          <div class="top-badges">
+            <div class="top-credit">제작·배포 회계조사부</div>
+            <div class="top-credit top-credit-logo" aria-label="한국사학진흥재단 CI">
+              <img
+                src="assets/kasedu-ci-horizontal.jpg"
+                alt="한국사학진흥재단 CI"
+              />
+            </div>
+          </div>
+
+          <div class="dashboard-controls">
+            <section class="panel">
+              <h2>필터</h2>
+              <label class="field">
+                <span>대학명 검색</span>
+                <input id="searchInput" type="search" placeholder="대학명으로 검색" />
+              </label>
+
+              <label class="field">
+                <span>감사구분</span>
+                <select id="typeFilter">
+                  <option value="all">전체</option>
+                  <option value="종합감사">종합감사</option>
+                  <option value="회계부분감사">회계부분감사</option>
+                  <option value="재무감사">재무감사</option>
+                  <option value="특정감사">특정감사</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>연도</span>
+                <select id="yearFilter">
+                  <option value="all">전체</option>
+                </select>
+              </label>
+
+              <label class="check-field">
+                <input id="includeFailedToggle" type="checkbox" />
+                <span>OCR 실패 건 포함</span>
+              </label>
+            </section>
+
+            <section class="panel upload-panel">
+              <h2>데이터 불러오기</h2>
+              <p>감사결과 JSON 파일을 업로드하면 대시보드가 즉시 갱신됩니다.</p>
+              <button id="loadIndexButton" class="primary-button" type="button">audit-index.json 불러오기</button>
+              <label class="upload-button" for="fileInput">JSON 업로드</label>
+              <input id="fileInput" type="file" accept="application/json" />
+              <button id="resetButton" class="secondary-button" type="button">샘플 데이터로 복원</button>
+            </section>
+          </div>
+        </section>
 
 
         <section class="stepper">
@@ -104,8 +103,8 @@
 
           <div id="detailPanel" class="panel detail-panel">
             <div class="panel-head">
-              <h3>선택된 기관 요약</h3>
-              <span class="muted">자동 생성 요약</span>
+              <h3>바로가기</h3>
+              <span class="muted">학교명 검색 · PDF 원문 다운로드</span>
             </div>
             <div id="detailView" class="detail-view"></div>
           </div>

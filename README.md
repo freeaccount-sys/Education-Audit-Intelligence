@@ -4,6 +4,70 @@
 
 브라우저에서 바로 열 수 있는 정적 웹 대시보드입니다.
 
+## 서버 포함 배포
+
+이 프로젝트는 `Node 서버 + 정적 프런트엔드` 방식으로 배포하는 구성이 가장 잘 맞습니다.
+
+### 운영 방식
+
+- 프런트엔드는 `server.js`가 정적 파일로 서빙합니다.
+- 감사결과 데이터는 `/api/audit-results`와 `/api/audits`로 제공합니다.
+- PDF 원문 다운로드는 서버가 지정된 PDF 폴더에서 파일을 찾아 응답합니다.
+- Upstage OCR 또는 Gemini를 쓸 때만 해당 API 키가 필요합니다.
+
+### 준비 파일
+
+- `index.html`, `app.js`, `styles.css`
+- `audit-index.json`
+- `ocr-results.json` 또는 배포에 사용할 감사결과 JSON
+- `audit-pdf-links.json`
+- `assets/kasedu-ci-horizontal.jpg`
+- `.env`
+
+### 환경변수
+
+- `PORT`: 서버 포트, 기본값은 `3000`
+- `HOST`: 바인딩 주소, 기본값은 `0.0.0.0`
+- `UPSTAGE_API_KEY`: Upstage OCR을 사용할 때 필요
+- `GOOGLE_AI_API_KEY`: Gemini OCR을 사용할 때 필요
+- `AUDIT_PDF_DIR`: 감사결과 PDF가 들어 있는 폴더 경로, 여러 개면 `;` 또는 `,`로 구분 가능
+
+### 실행
+
+```powershell
+Copy-Item .env.example .env
+npm install
+npm start
+```
+
+이후 브라우저에서 `http://127.0.0.1:3000/`으로 접속하면 됩니다.
+
+### Docker 배포
+
+```powershell
+docker build -t moe-audit-dashboard .
+docker run --rm -p 3000:3000 --env-file .env moe-audit-dashboard
+```
+
+컨테이너 실행 후 `http://127.0.0.1:3000/`으로 접속하면 됩니다.
+
+### Render 배포
+
+이 저장소에는 [render.yaml](render.yaml)이 들어 있어서 Render에서 Blueprint로 바로 배포할 수 있습니다.
+
+1. Render에서 `New +` 또는 Blueprint 배포를 선택합니다.
+2. 이 Git 저장소를 연결합니다.
+3. 웹 서비스가 생성되면 Render가 자동으로 `https://<서비스명>.onrender.com` 형태 주소를 줍니다.
+4. 배포 후 `https://<서비스명>.onrender.com/healthz`가 200을 반환하는지 확인합니다.
+
+PDF는 Google Drive 링크를 계속 써도 되고, 필요하면 `audit-pdf-links.json`만 갱신하면 됩니다.
+
+### 배포 팁
+
+- 서버에 PDF 원문 폴더를 같이 올려 두는 것이 가장 안정적입니다.
+- `audit-pdf-links.json`으로 외부 링크를 함께 관리하면 원문 다운로드가 더 정확해집니다.
+- 운영 환경에서는 `.env`를 별도로 관리하고 저장소에는 넣지 않는 편이 좋습니다.
+
 ## 기능
 
 - 사립대학과 학교법인 감사결과 목록 보기

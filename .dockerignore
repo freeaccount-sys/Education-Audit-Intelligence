@@ -1,0 +1,25 @@
+.git
+.gitignore
+.npm-cache
+node_modules
+edge-profile
+*.log
+server.out.log
+server.err.log
+.env
+test.pdf
+tmp-*
+scripts
+재무감사_정리표
+재무감사_정리표_정제본
+종합감사_정리표
+종합감사_정리표_정제본
+특정감사_정리표
+특정감사_정리표_정제본
+회계부분감사_정리표
+회계부분감사_정제본
+한국사학진흥재단 CI
+test.js
+test-download.js
+fix-ocr.js
+rename_daegu.js

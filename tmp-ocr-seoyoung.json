@@ -1,0 +1,25 @@
+[
+  {
+    "id": "[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf",
+    "institution": "서영대학교",
+    "institutionKind": "학교법인",
+    "type": "종합감사",
+    "region": "미상",
+    "year": 2026,
+    "auditDate": "미상",
+    "status": "OCR 실패",
+    "severity": "medium",
+    "summary": "OCR 실패: Upstage error(401): {\"error\":{\"message\":\"API key suspended due to insufficient credit. Register your payment method at https://console.upstage.ai/billing to continue.\",\"type\":\"invalid_request_error\",\"param\":\"\",\"code\":\"api_key_is_not_allowed\"}}",
+    "findings": [
+      {
+        "title": "OCR 오류",
+        "detail": "Upstage error(401): {\"error\":{\"message\":\"API key suspended due to insufficient credit. Register your payment method at https://console.upstage.ai/billing to continue.\",\"type\":\"invalid_request_error\",\"param\":\"\",\"code\":\"api_key_is_not_allowed\"}}"
+      }
+    ],
+    "fileName": "[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf",
+    "filePath": "C:\\antigravity\\audit_files\\[공개본]+학교법인+서강학원+및+서영대학교+종합감사+결과+보고서.최종본.pdf",
+    "fileSize": 1861592,
+    "lastWriteTime": "2026-04-10T06:34:12.529Z",
+    "source": "upstage-failed"
+  }
+]

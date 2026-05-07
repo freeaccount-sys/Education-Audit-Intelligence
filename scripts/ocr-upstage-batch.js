@@ -154,6 +154,14 @@ function splitIssuePhrases(text) {
     .slice(0, 5);
 }
 
+function cleanIssueTitle(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .replace(/^[\-•·◦]\s*/, "")
+    .replace(/^\d{1,2}[.)]\s*/, "")
+    .trim();
+}
+
 function extractTableData(payload) {
   if (!payload || !payload.elements || !Array.isArray(payload.elements)) {
     return null;

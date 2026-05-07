@@ -130,8 +130,168 @@ const state = {
   sampleTableCache: {},
 };
 
+const comprehensiveIssueTitleMap = {};
+let comprehensiveIssueTitleMapLoaded = false;
+let comprehensiveIssueTitleMapPromise = null;
+
+function normalizeInstitutionKey(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[^0-9a-z\uac00-\ud7a3]+/gi, "");
+}
+
+function institutionNameVariants(value) {
+  const base = normalizeSingleLineText(value);
+  if (!base) {
+    return [];
+  }
+  const variants = new Set([base]);
+  if (base.endsWith("대학교")) {
+    variants.add(base.replace(/대학교$/, "대"));
+  }
+  if (base.endsWith("대")) {
+    variants.add(base.replace(/대$/, "대학교"));
+  }
+  return [...variants];
+}
+
+function applyComprehensiveIssueMap(rawMap = {}) {
+  Object.keys(comprehensiveIssueTitleMap).forEach((key) => delete comprehensiveIssueTitleMap[key]);
+
+  for (const [institution, titles] of Object.entries(rawMap)) {
+    if (!Array.isArray(titles)) {
+      continue;
+    }
+    for (const variant of institutionNameVariants(institution)) {
+      const key = normalizeInstitutionKey(variant);
+      if (!key) {
+        continue;
+      }
+      comprehensiveIssueTitleMap[key] = titles
+        .map((title) => normalizeSingleLineText(title))
+        .filter((title) => title.length > 0);
+    }
+  }
+}
+
+async function loadComprehensiveIssueTitleMap() {
+  if (comprehensiveIssueTitleMapLoaded) {
+    return comprehensiveIssueTitleMap;
+  }
+  if (comprehensiveIssueTitleMapPromise) {
+    return comprehensiveIssueTitleMapPromise;
+  }
+
+  comprehensiveIssueTitleMapPromise = fetch("/comprehensive-issue-titles.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`종합감사 지적건명 맵 로드 실패: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((payload) => {
+      applyComprehensiveIssueMap(payload?.schools ?? {});
+      comprehensiveIssueTitleMapLoaded = true;
+      return comprehensiveIssueTitleMap;
+    })
+    .catch((error) => {
+      console.warn(error);
+      return comprehensiveIssueTitleMap;
+    });
+
+  return comprehensiveIssueTitleMapPromise;
+}
+
+function getComprehensiveIssueTitlesForAudit(audit) {
+  const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit?.type ?? ""));
+  if (typeLabel !== "종합감사") {
+    return null;
+  }
+
+  const candidates = [
+    normalizeSingleLineText(audit?.institution ?? ""),
+    normalizeAuditInstitutionLabel(normalizeSingleLineText(audit?.institution ?? "")),
+    normalizeAuditInstitutionLabel(formatAuditTarget(audit)),
+  ];
+
+  for (const name of candidates) {
+    for (const variant of institutionNameVariants(name)) {
+      const key = normalizeInstitutionKey(variant);
+      if (key && Object.prototype.hasOwnProperty.call(comprehensiveIssueTitleMap, key)) {
+        return Array.isArray(comprehensiveIssueTitleMap[key]) ? comprehensiveIssueTitleMap[key] : [];
+      }
+    }
+  }
+
+  return null;
+}
+
+function normalizeIssueTitleForDisplay(value) {
+  let title = normalizeSingleLineText(value);
+  if (!title) {
+    return "";
+  }
+
+  title = title.split("ㅇ")[0];
+  title = title.split("◦")[0];
+  title = title.split("【")[0];
+  title = title.split("<")[0];
+  title = title.split(";")[0];
+  title = title.split(":")[0];
+  title = title.replace(/^\d{1,2}\.\s*/, "").trim();
+  title = normalizeSingleLineText(title);
+
+  if (!title || title.length < 4 || title.length > 50) {
+    return "";
+  }
+
+  if (/^제\d{4}\s*-\s*\d+회/.test(title)) {
+    return "";
+  }
+  if (/[0-9]{4}\.\s*[0-9]{1,2}\./.test(title)) {
+    return "";
+  }
+  if (/(그럼에도|따르면|있었|있고|있음|하여|하였|때문|검토결과|의견|사실관계)/.test(title)) {
+    return "";
+  }
+  if (/^(자\s|까지\s|부터\s|에\s|로\s|은\s|는\s)/.test(title)) {
+    return "";
+  }
+  if (/^[\(\[]/.test(title)) {
+    return "";
+  }
+
+  const issueKeywordPattern =
+    /(부적정|부당|미준수|미이행|미제출|미조치|위반|미흡|미비|미편입|미심의|미보관|미징수|미작성|미실시|관리|운영|집행|지출|선정|평가|임용|채용|회계|장학금|성적|학점|계약|처리|누락|은폐|허위|초과|부실)/;
+  if (!issueKeywordPattern.test(title)) {
+    return "";
+  }
+
+  return title;
+}
+
+function filterIssueTitlesForDisplay(titles = []) {
+  const list = Array.isArray(titles) ? titles : [];
+  const seen = new Set();
+  const out = [];
+
+  for (const item of list) {
+    const title = normalizeIssueTitleForDisplay(item);
+    if (!title || seen.has(title)) {
+      continue;
+    }
+    seen.add(title);
+    out.push(title);
+  }
+
+  return out;
+}
+
 async function loadAuditsFromAPI() {
   try {
+    await loadComprehensiveIssueTitleMap();
     const response = await fetch('/api/audit-results');
     if (!response.ok) {
       throw new Error(`API 요청 실패: ${response.status}`);
@@ -178,6 +338,63 @@ const manualAuditOverrides = {
     year: 2018,
   },
 };
+
+const manualIssueTitleOverrides = {
+  "대구가톨릭대학교|종합감사": [
+    "기본재산 관리 부적정",
+    "제3자 소유 토지 교지 사용",
+    "법인 적립금 관리 부적정",
+    "부속병원 기부금 법인 세입",
+    "법인 자금 관리 부적정",
+    "학교법인 직원의 타법인 업무수행",
+    "이사회 심의·의결 사항 미심의·의결",
+    "교원 채용 심사위원 위촉 부적정",
+    "겸직 미승인 및 복무 미처리 외부 출강",
+    "연구년 교원 연구결과물 미제출",
+    "연구년 교원 선정 부당",
+    "부설학교 교원 결격사유 회보 전 신규임용",
+    "연구비 집행 부적정",
+    "가족수당 지급 부적정",
+    "적립금 투자기준 미비",
+    "국유재산 무단 사용 및 변상금 납부",
+    "산학협력단 운영비 교비회계 집행",
+    "포상금 지급 부적정",
+    "정년퇴직 직원 특별휴가 부여 부적정",
+    "교수회의 참석비 지급 부적정",
+    "일반경쟁 대상 용역 등 수의계약 체결 부적정",
+    "교비회계 집행 부적정",
+    "교내연구비 연구결과물 미제출 및 지연제출",
+    "국가연구개발사업 연구책임자 연구노트 등 미제출",
+    "지식재산권 관리 부적정",
+    "공동장비 사용료 미징수",
+    "대학특성화사업 입찰계약 전자조달시스템(G2B) 미이용",
+    "이사회 미의결 교직원 보수 지급",
+    "전임의 근로계약서 미작성",
+    "병원회계 소관 경조사비(외부인) 지출증빙 미첨부",
+    "병원회계 소관 일반경쟁 대상 용역 등 수의계약 부당",
+    "현장실습 수업 학점 부여 부적정",
+    "재직기관 교육봉사활동 실적 학점 부여 부적정",
+    "성적 임의정정 부적정",
+    "미인가 학습장 운영 부적정",
+    "휴·보강 미실시 등 초과강의료 지급 부적정",
+    "교직원 본인 자녀 장학금 부당 지급",
+    "출석기준 미충족자 학점 부여 및 교내 장학금 지급",
+    "기숙복지장학금 대상자 선정 부적정",
+    "성적 증빙자료 미보관",
+    "평생교육원 교육과정 신규개설 미보고",
+    "평생교육원 운영위원회 운영 부적정",
+    "평생교육원 민간자격 표시 의무 미준수",
+    "전기 및 정보통신 공사 미분리 발주",
+  ],
+};
+
+function getManualIssueTitleOverride(audit) {
+  const institution = normalizeAuditInstitutionLabel(
+    normalizeSingleLineText(audit?.institution ?? formatAuditTarget(audit))
+  );
+  const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit?.type ?? ""));
+  return manualIssueTitleOverrides[`${institution}|${typeLabel}`] ?? null;
+}
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -585,12 +802,7 @@ function filteredAudits() {
   const search = state.filters.search.trim().toLowerCase();
 
   return state.audits.filter((audit) => {
-    const matchesSearch =
-      !search ||
-      [audit.institution, audit.type, audit.region, audit.summary, ...audit.findings.map((f) => `${f.title} ${f.detail}`)]
-        .join(" ")
-        .toLowerCase()
-        .includes(search);
+    const matchesSearch = !search || String(audit.institution ?? "").toLowerCase().includes(search);
 
     const matchesType = state.filters.type === "all" || audit.type === state.filters.type;
     const matchesYear = state.filters.year === "all" || String(audit.year) === state.filters.year;
@@ -600,12 +812,18 @@ function filteredAudits() {
   });
 }
 
+function formatTodayLabel() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}.${month}.${day}`;
+}
+
 function aggregateStats(audits) {
-  const totalFindings = audits.reduce((sum, audit) => sum + audit.findings.length, 0);
   return [
     { label: "대상 기관 수", value: audits.length },
-    { label: "지적사항 수", value: totalFindings },
-    { label: "조치 완료", value: audits.filter((audit) => audit.status === "조치 완료").length },
+    { label: "기준 일자", value: formatTodayLabel() },
   ];
 }
 
@@ -988,13 +1206,13 @@ function extractPeriod(text) {
   if (dateMatch) {
     return `${dateMatch[1]} ~ ${dateMatch[2]}`;
   }
-  return "미상";
+  return "";
 }
 
 function extractDate(text) {
   const match = text.match(/(\d{4}[.\-/]\d{1,2}[.\-/]\d{1,2})/);
   if (!match) {
-    return "미상";
+    return "";
   }
 
   return match[1].replace(/\./g, "-").replace(/\//g, "-");
@@ -1143,7 +1361,7 @@ function formatAuditTarget(audit) {
     return parts[0];
   }
 
-  return institution || "미상";
+  return institution || "";
 }
 
 function normalizeAuditInstitutionLabel(label) {
@@ -1182,6 +1400,150 @@ function formatAuditPeriod(audit) {
   }
 
   return "미상";
+}
+
+function extractIssueTitleFromText(detail) {
+  const text = normalizeSingleLineText(detail);
+  if (!text) {
+    return "";
+  }
+  const firstChunk = text.split(/[.:;,\n\r]/)[0]?.trim() ?? "";
+  return firstChunk.length > 40 ? `${firstChunk.slice(0, 40).trim()}...` : firstChunk;
+}
+
+function buildIssueTitleList(findings = [], summaryText = "", contentText = "") {
+  const genericPattern = /^지적사항\s*\d*$/i;
+  const seen = new Set();
+  const titles = [];
+
+  for (const finding of findings) {
+    const rawTitle = normalizeSingleLineText(finding?.title ?? "");
+    const fallback = extractIssueTitleFromText(finding?.detail ?? "");
+    const candidate = !rawTitle || genericPattern.test(rawTitle) ? fallback : rawTitle;
+
+    if (!candidate || seen.has(candidate)) {
+      continue;
+    }
+    seen.add(candidate);
+    titles.push(candidate);
+  }
+
+  return titles;
+}
+
+function buildIssueTitleListSafe(findings = [], summaryText = "", contentText = "") {
+  const genericPattern = /^지적사항(\s*\d+)?$/i;
+  const noisePattern = /(파일명\s*기반\s*인덱스|요약\s*없음|내용\s*없음|미상)/i;
+  const list = Array.isArray(findings) ? findings : findings ? [findings] : [];
+  const seen = new Set();
+  const titles = [];
+
+  for (const finding of list) {
+    const rawTitle = normalizeSingleLineText(finding?.title ?? "");
+    const fallback = extractIssueTitleFromText(finding?.detail ?? "");
+    const candidate = !rawTitle || genericPattern.test(rawTitle) ? fallback : rawTitle;
+    if (!candidate || noisePattern.test(candidate) || seen.has(candidate)) {
+      continue;
+    }
+    seen.add(candidate);
+    titles.push(candidate);
+  }
+
+  if (!titles.length) {
+    const fallbackSources = [summaryText, contentText]
+      .map((text) => normalizeSingleLineText(text))
+      .filter(Boolean);
+    for (const source of fallbackSources) {
+      const chunk = extractIssueTitleFromText(source);
+      if (!chunk || noisePattern.test(chunk) || seen.has(chunk)) {
+        continue;
+      }
+      seen.add(chunk);
+      titles.push(chunk);
+    }
+  }
+
+  return titles;
+}
+
+function extractIssueTitlesFromLongText(text) {
+  const source = normalizeSingleLineText(text);
+  if (!source) {
+    return [];
+  }
+
+  const titles = [];
+  const pushTitle = (value) => {
+    const normalized = normalizeSingleLineText(value)
+      .replace(/^\d{1,2}\.\s*/, "")
+      .replace(/^[\-•·◦]\s*/, "")
+      .trim();
+    if (normalized.length < 4 || normalized.length > 80) {
+      return;
+    }
+    titles.push(normalized);
+  };
+
+  const numberedPattern = /(?:^|[【】\s])\d{1,2}\.\s*([^◦【】]{4,80})/g;
+  for (const match of source.matchAll(numberedPattern)) {
+    pushTitle(match[1]);
+  }
+
+  const leadPattern = /(^|[【】\s])([^◦【】]{4,80}?(?:미준수|부적정|부당|미이행|미제출|소홀|위반))/g;
+  for (const match of source.matchAll(leadPattern)) {
+    pushTitle(match[2]);
+  }
+
+  if (source.includes("◦")) {
+    pushTitle(source.split("◦")[0]);
+  }
+
+  return titles;
+}
+
+function buildIssueTitleListSafe(findings = [], summaryText = "", contentText = "") {
+  const genericPattern = /^지적사항(\s*\d+)?$/i;
+  const noisePattern = /(파일명\s*기반\s*인덱스|요약\s*없음|내용\s*없음|미상|index)/i;
+  const list = Array.isArray(findings) ? findings : findings ? [findings] : [];
+  const seen = new Set();
+  const titles = [];
+
+  const addTitle = (value) => {
+    const normalized = normalizeSingleLineText(value);
+    if (!normalized || noisePattern.test(normalized) || seen.has(normalized)) {
+      return;
+    }
+    seen.add(normalized);
+    titles.push(normalized);
+  };
+
+  for (const finding of list) {
+    const rawTitle = normalizeSingleLineText(finding?.title ?? "");
+    const fallback = extractIssueTitleFromText(finding?.detail ?? "");
+    let candidate = !rawTitle || genericPattern.test(rawTitle) ? fallback : rawTitle;
+    if (candidate.length > 90) {
+      candidate = extractIssueTitleFromText(candidate);
+    }
+    addTitle(candidate);
+  }
+
+  const fallbackSources = [summaryText, contentText]
+    .map((text) => normalizeSingleLineText(text))
+    .filter(Boolean);
+
+  for (const source of fallbackSources) {
+    for (const title of extractIssueTitlesFromLongText(source)) {
+      addTitle(title);
+    }
+  }
+
+  if (!titles.length) {
+    for (const source of fallbackSources) {
+      addTitle(extractIssueTitleFromText(source));
+    }
+  }
+
+  return titles.slice(0, 20);
 }
 
 function parseYearFromText(value) {
@@ -1246,7 +1608,7 @@ function resolveImportedYear(item, fileName, isFailed) {
 
 function formatYearLabel(audit) {
   const year = Number(audit?.year);
-  return Number.isFinite(year) && year > 0 ? String(year) : "미상";
+  return Number.isFinite(year) && year > 0 ? String(year) : "";
 }
 
 function formatAuditContent(audit) {
@@ -1358,7 +1720,7 @@ function formatAuditIsoDate(year, month, day) {
 function extractAuditDateNormalized(text) {
   const normalized = normalizeAuditDateText(text);
   if (!normalized) {
-    return "미상";
+    return "";
   }
 
   const fullDate = normalized.match(/((?:19|20)\d{2})\s*[.\-/]\s*(\d{1,2})\s*[.\-/]\s*(\d{1,2})/);
@@ -1380,13 +1742,13 @@ function extractAuditDateNormalized(text) {
     }
   }
 
-  return "미상";
+  return "";
 }
 
 function extractAuditPeriodNormalized(text) {
   const normalized = normalizeAuditDateText(text);
   if (!normalized) {
-    return "미상";
+    return "";
   }
 
   const windows = [
@@ -1455,7 +1817,7 @@ function extractAuditPeriodNormalized(text) {
     }
   }
 
-  return "미상";
+  return "";
 }
 
 function classifyAuditText(text) {
@@ -1465,7 +1827,7 @@ function classifyAuditText(text) {
   const auditDate = extractAuditDateNormalized(normalized);
   const auditPeriod = extractAuditPeriodNormalized(normalized);
   const statusMatch = normalized.match(/조치결과[:\s]+([^\n\r]+)/);
-  const status = statusMatch?.[1]?.trim() ?? "미상";
+  const status = statusMatch?.[1]?.trim() ?? "";
   const findingsSource =
     normalized.match(/지적사항[:\s]+([^\n\r]+)/)?.[1] ??
     normalized.match(/주요지적[:\s]+([^\n\r]+)/)?.[1] ??
@@ -1482,7 +1844,7 @@ function classifyAuditText(text) {
   return {
     institution,
     type: auditType,
-    region: "미상",
+    region: "",
     year: Number.parseInt(auditDate.slice(0, 4), 10) || new Date().getFullYear(),
     auditDate,
     auditPeriod,
@@ -1522,14 +1884,14 @@ function normalizeImportedAudit(item, index) {
   const institutionKind = item.institutionKind ?? item.schoolType ?? filenameInfo?.institutionKind ?? "";
   const institution = item.institution ?? filenameInfo?.institution ?? `기관 ${index + 1}`;
 
-  const baseStatus = item.status ?? (fileName ? "OCR 대기" : "미상");
+  const baseStatus = item.status ?? (fileName ? "OCR 대기" : "");
   const isFailed =
     String(baseStatus).includes("OCR 실패") ||
     item.source === "upstage-failed" ||
     String(item.summary ?? "").startsWith("OCR 실패");
   const normalizedSummary = isFailed
     ? summarizeFailureReason(item.summary ?? item.title)
-    : truncateText(item.summary ?? item.title ?? (fileName ? "파일명 기반 인덱스" : "요약 없음"), 220);
+    : truncateText(item.summary ?? item.title ?? "", 220);
   const normalizedFindings = isFailed
     ? [{ title: "OCR 실패 사유", detail: summarizeFailureReason(item.summary ?? "") }]
     : Array.isArray(item.findings)
@@ -1546,9 +1908,9 @@ function normalizeImportedAudit(item, index) {
     institution,
     institutionKind,
     type,
-    region: item.region ?? "미상",
+    region: item.region ?? "",
     year: resolvedYear,
-    auditDate: override?.auditDate ?? item.auditDate ?? item.date ?? "미상",
+    auditDate: override?.auditDate ?? item.auditDate ?? item.date ?? "",
     auditPeriod: override?.auditPeriod ?? item.auditPeriod ?? "",
     status: isFailed ? "OCR 실패" : baseStatus,
     summary: normalizedSummary,
@@ -1563,7 +1925,8 @@ function normalizeImportedAudit(item, index) {
 }
 
 async function loadAuditIndexFromJson(url = "audit-index.json") {
-  const response = await fetch(url, { cache: "no-store" });
+  const cacheBustedUrl = `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`;
+  const response = await fetch(cacheBustedUrl, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`인덱스 파일을 불러오지 못했습니다. (${response.status})`);
   }
@@ -1576,6 +1939,10 @@ async function loadAuditIndexFromJson(url = "audit-index.json") {
   }
 
   state.audits = normalized.map((audit, index) => normalizeImportedAudit(audit, index));
+  state.filters.search = "";
+  state.filters.type = "all";
+  state.filters.year = "all";
+  state.filters.includeFailed = false;
   state.selectedId = state.audits[0]?.id ?? null;
   state.dataSource = "index";
   state.dataSourceLabel = url;
@@ -1774,19 +2141,24 @@ function renderList(audits) {
         .map((audit, index) => {
           const active = audit.id === state.selectedId ? "active" : "";
           const targetText = normalizeAuditInstitutionLabel(formatAuditTarget(audit));
-          const summaryText = escapeHtml(audit.summary || formatAuditContent(audit));
+          const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
+          const regionLabel = normalizeSingleLineText(audit.region ?? "");
+          const eyebrowText = [typeLabel, regionLabel].filter(Boolean).join(" · ");
+          const summaryRaw = normalizeSingleLineText(audit.summary || formatAuditContent(audit));
+          const hideSummary = !summaryRaw || /^(미상|파일명 기반 인덱스|요약 없음|내용 없음)$/i.test(summaryRaw);
+          const summaryText = hideSummary ? "" : escapeHtml(summaryRaw);
           return `
             <article class="result-card ${active}" data-id="${escapeHtml(audit.id)}">
               <div class="result-card-head">
                 <div>
-                  <p class="eyebrow">${escapeHtml(formatAuditTypeLabel(audit.type))} · ${escapeHtml(audit.region)}</p>
+                  <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
                   <h4>${escapeHtml(targetText)}</h4>
                 </div>
                 <div class="result-card-tags">
                   ${audit.year ? `<span class="badge subdued">${escapeHtml(String(audit.year))}년</span>` : ""}
                 </div>
               </div>
-              <p class="result-summary">${summaryText}</p>
+              ${summaryText ? `<p class="result-summary">${summaryText}</p>` : ""}
             </article>
           `;
         })
@@ -1818,76 +2190,15 @@ function renderDetail(audits) {
     return;
   }
 
-  const targetText = normalizeAuditInstitutionLabel(formatAuditTarget(selected));
-  const periodText = formatAuditPeriod(selected);
-  const contentText = formatAuditContent(selected);
-  const shouldShowSampleTable = isComprehensiveAudit(selected);
   const pdfDownloadUrl = buildPdfDownloadUrl(selected);
-  const pdfDownloadName = sanitizeDownloadFileName(selected.fileName || `${selected.institution}_감사결과.pdf`);
-
   detail.innerHTML = `
-    <article class="detail-hero">
-      <p class="eyebrow">${escapeHtml(formatAuditTypeLabel(selected.type))} · ${escapeHtml(selected.region)}</p>
-      <h4>${escapeHtml(targetText)}</h4>
-      <p class="detail-copy">${escapeHtml(selected.summary || contentText)}</p>
-      <div class="audit-kv">
-        <div class="audit-kv-row"><span class="audit-kv-label">대상</span><span>${escapeHtml(targetText)}</span></div>
-        <div class="audit-kv-row"><span class="audit-kv-label">감사기간</span><span>${escapeHtml(periodText)}</span></div>
-        <div class="audit-kv-row"><span class="audit-kv-label">감사내용</span><span>${escapeHtml(contentText)}</span></div>
-      </div>
-      ${selected.fileName ? `<span class="file-line">원본 파일: ${escapeHtml(selected.fileName)}</span>` : ""}
-      ${selected.filePath ? `<span class="file-line">경로: ${escapeHtml(selected.filePath)}</span>` : ""}
-      ${selected.fileSize ? `<span class="file-line">크기: ${escapeHtml(formatSize(selected.fileSize))}</span>` : ""}
-      ${selected.lastWriteTime ? `<span class="file-line">수정시각: ${escapeHtml(selected.lastWriteTime)}</span>` : ""}
-      <div class="badge-row">
-        <span class="badge">감사일 ${escapeHtml(selected.auditDate)}</span>
-        ${selected.source ? `<span class="badge">${escapeHtml(selected.source)}</span>` : ""}
-      </div>
       <div class="external-links">
         ${buildExternalSearchLink(selected)}
-        <a class="external-link" href="${pdfDownloadUrl}" target="_blank" rel="noopener noreferrer" style="margin-top: 8px;">
+        <a class="external-link" href="${pdfDownloadUrl}" target="_blank" rel="noopener noreferrer">
           📄 이 기관의 감사결과 PDF 원문 다운로드
         </a>
-        <div class="external-hint">
-          학교명 기준으로 확인하고, 종합감사와 회계부분감사는 대시보드에서 구분해 보세요.
-        </div>
       </div>
-    </article>
-
-    <section>
-      <h4>핵심 지적사항</h4>
-      <div class="detail-list">
-        ${selected.findings
-          .map(
-            (finding) => {
-              const dispositionHtml = finding.disposition
-                ? `<p class="finding-disposition"><strong>처분사항:</strong> ${escapeHtml(finding.disposition)}</p>`
-                : "";
-              return `
-                <article class="issue">
-                  <h5>${escapeHtml(finding.title)}</h5>
-                  <p><strong>지적내용:</strong> ${escapeHtml(finding.detail || '내용 없음')}</p>
-                  ${dispositionHtml}
-                </article>
-              `;
-            }
-          )
-          .join("")}
-      </div>
-    </section>
-
-    <section>
-      <h4>자동 요약 포인트</h4>
-      <div id="dispositionSummary" class="issue">
-        <p>처분요구 요약을 분석 중입니다...</p>
-      </div>
-    </section>
-
   `;
-
-  void renderDispositionSummaryForAudit(selected);
-
-
 }
 
 function renderOcrQueue() {
@@ -1913,7 +2224,7 @@ function renderOcrQueue() {
             <span>${escapeHtml(job.name)}</span>
             <span class="badge ${job.statusClass ?? "medium"}">${escapeHtml(job.status)}</span>
           </div>
-          <small>${escapeHtml(job.sizeLabel)} · ${escapeHtml(job.type)}</small>
+          <small>${escapeHtml(job.sizeLabel ? `${job.sizeLabel} · ` : "")}${escapeHtml(job.type)}</small>
           ${job.engine ? `<small class="muted">엔진: ${escapeHtml(job.engine)}</small>` : ""}
           ${job.relativePath ? `<small class="muted">${escapeHtml(job.relativePath)}</small>` : ""}
           ${job.error ? `<small class="muted">${escapeHtml(job.error)}</small>` : ""}
@@ -1933,7 +2244,7 @@ function renderOcrOutput(content, analysis = null) {
         <div>텍스트 추출: ${escapeHtml(analysis.textPages ?? 0)}</div>
         <div>이미지 OCR: ${escapeHtml(analysis.ocrPages ?? 0)}</div>
         <div>평균 신뢰도: ${escapeHtml(
-          analysis.averageConfidence ? `${analysis.averageConfidence.toFixed(1)}%` : "미상"
+          analysis.averageConfidence ? `${analysis.averageConfidence.toFixed(1)}%` : "-"
         )}</div>
         ${
           analysis.ocrPages > 0 && analysis.averageConfidence > 0 && analysis.averageConfidence < 70
@@ -1963,7 +2274,7 @@ function renderOcrStatus(text) {
 
 function formatSize(bytes) {
   if (!bytes && bytes !== 0) {
-    return "크기 미상";
+    return "";
   }
 
   const units = ["B", "KB", "MB", "GB"];
@@ -2273,9 +2584,13 @@ function bindEvents() {
 
   $("#resetButton").addEventListener("click", () => {
     state.audits = sampleAudits;
-    state.selectedId = sampleAudits[0]?.id ?? null;
     state.dataSource = "sample";
     state.dataSourceLabel = "샘플 데이터";
+    state.filters.search = "";
+    state.filters.type = "all";
+    state.filters.year = "all";
+    state.filters.includeFailed = false;
+    state.selectedId = sampleAudits[0]?.id ?? null;
     state.ocrResult = null;
     state.ocrText = "";
     state.ocrAnalysis = null;
@@ -2353,9 +2668,9 @@ function bindEvents() {
 
 bindEvents();
 render();
-loadAuditsFromAPI()
+loadAuditIndexFromJson("audit-index.json")
   .catch(() => loadAuditIndexFromJson("ocr-results.json"))
-  .catch(() => loadAuditIndexFromJson("audit-index.json"))
+  .catch(() => loadAuditsFromAPI())
   .catch(() => {
     state.dataSource = "sample";
     state.dataSourceLabel = "샘플 데이터";
