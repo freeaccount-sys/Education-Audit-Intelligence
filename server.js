@@ -860,6 +860,21 @@ async function handlePdfDownload(req, res) {
       fileName: requestUrl.searchParams.get("fileName") || "",
       filePath: requestUrl.searchParams.get("filePath") || requestUrl.searchParams.get("path") || "",
     });
+    const redirectUrl = pickAuditPdfLink({
+      id: requestUrl.searchParams.get("id") || "",
+      institution: requestUrl.searchParams.get("institution") || legacyPath,
+      type: requestUrl.searchParams.get("type") || "",
+      fileName: requestUrl.searchParams.get("fileName") || "",
+    });
+
+    if (redirectUrl && /^https?:\/\//i.test(redirectUrl)) {
+      res.writeHead(302, {
+        Location: redirectUrl,
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      });
+      res.end();
+      return;
+    }
 
     if (!targetPath) {
       sendText(res, 404, "PDF not found");
