@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "open": "powershell -NoProfile -Command \"Start-Process 'http://127.0.0.1:3000/'\"",
     "check": "node --check server.js && node --check app.js"
   },
   "dependencies": {

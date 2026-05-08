@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
@@ -22,18 +22,20 @@
         <section class="dashboard-top">
           <div class="brand">
             <div class="brand-mark">감</div>
-            <div>
+            <div class="brand-copy">
               <p class="eyebrow">Education Audit Intelligence</p>
-              <h1>교육부 사립 고등교육기관 감사결과</h1>
-            </div>
-          </div>
-          <div class="top-badges">
-            <div class="top-credit">제작·배포 회계조사부</div>
-            <div class="top-credit top-credit-logo" aria-label="한국사학진흥재단 CI">
-              <img
-                src="assets/kasedu-ci-horizontal.jpg"
-                alt="한국사학진흥재단 CI"
-              />
+              <div class="brand-title-row">
+                <div class="brand-title-group">
+                  <h1>교육부 사립 고등교육기관 감사결과</h1>
+                  <span class="brand-credit">제작·배포 회계조사부</span>
+                </div>
+                <span class="brand-logo" aria-label="한국사학진흥재단 CI">
+                  <img
+                    src="assets/kasedu-ci-horizontal.png"
+                    alt="한국사학진흥재단 CI"
+                  />
+                </span>
+              </div>
             </div>
           </div>
 
@@ -41,8 +43,14 @@
             <section class="panel">
               <h2>필터</h2>
               <label class="field">
-                <span>대학명 검색</span>
-                <input id="searchInput" type="search" placeholder="대학명으로 검색" />
+                <span>학교명 검색</span>
+                <input id="institutionSearchInput" type="search" placeholder="학교명으로 검색" />
+              </label>
+
+              <label class="field">
+                <span>키워드 검색</span>
+                <input id="keywordSearchInput" type="search" placeholder="이사회, 급여, 적립금 등으로 검색" />
+                <small class="muted">공백이나 쉼표로 여러 키워드를 넣으면, 입력한 단어 중 하나라도 포함된 결과를 보여줍니다.</small>
               </label>
 
               <label class="field">
@@ -67,15 +75,29 @@
                 <input id="includeFailedToggle" type="checkbox" />
                 <span>OCR 실패 건 포함</span>
               </label>
+
+              <button id="clearFiltersButton" class="secondary-button" type="button">필터 초기화</button>
+
+              <p id="filterSummary" class="muted filter-summary"></p>
             </section>
 
-            <section class="panel upload-panel">
-              <h2>데이터 불러오기</h2>
-              <p>감사결과 JSON 파일을 업로드하면 대시보드가 즉시 갱신됩니다.</p>
-              <button id="loadIndexButton" class="primary-button" type="button">audit-index.json 불러오기</button>
-              <label class="upload-button" for="fileInput">JSON 업로드</label>
-              <input id="fileInput" type="file" accept="application/json" />
-              <button id="resetButton" class="secondary-button" type="button">샘플 데이터로 복원</button>
+            <section class="panel notice-panel">
+              <div class="notice-head">
+                <div>
+                  <p class="eyebrow">Notice</p>
+                  <h2>안내사항</h2>
+                </div>
+                <span class="notice-badge">배포 안내</span>
+              </div>
+              <p class="notice-lead">
+                대시보드는 감사결과 검색과 세부 확인을 위한 도구입니다. 아래 사항을 참고해 주세요.
+              </p>
+              <ol class="notice-list">
+                <li>키워드 검색은 문서 표현 방식에 따라 결과가 명확하지 않을 수 있습니다.</li>
+                <li>`감사결과 확인하기`를 통해 키워드 검색 결과의 세부 내용을 확인할 수 있습니다.</li>
+                <li>기준일자에 따라 감사 수검 사학기관 수가 적게 표시될 수 있습니다.</li>
+                <li>궁금한 사항은 회계조사부 선임행정관 박현수(053-770-2629)로 연락해 주시기 바랍니다.</li>
+              </ol>
             </section>
           </div>
         </section>
@@ -83,7 +105,7 @@
 
         <section class="stepper">
           <button id="step1Btn" class="step-button active" type="button">1단계 목록 탐색</button>
-          <button id="step2Btn" class="step-button" type="button">2단계 상세 검토·OCR</button>
+          <button id="step2Btn" class="step-button" type="button">2단계 상세 검토</button>
           <div class="step-actions">
             <button id="stepPrevBtn" class="secondary-button step-nav" type="button">이전</button>
             <button id="stepNextBtn" class="primary-button step-nav" type="button">다음</button>
@@ -100,88 +122,8 @@
             </div>
             <div id="auditList" class="audit-list"></div>
           </div>
-
-          <div id="detailPanel" class="panel detail-panel">
-            <div class="panel-head">
-              <h3>바로가기</h3>
-              <span class="muted">학교명 검색 · PDF 원문 다운로드</span>
-            </div>
-            <div id="detailView" class="detail-view"></div>
-          </div>
         </section>
 
-        <section id="ocrSection" class="panel ocr-panel">
-          <div class="panel-head">
-            <div>
-              <h3>OCR 작업공간</h3>
-              <p class="muted">
-                스캔본 PDF를 로컬 OCR 또는 Upstage Document Parse로 처리하고, 감사결과 카드로 자동
-                구조화합니다.
-              </p>
-            </div>
-            <span id="ocrStatus" class="muted">대기 중</span>
-          </div>
-
-          <div class="ocr-grid">
-            <div class="ocr-box">
-              <label class="field">
-                <span>파싱 엔진</span>
-                <select id="ocrEngineSelect">
-                  <option value="local">로컬 OCR</option>
-                  <option value="upstage">Upstage Document Parse</option>
-                  <option value="gemini">Gemini 1.5 Flash (Google AI)</option>
-                </select>
-              </label>
-
-              <label class="field">
-                <span>Upstage 모드</span>
-                <select id="upstageModeSelect">
-                  <option value="enhanced">enhanced</option>
-                  <option value="auto">auto</option>
-                  <option value="standard">standard</option>
-                </select>
-              </label>
-
-              <label class="field">
-                <span>PDF 파일 또는 폴더 업로드</span>
-                <input id="pdfInput" type="file" accept="application/pdf" multiple webkitdirectory />
-              </label>
-              <p class="ocr-help">
-                스캔본 PDF를 선택하면 처리 대기열에 들어갑니다. Chromium 계열 브라우저에서는
-                폴더째로 선택할 수도 있습니다.
-              </p>
-              <p class="ocr-help">
-                Upstage를 쓰려면 로컬 서버에서 `UPSTAGE_API_KEY` 환경변수를 설정한 뒤 실행하세요.
-              </p>
-
-              <label class="field">
-                <span>OCR 텍스트 입력</span>
-                <textarea
-                  id="ocrTextInput"
-                  rows="10"
-                  placeholder="OCR이 추출한 텍스트를 붙여넣거나, 다음 단계에서 자동 OCR이 넣을 결과를 여기로 연결합니다."
-                ></textarea>
-              </label>
-
-              <div class="button-row">
-                <button id="analyzeButton" class="primary-button" type="button">분석 시작</button>
-                <button id="loadSampleTextButton" class="secondary-button" type="button">
-                  샘플 텍스트 불러오기
-                </button>
-              </div>
-            </div>
-
-            <div class="ocr-box">
-              <h4>처리 대기열</h4>
-              <div id="ocrQueue" class="queue-list"></div>
-
-              <h4>구조화 결과</h4>
-              <div id="ocrOutput" class="ocr-output empty-state">
-                아직 분석된 결과가 없습니다.
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   </body>

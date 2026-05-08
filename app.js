@@ -1,4 +1,4 @@
-const sampleAudits = [
+﻿const sampleAudits = [
   {
     id: "audit-001",
     institution: "한빛사립대학교",
@@ -110,7 +110,8 @@ const sampleAudits = [
 const state = {
   audits: sampleAudits,
   filters: {
-    search: "",
+    institutionSearch: "",
+    keywordSearch: "",
     type: "all",
     year: "all",
     includeFailed: false,
@@ -126,9 +127,40 @@ const state = {
   upstageMode: "enhanced",
   dataSource: "api",
   dataSourceLabel: "전체 감사 데이터",
+  dataSourceUrl: "",
   currentStep: 1,
   sampleTableCache: {},
 };
+
+const APP_STATE_STORAGE_KEY = "moe-audit-dashboard-ui-state";
+
+function loadPersistedAppState() {
+  try {
+    const raw = localStorage.getItem(APP_STATE_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch (_error) {
+    return null;
+  }
+}
+
+function persistAppState() {
+  try {
+    const payload = {
+      dataSource: state.dataSource,
+      dataSourceLabel: state.dataSourceLabel,
+      dataSourceUrl: state.dataSourceUrl || "",
+      selectedId: state.selectedId,
+      audits: state.dataSource === "uploaded-json" ? state.audits : undefined,
+    };
+    localStorage.setItem(APP_STATE_STORAGE_KEY, JSON.stringify(payload));
+  } catch (_error) {
+    // localStorage가 막혀 있어도 앱은 계속 동작한다.
+  }
+}
 
 const comprehensiveIssueTitleMap = {};
 let comprehensiveIssueTitleMapLoaded = false;
@@ -234,8 +266,7 @@ function normalizeIssueTitleForDisplay(value) {
     return "";
   }
 
-  title = title.split("ㅇ")[0];
-  title = title.split("◦")[0];
+  title = title.replace(/^[\s•·◦ㅇ]+\s*/, "");
   title = title.split("【")[0];
   title = title.split("<")[0];
   title = title.split(";")[0];
@@ -599,7 +630,19 @@ function buildExternalSearchLink(audit) {
 
   return `
     <a class="external-link" href="${url}" target="_blank" rel="noreferrer">
-      Spotlight Univ에서 학교명으로 검색
+      감사결과 확인하기
+    </a>
+  `;
+}
+
+function buildActionLink(href, label, extraClass = "") {
+  if (!href) {
+    return "";
+  }
+
+  return `
+    <a class="external-link card-action-link ${extraClass}" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">
+      ${escapeHtml(label)}
     </a>
   `;
 }
@@ -798,17 +841,126 @@ function hasOcrRuntime() {
   return Boolean(window.pdfjsLib && window.Tesseract);
 }
 
+function normalizeKeywordSearchText(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+}
+
+function parseKeywordSearchTerms(value) {
+  return String(value ?? "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .split(/[\s,，;/]+/)
+    .map((part) => normalizeKeywordSearchText(part))
+    .filter(Boolean);
+}
+
+function collectSearchableText(value, out = []) {
+  if (value == null) {
+    return out;
+  }
+
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    const text = String(value).trim();
+    if (text) {
+      out.push(text);
+    }
+    return out;
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      collectSearchableText(item, out);
+    }
+    return out;
+  }
+
+  if (typeof value === "object") {
+    for (const item of Object.values(value)) {
+      collectSearchableText(item, out);
+    }
+  }
+
+  return out;
+}
+
+function buildAuditSearchText(audit) {
+  return collectSearchableText([
+    audit?.institution,
+    audit?.institutionKind,
+    audit?.type,
+    audit?.region,
+    audit?.year,
+    audit?.auditDate,
+    audit?.auditPeriod,
+    audit?.status,
+    audit?.summary,
+    audit?.issueTitles,
+    audit?.findings,
+    audit?.originalText,
+    audit?.ocrText,
+    audit?.content,
+    audit?.rawText,
+    audit?.fileName,
+  ])
+    .map((value) => normalizeKeywordSearchText(value))
+    .join(" ");
+}
+
+function buildInstitutionSearchText(audit) {
+  return [
+    audit?.institution,
+    formatAuditTarget(audit),
+    audit?.institutionKind,
+  ]
+    .filter(Boolean)
+    .map((value) => normalizeKeywordSearchText(value))
+    .join(" ");
+}
+
+function buildActiveFilterSummary() {
+  const parts = [];
+
+  if (state.filters.institutionSearch.trim()) {
+    parts.push(`학교명: ${state.filters.institutionSearch.trim()}`);
+  }
+
+  if (state.filters.keywordSearch.trim()) {
+    parts.push(`키워드: ${state.filters.keywordSearch.trim()}`);
+  }
+
+  if (state.filters.type !== "all") {
+    parts.push(`감사구분: ${state.filters.type}`);
+  }
+
+  if (state.filters.year !== "all") {
+    parts.push(`연도: ${state.filters.year}`);
+  }
+
+  if (state.filters.includeFailed) {
+    parts.push("OCR 실패 포함");
+  }
+
+  return parts.length ? `현재 필터: ${parts.join(" · ")}` : "현재 필터: 없음";
+}
+
 function filteredAudits() {
-  const search = state.filters.search.trim().toLowerCase();
+  const institutionSearch = normalizeKeywordSearchText(state.filters.institutionSearch);
+  const keywordTerms = parseKeywordSearchTerms(state.filters.keywordSearch);
 
   return state.audits.filter((audit) => {
-    const matchesSearch = !search || String(audit.institution ?? "").toLowerCase().includes(search);
+    const matchesInstitution = !institutionSearch || buildInstitutionSearchText(audit).includes(institutionSearch);
+    const searchableText = buildAuditSearchText(audit);
+    const matchesKeyword = !keywordTerms.length || keywordTerms.some((term) => searchableText.includes(term));
 
     const matchesType = state.filters.type === "all" || audit.type === state.filters.type;
     const matchesYear = state.filters.year === "all" || String(audit.year) === state.filters.year;
     const matchesFailed = state.filters.includeFailed || !isFailedAudit(audit);
 
-    return matchesSearch && matchesType && matchesYear && matchesFailed;
+    return matchesInstitution && matchesKeyword && matchesType && matchesYear && matchesFailed;
   });
 }
 
@@ -1411,26 +1563,6 @@ function extractIssueTitleFromText(detail) {
   return firstChunk.length > 40 ? `${firstChunk.slice(0, 40).trim()}...` : firstChunk;
 }
 
-function buildIssueTitleList(findings = [], summaryText = "", contentText = "") {
-  const genericPattern = /^지적사항\s*\d*$/i;
-  const seen = new Set();
-  const titles = [];
-
-  for (const finding of findings) {
-    const rawTitle = normalizeSingleLineText(finding?.title ?? "");
-    const fallback = extractIssueTitleFromText(finding?.detail ?? "");
-    const candidate = !rawTitle || genericPattern.test(rawTitle) ? fallback : rawTitle;
-
-    if (!candidate || seen.has(candidate)) {
-      continue;
-    }
-    seen.add(candidate);
-    titles.push(candidate);
-  }
-
-  return titles;
-}
-
 function buildIssueTitleListSafe(findings = [], summaryText = "", contentText = "") {
   const genericPattern = /^지적사항(\s*\d+)?$/i;
   const noisePattern = /(파일명\s*기반\s*인덱스|요약\s*없음|내용\s*없음|미상)/i;
@@ -1532,18 +1664,29 @@ function buildIssueTitleListSafe(findings = [], summaryText = "", contentText = 
     .filter(Boolean);
 
   for (const source of fallbackSources) {
+    const chunk = extractIssueTitleFromText(source);
+    if (chunk && !noisePattern.test(chunk) && !seen.has(chunk)) {
+      seen.add(chunk);
+      titles.push(chunk);
+    }
     for (const title of extractIssueTitlesFromLongText(source)) {
       addTitle(title);
     }
   }
 
-  if (!titles.length) {
-    for (const source of fallbackSources) {
-      addTitle(extractIssueTitleFromText(source));
-    }
-  }
-
   return titles.slice(0, 20);
+}
+
+function collectIssueTitlesFromAudit(audit) {
+  const explicitTitles = Array.isArray(audit?.issueTitles) ? audit.issueTitles : [];
+  const findings = Array.isArray(audit?.findings) ? audit.findings : [];
+  const summaryText = audit?.summary ?? "";
+  const contentText = audit?.originalText ?? audit?.ocrText ?? audit?.content ?? audit?.rawText ?? "";
+
+  return filterIssueTitlesForDisplay([
+    ...explicitTitles,
+    ...buildIssueTitleListSafe(findings, summaryText, contentText),
+  ]);
 }
 
 function parseYearFromText(value) {
@@ -1851,6 +1994,7 @@ function classifyAuditText(text) {
     status,
     summary: summarySource,
     findings: findings.length ? findings : [{ title: "지적사항", detail: findingsSource }],
+    issueTitles: buildIssueTitleListSafe(findings, summarySource, normalized),
     originalText: normalized,
     auditType,
   };
@@ -1902,6 +2046,24 @@ function normalizeImportedAudit(item, index) {
       : [];
 
   const resolvedYear = override?.year ?? resolveImportedYear(item, fileName, isFailed);
+  const manualIssueTitles = getManualIssueTitleOverride({ institution, type });
+  const comprehensiveIssueTitles = getComprehensiveIssueTitlesForAudit({
+    institution,
+    type,
+  }) ?? [];
+  const issueTitles = filterIssueTitlesForDisplay([
+    ...(Array.isArray(manualIssueTitles) ? manualIssueTitles : []),
+    ...comprehensiveIssueTitles,
+    ...collectIssueTitlesFromAudit({
+      findings: normalizedFindings,
+      issueTitles: item.issueTitles ?? [],
+      summary: normalizedSummary,
+      originalText: item.originalText ?? item.ocrText ?? item.content ?? item.rawText ?? "",
+      ocrText: item.ocrText ?? "",
+      content: item.content ?? "",
+      rawText: item.rawText ?? "",
+    }),
+  ]);
 
   return {
     id: item.id ?? item.fileId ?? item.fileName ?? `imported-${index}`,
@@ -1915,6 +2077,7 @@ function normalizeImportedAudit(item, index) {
     status: isFailed ? "OCR 실패" : baseStatus,
     summary: normalizedSummary,
     findings: normalizedFindings,
+    issueTitles,
     fileName: fileName || undefined,
     filePath: item.filePath ?? item.pdfPath ?? "",
     pdfUrl: item.pdfUrl ?? item.pdfDownloadUrl ?? item.downloadUrl ?? item.driveUrl ?? item.fileUrl ?? item.url ?? "",
@@ -1925,6 +2088,8 @@ function normalizeImportedAudit(item, index) {
 }
 
 async function loadAuditIndexFromJson(url = "audit-index.json") {
+  await loadComprehensiveIssueTitleMap();
+
   const cacheBustedUrl = `${url}${url.includes("?") ? "&" : "?"}v=${Date.now()}`;
   const response = await fetch(cacheBustedUrl, { cache: "no-store" });
   if (!response.ok) {
@@ -1939,17 +2104,20 @@ async function loadAuditIndexFromJson(url = "audit-index.json") {
   }
 
   state.audits = normalized.map((audit, index) => normalizeImportedAudit(audit, index));
-  state.filters.search = "";
+  state.filters.institutionSearch = "";
+  state.filters.keywordSearch = "";
   state.filters.type = "all";
   state.filters.year = "all";
   state.filters.includeFailed = false;
   state.selectedId = state.audits[0]?.id ?? null;
   state.dataSource = "index";
   state.dataSourceLabel = url;
+  state.dataSourceUrl = url;
   state.ocrText = "";
   state.ocrResult = null;
   state.ocrAnalysis = null;
   state.ocrStatus = `${state.audits.length}개 인덱스 로드됨`;
+  persistAppState();
   render();
 }
 
@@ -2008,9 +2176,24 @@ function syncOcrControls() {
 }
 
 function syncFilterControls() {
+  const institutionSearchInput = $("#institutionSearchInput");
+  if (institutionSearchInput) {
+    institutionSearchInput.value = state.filters.institutionSearch;
+  }
+
+  const keywordSearchInput = $("#keywordSearchInput");
+  if (keywordSearchInput) {
+    keywordSearchInput.value = state.filters.keywordSearch;
+  }
+
   const includeFailedToggle = $("#includeFailedToggle");
   if (includeFailedToggle) {
     includeFailedToggle.checked = Boolean(state.filters.includeFailed);
+  }
+
+  const filterSummary = $("#filterSummary");
+  if (filterSummary) {
+    filterSummary.textContent = buildActiveFilterSummary();
   }
 }
 
@@ -2096,7 +2279,6 @@ function renderStepLayout() {
   const step2Btn = $("#step2Btn");
   const stepPrevBtn = $("#stepPrevBtn");
   const stepNextBtn = $("#stepNextBtn");
-  const detailPanel = $("#detailPanel");
   const ocrSection = $("#ocrSection");
   const isStep1 = state.currentStep === 1;
 
@@ -2111,9 +2293,6 @@ function renderStepLayout() {
   }
   if (stepNextBtn) {
     stepNextBtn.disabled = !isStep1;
-  }
-  if (detailPanel) {
-    detailPanel.classList.toggle("is-hidden", isStep1);
   }
   if (ocrSection) {
     ocrSection.classList.toggle("is-hidden", isStep1);
@@ -2143,22 +2322,27 @@ function renderList(audits) {
           const targetText = normalizeAuditInstitutionLabel(formatAuditTarget(audit));
           const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
           const regionLabel = normalizeSingleLineText(audit.region ?? "");
-          const eyebrowText = [typeLabel, regionLabel].filter(Boolean).join(" · ");
+          const yearBadge = audit.year ? `<span class="badge subdued year-badge">${escapeHtml(String(audit.year))}년</span>` : "";
+          const eyebrowText = [escapeHtml(typeLabel), yearBadge, regionLabel ? escapeHtml(regionLabel) : ""]
+            .filter(Boolean)
+            .join(" · ");
           const summaryRaw = normalizeSingleLineText(audit.summary || formatAuditContent(audit));
           const hideSummary = !summaryRaw || /^(미상|파일명 기반 인덱스|요약 없음|내용 없음)$/i.test(summaryRaw);
           const summaryText = hideSummary ? "" : escapeHtml(summaryRaw);
+          const pdfDownloadUrl = buildPdfDownloadUrl(audit);
           return `
             <article class="result-card ${active}" data-id="${escapeHtml(audit.id)}">
               <div class="result-card-head">
                 <div>
-                  <p class="eyebrow">${escapeHtml(eyebrowText)}</p>
+                  <p class="eyebrow">${eyebrowText}</p>
                   <h4>${escapeHtml(targetText)}</h4>
-                </div>
-                <div class="result-card-tags">
-                  ${audit.year ? `<span class="badge subdued">${escapeHtml(String(audit.year))}년</span>` : ""}
                 </div>
               </div>
               ${summaryText ? `<p class="result-summary">${summaryText}</p>` : ""}
+              <div class="result-card-actions">
+                ${buildExternalSearchLink(audit)}
+                ${buildActionLink(pdfDownloadUrl, "PDF 원문 열기", "pdf-action")}
+              </div>
             </article>
           `;
         })
@@ -2175,34 +2359,19 @@ function renderList(audits) {
       render();
     });
   });
-}
 
-function renderDetail(audits) {
-  const detail = $("#detailView");
-  const selected = audits.find((audit) => audit.id === state.selectedId) ?? audits[0] ?? null;
-
-  if (!selected) {
-    detail.innerHTML = `
-      <div class="empty-state">
-        선택된 기관이 없습니다.
-      </div>
-    `;
-    return;
-  }
-
-  const pdfDownloadUrl = buildPdfDownloadUrl(selected);
-  detail.innerHTML = `
-      <div class="external-links">
-        ${buildExternalSearchLink(selected)}
-        <a class="external-link" href="${pdfDownloadUrl}" target="_blank" rel="noopener noreferrer">
-          📄 이 기관의 감사결과 PDF 원문 다운로드
-        </a>
-      </div>
-  `;
+  list.querySelectorAll(".card-action-link").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  });
 }
 
 function renderOcrQueue() {
   const queue = $("#ocrQueue");
+  if (!queue) {
+    return;
+  }
 
   if (!state.ocrJobs.length) {
     queue.innerHTML = `
@@ -2236,6 +2405,9 @@ function renderOcrQueue() {
 
 function renderOcrOutput(content, analysis = null) {
   const output = $("#ocrOutput");
+  if (!output) {
+    return;
+  }
 
   const analysisBlock = analysis
     ? `
@@ -2269,6 +2441,9 @@ function renderOcrOutput(content, analysis = null) {
 
 function renderOcrStatus(text) {
   const status = $("#ocrStatus");
+  if (!status) {
+    return;
+  }
   status.textContent = text;
 }
 
@@ -2334,6 +2509,9 @@ function parseAndAddAudit(text, source = "local-ocr") {
 }
 
 function renderOcr() {
+  if (!$("#ocrQueue") && !$("#ocrOutput") && !$("#ocrStatus")) {
+    return;
+  }
   renderOcrQueue();
   renderOcrStatus(state.ocrStatus);
 
@@ -2460,7 +2638,6 @@ function render() {
   renderStats(audits);
   renderDashboardSource();
   renderList(audits);
-  renderDetail(audits);
   renderOcr();
 }
 
@@ -2481,6 +2658,8 @@ function readUploadedFile(file) {
       state.selectedId = state.audits[0]?.id ?? null;
       state.dataSource = "index";
       state.dataSourceLabel = file.name;
+      state.dataSourceUrl = "";
+      persistAppState();
       render();
     } catch (error) {
       window.alert(`파일을 읽지 못했습니다: ${error.message}`);
@@ -2524,36 +2703,18 @@ function bindEvents() {
     render();
   });
 
-  const heroSearchInput = $("#heroSearchInput");
-  const heroSearchButton = $("#heroSearchButton");
-
-  $("#searchInput").addEventListener("input", (event) => {
-    state.filters.search = event.target.value;
-    if (heroSearchInput) {
-      heroSearchInput.value = event.target.value;
-    }
-    render();
-  });
-
-  if (heroSearchInput) {
-    heroSearchInput.addEventListener("input", (event) => {
-      state.filters.search = event.target.value;
-      const sidebarSearch = $("#searchInput");
-      if (sidebarSearch) {
-        sidebarSearch.value = event.target.value;
-      }
+  const institutionSearchInput = $("#institutionSearchInput");
+  if (institutionSearchInput) {
+    institutionSearchInput.addEventListener("input", (event) => {
+      state.filters.institutionSearch = event.target.value;
       render();
     });
   }
 
-  if (heroSearchButton) {
-    heroSearchButton.addEventListener("click", () => {
-      const value = heroSearchInput ? heroSearchInput.value : "";
-      state.filters.search = value;
-      const sidebarSearch = $("#searchInput");
-      if (sidebarSearch) {
-        sidebarSearch.value = value;
-      }
+  const keywordSearchInput = $("#keywordSearchInput");
+  if (keywordSearchInput) {
+    keywordSearchInput.addEventListener("input", (event) => {
+      state.filters.keywordSearch = event.target.value;
       render();
     });
   }
@@ -2575,104 +2736,216 @@ function bindEvents() {
     render();
   });
 
-  $("#fileInput").addEventListener("change", (event) => {
-    const [file] = event.target.files ?? [];
-    if (file) {
-      readUploadedFile(file);
-    }
-  });
+  const clearFiltersButton = $("#clearFiltersButton");
+  if (clearFiltersButton) {
+    clearFiltersButton.addEventListener("click", () => {
+      state.filters.institutionSearch = "";
+      state.filters.keywordSearch = "";
+      state.filters.type = "all";
+      state.filters.year = "all";
+      state.filters.includeFailed = false;
+      render();
+    });
+  }
 
-  $("#resetButton").addEventListener("click", () => {
-    state.audits = sampleAudits;
-    state.dataSource = "sample";
-    state.dataSourceLabel = "샘플 데이터";
-    state.filters.search = "";
-    state.filters.type = "all";
-    state.filters.year = "all";
-    state.filters.includeFailed = false;
-    state.selectedId = sampleAudits[0]?.id ?? null;
-    state.ocrResult = null;
-    state.ocrText = "";
-    state.ocrAnalysis = null;
-    state.ocrJobs = [];
-    state.ocrStatus = "대기 중";
-    render();
-  });
+  const fileInput = $("#fileInput");
+  if (fileInput) {
+    fileInput.addEventListener("change", (event) => {
+      const [file] = event.target.files ?? [];
+      if (file) {
+        readUploadedFile(file);
+      }
+    });
+  }
+
+  const resetButton = $("#resetButton");
+  if (resetButton) {
+    resetButton.addEventListener("click", () => {
+      state.audits = sampleAudits;
+      state.dataSource = "sample";
+      state.dataSourceLabel = "샘플 데이터";
+      state.dataSourceUrl = "";
+      state.filters.institutionSearch = "";
+      state.filters.keywordSearch = "";
+      state.filters.type = "all";
+      state.filters.year = "all";
+      state.filters.includeFailed = false;
+      state.selectedId = sampleAudits[0]?.id ?? null;
+      state.ocrResult = null;
+      state.ocrText = "";
+      state.ocrAnalysis = null;
+      state.ocrJobs = [];
+      state.ocrStatus = "대기 중";
+      persistAppState();
+      render();
+    });
+  }
 
   if ($("#exportButton")) {
     $("#exportButton").addEventListener("click", exportFilteredData);
   }
 
-  $("#loadIndexButton").addEventListener("click", async () => {
-    try {
-      await loadAuditIndexFromJson();
-    } catch (error) {
-      window.alert(error.message);
-    }
-  });
+  const loadIndexButton = $("#loadIndexButton");
+  if (loadIndexButton) {
+    loadIndexButton.addEventListener("click", async () => {
+      try {
+        await loadAuditIndexFromJson();
+      } catch (error) {
+        window.alert(error.message);
+      }
+    });
+  }
 
-  $("#pdfInput").addEventListener("change", (event) => {
-    enqueuePdfFiles(event.target.files);
-    event.target.value = "";
-  });
+  const pdfInput = $("#pdfInput");
+  if (pdfInput) {
+    pdfInput.addEventListener("change", (event) => {
+      enqueuePdfFiles(event.target.files);
+      event.target.value = "";
+    });
+  }
 
-  $("#ocrEngineSelect").addEventListener("change", (event) => {
-    state.ocrEngine = event.target.value;
-    state.ocrStatus = 
+  const ocrEngineSelect = $("#ocrEngineSelect");
+  if (ocrEngineSelect) {
+    ocrEngineSelect.addEventListener("change", (event) => {
+      state.ocrEngine = event.target.value;
+      state.ocrStatus =
         state.ocrEngine === "gemini" ? "Gemini 분석 준비됨" :
         state.ocrEngine === "upstage" ? "Upstage 파싱 준비됨" : "로컬 OCR 준비됨";
-    renderOcr();
-  });
+      renderOcr();
+    });
+  }
 
-  $("#upstageModeSelect").addEventListener("change", (event) => {
-    state.upstageMode = event.target.value;
-    render();
-  });
+  const upstageModeSelect = $("#upstageModeSelect");
+  if (upstageModeSelect) {
+    upstageModeSelect.addEventListener("change", (event) => {
+      state.upstageMode = event.target.value;
+      render();
+    });
+  }
 
-  $("#analyzeButton").addEventListener("click", () => {
-    try {
-      const text = $("#ocrTextInput").value.trim();
-      state.dataSource = "ocr";
+  const analyzeButton = $("#analyzeButton");
+  if (analyzeButton) {
+    analyzeButton.addEventListener("click", () => {
+      try {
+        const text = $("#ocrTextInput").value.trim();
+        state.dataSource = "ocr";
+        state.dataSourceUrl = "";
+        state.ocrAnalysis = {
+          pageCount: 1,
+          textPages: 1,
+          ocrPages: 0,
+          averageConfidence: 100,
+        };
+        const record = parseAndAddAudit(text, "manual-text");
+        persistAppState();
+        renderOcrOutput(JSON.stringify(record, null, 2));
+      } catch (error) {
+        state.ocrStatus = error.message;
+        renderOcr();
+        window.alert(error.message);
+      }
+    });
+  }
+
+  const loadSampleTextButton = $("#loadSampleTextButton");
+  if (loadSampleTextButton) {
+    loadSampleTextButton.addEventListener("click", () => {
+      $("#ocrTextInput").value = sampleOcrText;
+      state.ocrText = sampleOcrText;
+      state.ocrResult = createAuditRecordFromText(sampleOcrText, "sample-text");
       state.ocrAnalysis = {
         pageCount: 1,
         textPages: 1,
         ocrPages: 0,
         averageConfidence: 100,
       };
-      const record = parseAndAddAudit(text, "manual-text");
-      renderOcrOutput(JSON.stringify(record, null, 2));
-    } catch (error) {
-      state.ocrStatus = error.message;
+      state.dataSource = "ocr";
+      state.ocrStatus = "샘플 텍스트 로드됨";
+      state.dataSourceUrl = "";
+      persistAppState();
       renderOcr();
-      window.alert(error.message);
-    }
-  });
+    });
+  }
+}
 
-  $("#loadSampleTextButton").addEventListener("click", () => {
-    $("#ocrTextInput").value = sampleOcrText;
-    state.ocrText = sampleOcrText;
-    state.ocrResult = createAuditRecordFromText(sampleOcrText, "sample-text");
-    state.ocrAnalysis = {
-      pageCount: 1,
-      textPages: 1,
-      ocrPages: 0,
-      averageConfidence: 100,
-    };
-    state.dataSource = "ocr";
-    state.ocrStatus = "샘플 텍스트 로드됨";
-    renderOcr();
-  });
+
+function showFileProtocolNotice() {
+  const shell = document.querySelector(".shell");
+  if (!shell) {
+    return;
+  }
+
+  shell.innerHTML = `
+    <main class="content">
+      <section class="panel">
+        <h1>브라우저로 직접 연 파일입니다</h1>
+        <p class="muted">
+          이 대시보드는 "index.html"을 파일로 여는 방식보다 로컬 서버로 여는 방식이 안정적입니다.
+        </p>
+        <p>
+          먼저 터미널에서 <code>npm start</code>를 실행한 뒤
+          <code>http://127.0.0.1:3000/</code>으로 접속해 주세요.
+        </p>
+        <p class="muted">
+          필요하면 <code>npm run open</code>으로 브라우저를 바로 열 수 있습니다.
+        </p>
+      </section>
+    </main>
+  `;
 }
 
 
 
-bindEvents();
-render();
-loadAuditIndexFromJson("audit-index.json")
-  .catch(() => loadAuditIndexFromJson("ocr-results.json"))
-  .catch(() => loadAuditsFromAPI())
-  .catch(() => {
-    state.dataSource = "sample";
-    state.dataSourceLabel = "샘플 데이터";
+async function initializeApp() {
+  if (window.location.protocol === "file:") {
+    showFileProtocolNotice();
+    return;
+  }
+
+  bindEvents();
+  await loadComprehensiveIssueTitleMap();
+
+  const savedState = loadPersistedAppState();
+
+  if (savedState?.dataSource === "uploaded-json" && Array.isArray(savedState.audits) && savedState.audits.length) {
+    state.audits = savedState.audits.map((audit, index) => normalizeImportedAudit(audit, index));
+    state.dataSource = "uploaded-json";
+    state.dataSourceLabel = savedState.dataSourceLabel || "업로드한 JSON";
+    state.dataSourceUrl = "";
+    state.selectedId = savedState.selectedId && state.audits.some((audit) => audit.id === savedState.selectedId)
+      ? savedState.selectedId
+      : state.audits[0]?.id ?? null;
+    state.filters.institutionSearch = "";
+    state.filters.keywordSearch = "";
+    state.filters.type = "all";
+    state.filters.year = "all";
+    state.filters.includeFailed = false;
     render();
-  });
+    return;
+  }
+
+  const preferredSource = "audit-index.json";
+  try {
+    await loadAuditIndexFromJson(preferredSource);
+    return;
+  } catch (_error) {
+    try {
+      await loadAuditIndexFromJson("ocr-results.json");
+      return;
+    } catch (_error2) {
+      try {
+        await loadAuditsFromAPI();
+        return;
+      } catch (_error3) {
+        state.dataSource = "sample";
+        state.dataSourceLabel = "샘플 데이터";
+        state.dataSourceUrl = "";
+        state.audits = sampleAudits;
+        state.selectedId = sampleAudits[0]?.id ?? null;
+        render();
+      }
+    }
+  }
+}
+
+initializeApp();
