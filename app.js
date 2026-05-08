@@ -947,6 +947,17 @@ function buildActiveFilterSummary() {
   return parts.length ? `현재 필터: ${parts.join(" · ")}` : "현재 필터: 없음";
 }
 
+const DASHBOARD_BASE_DATE = "2026-05-07";
+
+function formatFixedDateLabel(isoDate) {
+  const [year, month, day] = String(isoDate ?? "").split("-");
+  if (!year || !month || !day) {
+    return String(isoDate ?? "");
+  }
+
+  return `${year}.${month}.${day}`;
+}
+
 function filteredAudits() {
   const institutionSearch = normalizeKeywordSearchText(state.filters.institutionSearch);
   const keywordTerms = parseKeywordSearchTerms(state.filters.keywordSearch);
@@ -964,18 +975,10 @@ function filteredAudits() {
   });
 }
 
-function formatTodayLabel() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}.${month}.${day}`;
-}
-
 function aggregateStats(audits) {
   return [
     { label: "대상 기관 수", value: audits.length },
-    { label: "기준 일자", value: formatTodayLabel() },
+    { label: "기준 일자", value: formatFixedDateLabel(DASHBOARD_BASE_DATE) },
   ];
 }
 
