@@ -334,6 +334,7 @@ async function loadAuditsFromAPI() {
     state.selectedId = state.audits[0]?.id ?? null;
     state.dataSource = "api";
     state.dataSourceLabel = "교육부 종합감사 데이터";
+    reconcileKeywordSearchAudits();
     render();
   } catch (error) {
     console.error('종합감사 데이터 로드 실패:', error);
@@ -940,6 +941,75 @@ function formatFixedDateLabel(isoDate) {
   }
 
   return `${year}.${month}.${day}`;
+}
+
+function normalizeAuditMatchKey(value) {
+  return normalizeKeywordSearchText(value);
+}
+
+function preferBestAuditMatch(audits) {
+  if (!Array.isArray(audits) || audits.length === 0) {
+    return null;
+  }
+
+  return audits.find((audit) => audit?.pdfUrl || audit?.filePath) ?? audits[0] ?? null;
+}
+
+function findBestAuditMatchForKeywordRow(keywordAudit) {
+  const audits = Array.isArray(state.audits) ? state.audits : [];
+  if (!audits.length) {
+    return null;
+  }
+
+  const institutionKey = normalizeAuditMatchKey(keywordAudit?.institution);
+  const typeKey = normalizeAuditMatchKey(keywordAudit?.type);
+  const yearKey = String(keywordAudit?.year ?? "").trim();
+
+  if (!institutionKey) {
+    return null;
+  }
+
+  const institutionMatches = audits.filter((audit) => normalizeAuditMatchKey(audit?.institution) === institutionKey);
+  if (!institutionMatches.length) {
+    return null;
+  }
+
+  const typeMatches = institutionMatches.filter((audit) => normalizeAuditMatchKey(audit?.type) === typeKey);
+  const yearMatches = institutionMatches.filter((audit) => String(audit?.year ?? "").trim() === yearKey);
+  const typeYearMatches = typeMatches.filter((audit) => String(audit?.year ?? "").trim() === yearKey);
+
+  return (
+    preferBestAuditMatch(typeYearMatches) ??
+    preferBestAuditMatch(typeMatches) ??
+    preferBestAuditMatch(yearMatches) ??
+    preferBestAuditMatch(institutionMatches)
+  );
+}
+
+function reconcileKeywordSearchAudits() {
+  if (!Array.isArray(state.keywordAudits) || !state.keywordAudits.length) {
+    return;
+  }
+
+  state.keywordAudits = state.keywordAudits.map((audit) => {
+    const matchedAudit = findBestAuditMatchForKeywordRow(audit);
+    if (!matchedAudit) {
+      return audit;
+    }
+
+    const pdfUrl = buildPdfDownloadUrl(matchedAudit);
+    return {
+      ...audit,
+      linkedAuditId: matchedAudit.id,
+      linkedAuditFileName: matchedAudit.fileName ?? "",
+      linkedAuditFilePath: matchedAudit.filePath ?? "",
+      pdfUrl: pdfUrl || audit.pdfUrl || "",
+    };
+  });
+
+  if (state.currentStep === 2 || state.filters.keywordSearch.trim()) {
+    render();
+  }
 }
 
 function getIntegratedSearchAudits() {
@@ -2185,6 +2255,7 @@ async function loadAuditIndexFromJson(url = "audit-index.json") {
   state.ocrAnalysis = null;
   state.ocrStatus = `${state.audits.length}개 인덱스 로드됨`;
   persistAppState();
+  reconcileKeywordSearchAudits();
   render();
 }
 
@@ -2256,6 +2327,7 @@ async function loadKeywordSearchIndex(url = "/api/keyword-audit-source.csv") {
 
   state.keywordDataSourceLabel = "('26. 5. 14.) 2017년 이후 교육부 감사 결과(국공립 포함).csv";
   state.keywordDataSourceUrl = url;
+  reconcileKeywordSearchAudits();
   return state.keywordAudits;
 }
 
@@ -3104,6 +3176,7 @@ async function initializeApp() {
     state.filters.keywordSearch = "";
     state.filters.type = "all";
     state.filters.year = "all";
+    reconcileKeywordSearchAudits();
     render();
     await keywordSearchDataPromise;
     return;
@@ -3130,6 +3203,7 @@ async function initializeApp() {
         state.dataSourceUrl = "";
         state.audits = sampleAudits;
         state.selectedId = sampleAudits[0]?.id ?? null;
+        reconcileKeywordSearchAudits();
         await keywordSearchDataPromise;
         render();
       }
