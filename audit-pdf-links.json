@@ -478,5 +478,17 @@
     "type": "종합감사",
     "fileName": "세명대학교_종합감사_결과.pdf",
     "pdfUrl": "https://drive.google.com/file/d/1cD0Dd99CRZmp_oyNLgfioHzxm6jx_n7Z/view?usp=sharing"
+  },
+  {
+    "institution": "세명대학교",
+    "type": "회계부분감사",
+    "fileName": "세명대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1OpVg7fOSYY9_69dww_XYClbDxrPO6GGW/view?usp=sharing"
+  },
+  {
+    "institution": "백석대학교",
+    "type": "회계부분감사",
+    "fileName": "백석대학교_회계부분감사_결과.pdf",
+    "pdfUrl": "https://drive.google.com/file/d/1FYQAMY3FSRXI8Yu9zvd7q911BsYQv3cg/view?usp=sharing"
   }
 ]

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>교육부 사립 고등교육기관 감사결과 대시보드</title>
+    <title>교육부 고등교육기관 감사결과 대시보드</title>
     <meta
       name="description"
-      content="교육부 사립 고등교육기관 감사결과를 기관별로 요약하고 검색할 수 있는 대시보드"
+      content="교육부 고등교육기관 감사결과를 기관별로 요약하고 검색할 수 있는 대시보드"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +26,7 @@
               <p class="eyebrow">Education Audit Intelligence</p>
               <div class="brand-title-row">
                 <div class="brand-title-group">
-                  <h1>교육부 사립 고등교육기관 감사결과</h1>
+                  <h1>교육부 고등교육기관 감사결과</h1>
                   <span class="brand-credit">제작·배포 회계조사부</span>
                 </div>
                 <span class="brand-logo" aria-label="한국사학진흥재단 CI">
@@ -39,18 +39,27 @@
             </div>
           </div>
 
+          <section class="panel notice-panel">
+            <div class="notice-head">
+              <div>
+                <p class="eyebrow">Notice</p>
+                <h2>안내사항</h2>
+              </div>
+              <span class="notice-badge">배포 안내</span>
+            </div>
+            <ol class="notice-list">
+              <li>키워드 검색은 문서 표현 방식에 따라 결과가 명확하지 않을 수 있습니다. 세부 정확한 내용은 ‘감사결과 확인하기’ 또는 ‘pdf 원문 열기’를 통해 확인해 주세요.</li>
+              <li>2017년 이후 감사 결과를 보여주며, 기준일자에 따라 감사 수검 기관이 변경될 수 있습니다.</li>
+              <li>궁금한 사항은 회계조사부 선임행정관 박현수(053-770-2629)로 연락해 주시기 바랍니다.</li>
+            </ol>
+          </section>
+
           <div class="dashboard-controls">
             <section class="panel">
-              <h2>필터</h2>
+              <h2>통합검색</h2>
               <label class="field">
                 <span>학교명 검색</span>
                 <input id="institutionSearchInput" type="search" placeholder="학교명으로 검색" />
-              </label>
-
-              <label class="field">
-                <span>키워드 검색</span>
-                <input id="keywordSearchInput" type="search" placeholder="이사회, 급여, 적립금 등으로 검색" />
-                <small class="muted">공백이나 쉼표로 여러 키워드를 넣으면, 입력한 단어 중 하나라도 포함된 결과를 보여줍니다.</small>
               </label>
 
               <label class="field">
@@ -71,41 +80,39 @@
                 </select>
               </label>
 
-              <label class="check-field">
-                <input id="includeFailedToggle" type="checkbox" />
-                <span>OCR 실패 건 포함</span>
-              </label>
-
               <button id="clearFiltersButton" class="secondary-button" type="button">필터 초기화</button>
 
               <p id="filterSummary" class="muted filter-summary"></p>
             </section>
 
-            <section class="panel notice-panel">
-              <div class="notice-head">
+            <section class="panel keyword-panel">
+              <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Notice</p>
-                  <h2>안내사항</h2>
+                  <p class="eyebrow">Keyword Search</p>
+                  <h2>키워드 검색</h2>
                 </div>
-                <span class="notice-badge">배포 안내</span>
+                <span class="badge medium">독립 검색</span>
               </div>
-              <p class="notice-lead">
-                대시보드는 감사결과 검색과 세부 확인을 위한 도구입니다. 아래 사항을 참고해 주세요.
-              </p>
-              <ol class="notice-list">
-                <li>키워드 검색은 문서 표현 방식에 따라 결과가 명확하지 않을 수 있습니다.</li>
-                <li>`감사결과 확인하기`를 통해 키워드 검색 결과의 세부 내용을 확인할 수 있습니다.</li>
-                <li>기준일자에 따라 감사 수검 사학기관 수가 적게 표시될 수 있습니다.</li>
-                <li>궁금한 사항은 회계조사부 선임행정관 박현수(053-770-2629)로 연락해 주시기 바랍니다.</li>
-              </ol>
+              <label class="field keyword-field">
+                <span>검색어</span>
+                <input id="keywordSearchInput" type="search" placeholder="지적건명으로 검색" />
+                <small class="muted">공백이나 쉼표로 여러 키워드를 넣으면, 지적건명에 포함된 결과를 보여줍니다. 입력하면 2단계 결과가 바로 갱신됩니다.</small>
+              </label>
+              <div class="keyword-examples">
+                <span class="keyword-chip">이사회</span>
+                <span class="keyword-chip">급여</span>
+                <span class="keyword-chip">적립금</span>
+                <span class="keyword-chip">계약</span>
+                <span class="keyword-chip">장학금</span>
+              </div>
             </section>
           </div>
         </section>
 
 
         <section class="stepper">
-          <button id="step1Btn" class="step-button active" type="button">1단계 목록 탐색</button>
-          <button id="step2Btn" class="step-button" type="button">2단계 상세 검토</button>
+          <button id="step1Btn" class="step-button active" type="button">1단계 통합검색 결과</button>
+          <button id="step2Btn" class="step-button" type="button">2단계 키워드 검색 결과</button>
           <div class="step-actions">
             <button id="stepPrevBtn" class="secondary-button step-nav" type="button">이전</button>
             <button id="stepNextBtn" class="primary-button step-nav" type="button">다음</button>

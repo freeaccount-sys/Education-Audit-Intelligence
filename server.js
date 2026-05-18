@@ -37,6 +37,9 @@ const UPSTAGE_API_KEY = process.env.UPSTAGE_API_KEY;
 const GOOGLE_AI_API_KEY = process.env.GOOGLE_AI_API_KEY;
 const UPSTAGE_API_URL = "https://api.upstage.ai/v1/document-digitization";
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const KEYWORD_CSV_FILE_ID = String(process.env.KEYWORD_CSV_FILE_ID || "").trim();
+const KEYWORD_CSV_URL = String(process.env.KEYWORD_CSV_URL || "").trim();
+const KEYWORD_CSV_LOCAL_PATH = path.resolve(ROOT, String(process.env.KEYWORD_CSV_LOCAL_PATH || "keyword-audit-source.csv"));
 const AUDIT_PDF_ROOTS = String(process.env.AUDIT_PDF_DIR || "")
   .split(/[;,]/)
   .map((value) => value.trim())
@@ -96,6 +99,67 @@ function sendJson(res, statusCode, payload) {
 function sendText(res, statusCode, text, contentType = "text/plain; charset=utf-8") {
   res.writeHead(statusCode, {
     "Content-Type": contentType,
+  });
+  res.end(text);
+}
+
+function getKeywordCsvSource() {
+  if (KEYWORD_CSV_URL) {
+    return {
+      kind: "remote",
+      url: KEYWORD_CSV_URL,
+      label: KEYWORD_CSV_URL,
+    };
+  }
+
+  if (KEYWORD_CSV_FILE_ID) {
+    return {
+      kind: "remote",
+      url: `https://drive.google.com/uc?export=download&id=${encodeURIComponent(KEYWORD_CSV_FILE_ID)}`,
+      label: `Drive file ${KEYWORD_CSV_FILE_ID}`,
+    };
+  }
+
+  return {
+    kind: "local",
+    path: KEYWORD_CSV_LOCAL_PATH,
+    label: KEYWORD_CSV_LOCAL_PATH,
+  };
+}
+
+async function handleKeywordCsv(req, res) {
+  const source = getKeywordCsvSource();
+
+  if (source.kind === "local") {
+    if (!fs.existsSync(source.path)) {
+      sendJson(res, 404, {
+        error: `키워드 CSV를 찾지 못했습니다: ${source.path}`,
+      });
+      return;
+    }
+
+    const text = fs.readFileSync(source.path, "utf8");
+    res.writeHead(200, {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Cache-Control": "no-store",
+    });
+    res.end(text);
+    return;
+  }
+
+  const upstream = await fetch(source.url, { redirect: "follow" });
+  if (!upstream.ok) {
+    sendJson(res, 502, {
+      error: `키워드 CSV를 불러오지 못했습니다: ${upstream.status}`,
+      source: source.label,
+    });
+    return;
+  }
+
+  const text = await upstream.text();
+  res.writeHead(200, {
+    "Content-Type": "text/csv; charset=utf-8",
+    "Cache-Control": "no-store",
   });
   res.end(text);
 }
@@ -167,16 +231,18 @@ function pickAuditPdfLink(audit) {
   const auditId = String(audit?.id ?? "").trim();
   const auditInstitution = normalizeInstitutionName(audit?.institution);
   const auditType = String(audit?.type ?? "").trim();
+  const auditTypeKey = normalizeSearchText(auditType);
   const auditFileName = String(audit?.fileName ?? "").trim();
 
   const exactMatch = links.find((entry) => {
     if (!entry.pdfUrl) {
       return false;
     }
+    const entryTypeKey = normalizeSearchText(entry.type);
     return (
       (auditId && entry.id === auditId) ||
       (auditFileName && entry.fileName === auditFileName) ||
-      (auditInstitution && entry.institution === auditInstitution && (!entry.type || !auditType || entry.type === auditType))
+      (auditInstitution && entry.institution === auditInstitution && (!entryTypeKey || !auditTypeKey || entryTypeKey === auditTypeKey))
     );
   });
 
@@ -184,7 +250,7 @@ function pickAuditPdfLink(audit) {
     return exactMatch.pdfUrl;
   }
 
-  const searchTerms = [auditId, auditInstitution, auditFileName].map(normalizeSearchText).filter(Boolean);
+  const searchTerms = [auditId, auditInstitution, auditType, auditFileName].map(normalizeSearchText).filter(Boolean);
   let bestUrl = "";
   let bestScore = 0;
 
@@ -860,23 +926,23 @@ async function handlePdfDownload(req, res) {
       fileName: requestUrl.searchParams.get("fileName") || "",
       filePath: requestUrl.searchParams.get("filePath") || requestUrl.searchParams.get("path") || "",
     });
-    const redirectUrl = pickAuditPdfLink({
-      id: requestUrl.searchParams.get("id") || "",
-      institution: requestUrl.searchParams.get("institution") || legacyPath,
-      type: requestUrl.searchParams.get("type") || "",
-      fileName: requestUrl.searchParams.get("fileName") || "",
-    });
-
-    if (redirectUrl && /^https?:\/\//i.test(redirectUrl)) {
-      res.writeHead(302, {
-        Location: redirectUrl,
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      });
-      res.end();
-      return;
-    }
-
     if (!targetPath) {
+      const redirectUrl = pickAuditPdfLink({
+        id: requestUrl.searchParams.get("id") || "",
+        institution: requestUrl.searchParams.get("institution") || legacyPath,
+        type: requestUrl.searchParams.get("type") || "",
+        fileName: requestUrl.searchParams.get("fileName") || "",
+      });
+
+      if (redirectUrl && /^https?:\/\//i.test(redirectUrl)) {
+        res.writeHead(302, {
+          Location: redirectUrl,
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        });
+        res.end();
+        return;
+      }
+
       sendText(res, 404, "PDF not found");
       return;
     }
@@ -899,23 +965,31 @@ async function handlePdfDownload(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.method === "GET" && req.url === "/healthz") {
+    const requestUrl = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+    const pathname = requestUrl.pathname;
+
+    if (req.method === "GET" && pathname === "/healthz") {
       sendHealth(res);
       return;
     }
 
-    if (req.method === "GET" && req.url === "/api/audit-results") {
+    if (req.method === "GET" && pathname === "/api/audit-results") {
       await handleAuditResults(req, res);
       return;
     }
 
-    if (req.method === "GET" && req.url === "/api/audits") {
+    if (req.method === "GET" && pathname === "/api/keyword-audit-source.csv") {
+      await handleKeywordCsv(req, res);
+      return;
+    }
+
+    if (req.method === "GET" && pathname === "/api/audits") {
       sendJson(res, 200, { audits: auditDataCache || [] });
       return;
     }
 
-    if (req.method === "GET" && req.url.startsWith("/api/audits/")) {
-      const institution = decodeURIComponent(req.url.replace("/api/audits/", ""));
+    if (req.method === "GET" && pathname.startsWith("/api/audits/")) {
+      const institution = decodeURIComponent(pathname.replace("/api/audits/", ""));
       const audit = (auditDataCache || []).find(a => 
         a.institution === institution || a.id === `audit-${institution}`
       );
@@ -927,17 +1001,22 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    if (req.method === "GET" && (req.url.startsWith("/api/pdf/") || req.url.startsWith("/api/pdf?") || req.url === "/api/pdf")) {
+    if (req.method === "GET" && pathname.startsWith("/api/pdf/")) {
       await handlePdfDownload(req, res);
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/upstage/parse") {
+    if (req.method === "GET" && pathname === "/api/pdf") {
+      await handlePdfDownload(req, res);
+      return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/upstage/parse") {
       await handleUpstageParse(req, res);
       return;
     }
 
-    if (req.method === "POST" && req.url === "/api/gemini/parse") {
+    if (req.method === "POST" && pathname === "/api/gemini/parse") {
       await handleGeminiParse(req, res);
       return;
     }
