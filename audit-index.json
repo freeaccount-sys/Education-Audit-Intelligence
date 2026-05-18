@@ -1615,24 +1615,6 @@
     "year": 2017
   },
   {
-    "id": "학교법인+백석대학교,+백석대학교+및+백석문화대학교+종합감사+결과+처분서",
-    "fileName": "학교법인+백석대학교,+백석대학교+및+백석문화대학교+종합감사+결과+처분서.pdf",
-    "filePath": "C:\\antigravity\\audit_files\\학교법인+백석대학교,+백석대학교+및+백석문화대학교+종합감사+결과+처분서.pdf",
-    "pdfUrl": "https://drive.google.com/file/d/1xV8jaQJbTGDe3FBIeAO58mRG3ZIYzC_u/view?usp=sharing",
-    "institutionKind": "학교법인",
-    "institution": "백석문화대학교",
-    "type": "종합감사",
-    "status": "OCR 대기",
-    "severity": "low",
-    "summary": "파일명 기반 인덱스",
-    "findings": [],
-    "fileSize": 1571142,
-    "lastWriteTime": "2026-04-10T15:40:13",
-    "auditPeriod": "2019",
-    "auditDate": "2019",
-    "year": 2019
-  },
-  {
     "id": "학교법인+백암학원+및+백제예술대학교+종합감사+결과",
     "fileName": "학교법인+백암학원+및+백제예술대학교+종합감사+결과.pdf",
     "filePath": "C:\\antigravity\\audit_files\\학교법인+백암학원+및+백제예술대학교+종합감사+결과.pdf",
@@ -2923,5 +2905,21 @@
     "auditPeriod": "",
     "source": "csv-import-34",
     "pdfUrl": "https://drive.google.com/file/d/1hLX4f1F3PQL67-MExdH3mqyK7nURV56_/view?usp=sharing"
+  },
+  {
+    "id": "audit-백석대학교-2019-종합감사",
+    "institution": "백석대학교",
+    "institutionKind": "사립대학",
+    "type": "종합감사",
+    "region": "미분류",
+    "year": 2019,
+    "auditDate": "2019-01-01",
+    "auditPeriod": "",
+    "status": "원문 링크",
+    "severity": "low",
+    "summary": "백석대학교 2019년 종합감사 결과",
+    "findings": [],
+    "source": "manual",
+    "pdfUrl": "https://drive.google.com/file/d/1xV8jaQJbTGDe3FBIeAO58mRG3ZIYzC_u/view?usp=sharing"
   }
 ]

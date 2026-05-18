@@ -4001,5 +4001,21 @@
       }
     ],
     "totalFindings": 41
+  },
+  {
+    "id": "audit-백석대학교-2019-종합감사",
+    "institution": "백석대학교",
+    "institutionKind": "사립대학",
+    "type": "종합감사",
+    "region": "미분류",
+    "year": 2019,
+    "auditDate": "2019-01-01",
+    "auditPeriod": "",
+    "status": "원문 링크",
+    "severity": "low",
+    "summary": "백석대학교 2019년 종합감사 결과",
+    "findings": [],
+    "source": "manual",
+    "pdfUrl": "https://drive.google.com/file/d/1xV8jaQJbTGDe3FBIeAO58mRG3ZIYzC_u/view?usp=sharing"
   }
 ]
