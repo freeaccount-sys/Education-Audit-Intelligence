@@ -1949,6 +1949,7 @@ function buildPdfDownloadUrl(audit) {
   if (audit?.id) params.set("id", audit.id);
   if (audit?.institution) params.set("institution", audit.institution);
   if (audit?.type) params.set("type", audit.type);
+  if (audit?.year) params.set("year", String(audit.year));
 
   const query = params.toString();
   return query ? `/api/pdf?${query}` : "";

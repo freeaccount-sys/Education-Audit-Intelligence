@@ -238,11 +238,12 @@ function pickAuditPdfLink(audit) {
     if (!entry.pdfUrl) {
       return false;
     }
+
     const entryTypeKey = normalizeSearchText(entry.type);
     return (
       (auditId && entry.id === auditId) ||
       (auditFileName && entry.fileName === auditFileName) ||
-      (auditInstitution && entry.institution === auditInstitution && (!entryTypeKey || !auditTypeKey || entryTypeKey === auditTypeKey))
+      (auditInstitution && entry.institution === auditInstitution && entryTypeKey && auditTypeKey && entryTypeKey === auditTypeKey)
     );
   });
 
@@ -250,36 +251,7 @@ function pickAuditPdfLink(audit) {
     return exactMatch.pdfUrl;
   }
 
-  const searchTerms = [auditId, auditInstitution, auditType, auditFileName].map(normalizeSearchText).filter(Boolean);
-  let bestUrl = "";
-  let bestScore = 0;
-
-  for (const entry of links) {
-    if (!entry.pdfUrl) {
-      continue;
-    }
-
-    const haystack = normalizeSearchText([entry.id, entry.institution, entry.type, entry.fileName].filter(Boolean).join(" "));
-    let score = 0;
-
-    for (const term of searchTerms) {
-      if (!term) {
-        continue;
-      }
-      if (haystack === term) {
-        score = Math.max(score, 100);
-      } else if (haystack.includes(term)) {
-        score = Math.max(score, 80 + Math.min(term.length, 15));
-      }
-    }
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestUrl = entry.pdfUrl;
-    }
-  }
-
-  return bestUrl;
+  return "";
 }
 
 function isPathInside(parent, target) {
@@ -313,10 +285,23 @@ function findAuditPdfTarget(search = {}) {
   const filePath = String(search.filePath ?? "").trim();
   const fileName = String(search.fileName ?? search.pdfName ?? search.name ?? "").trim();
   const institution = String(search.institution ?? "").trim();
+  const type = String(search.type ?? "").trim();
+  const year = String(search.year ?? "").trim();
   const id = String(search.id ?? "").trim();
 
   const auditRecord =
-    (auditDataCache || []).find((item) => item && (item.id === id || item.fileName === fileName || item.institution === institution)) || null;
+    (auditDataCache || []).find((item) => {
+      if (!item) {
+        return false;
+      }
+
+      const itemYear = String(item.year ?? "").trim();
+      return (
+        (id && item.id === id) ||
+        (fileName && item.fileName === fileName) ||
+        (institution && item.institution === institution && (!type || item.type === type) && (!year || itemYear === year))
+      );
+    }) || null;
 
   if (auditRecord?.filePath) {
     candidates.add(String(auditRecord.filePath).trim());
