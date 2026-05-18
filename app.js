@@ -1929,6 +1929,21 @@ function normalizePdfDownloadUrl(url) {
 }
 
 function buildPdfDownloadUrl(audit) {
+  if (audit?.filePath) {
+    const params = new URLSearchParams();
+    params.set("filePath", audit.filePath);
+    if (audit?.fileName) params.set("fileName", audit.fileName);
+    if (audit?.id) params.set("id", audit.id);
+    if (audit?.institution) params.set("institution", audit.institution);
+    if (audit?.type) params.set("type", audit.type);
+    if (audit?.year) params.set("year", String(audit.year));
+
+    const query = params.toString();
+    if (query) {
+      return `/api/pdf?${query}`;
+    }
+  }
+
   const directUrl = normalizePdfDownloadUrl(
     audit?.pdfUrl ||
       audit?.pdfDownloadUrl ||
@@ -1944,7 +1959,6 @@ function buildPdfDownloadUrl(audit) {
 
   const params = new URLSearchParams();
 
-  if (audit?.filePath) params.set("filePath", audit.filePath);
   if (audit?.fileName) params.set("fileName", audit.fileName);
   if (audit?.id) params.set("id", audit.id);
   if (audit?.institution) params.set("institution", audit.institution);
