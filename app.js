@@ -2597,12 +2597,6 @@ function renderList(audits) {
           const eyebrowText = [escapeHtml(typeLabel), yearBadge]
             .filter(Boolean)
             .join(" · ");
-          const summaryRaw = normalizeSingleLineText(audit.summary || formatAuditContent(audit));
-          const hideSummary =
-            !summaryRaw ||
-            /^(미상|파일명 기반 인덱스|요약 없음|내용 없음)$/i.test(summaryRaw) ||
-            isRedundantAuditSummary(summaryRaw, audit);
-          const summaryText = hideSummary ? "" : escapeHtml(summaryRaw);
           const pdfDownloadUrl = buildPdfDownloadUrl(audit);
           const resultActions = `
             <div class="result-card-actions">
@@ -2618,7 +2612,6 @@ function renderList(audits) {
                   <h4>${escapeHtml(targetText)}</h4>
                 </div>
               </div>
-              ${summaryText ? `<p class="result-summary">${summaryText}</p>` : ""}
               ${resultActions}
             </article>
           `;
