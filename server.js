@@ -46,6 +46,7 @@ const AUDIT_PDF_ROOTS = String(process.env.AUDIT_PDF_DIR || "")
   .filter(Boolean);
 
 if (!AUDIT_PDF_ROOTS.length) {
+  AUDIT_PDF_ROOTS.push(path.resolve(ROOT, "audit_files"));
   AUDIT_PDF_ROOTS.push(path.resolve(ROOT, "..", "audit_files"));
 }
 
