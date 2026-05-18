@@ -910,6 +910,32 @@ function buildInstitutionSearchText(audit) {
     .join(" ");
 }
 
+function isRedundantAuditSummary(summaryText, audit) {
+  const summary = normalizeSingleLineText(summaryText);
+  if (!summary) {
+    return true;
+  }
+
+  const institution = normalizeSingleLineText(audit?.institution ?? "");
+  const type = normalizeSingleLineText(formatAuditTypeLabel(audit?.type ?? ""));
+  const year = audit?.year ? `${String(audit.year)}년` : "";
+  const compactSummary = normalizeKeywordSearchText(summary);
+  const candidates = [
+    `${institution}${year}${type}결과`,
+    `${institution}${type}결과`,
+    `${institution}${year}${type}`,
+    `${institution}${type}`,
+  ]
+    .map((value) => normalizeKeywordSearchText(value))
+    .filter(Boolean);
+
+  if (candidates.some((candidate) => compactSummary === candidate || compactSummary.startsWith(candidate) && compactSummary.length <= candidate.length + 6)) {
+    return true;
+  }
+
+  return false;
+}
+
 function buildActiveFilterSummary() {
   const parts = [];
 
@@ -2567,13 +2593,15 @@ function renderList(audits) {
           const active = audit.id === state.selectedId ? "active" : "";
           const targetText = normalizeAuditInstitutionLabel(formatAuditTarget(audit));
           const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
-          const regionLabel = normalizeSingleLineText(audit.region ?? "");
           const yearBadge = audit.year ? `<span class="badge subdued year-badge">${escapeHtml(String(audit.year))}년</span>` : "";
-          const eyebrowText = [escapeHtml(typeLabel), yearBadge, regionLabel ? escapeHtml(regionLabel) : ""]
+          const eyebrowText = [escapeHtml(typeLabel), yearBadge]
             .filter(Boolean)
             .join(" · ");
           const summaryRaw = normalizeSingleLineText(audit.summary || formatAuditContent(audit));
-          const hideSummary = !summaryRaw || /^(미상|파일명 기반 인덱스|요약 없음|내용 없음)$/i.test(summaryRaw);
+          const hideSummary =
+            !summaryRaw ||
+            /^(미상|파일명 기반 인덱스|요약 없음|내용 없음)$/i.test(summaryRaw) ||
+            isRedundantAuditSummary(summaryRaw, audit);
           const summaryText = hideSummary ? "" : escapeHtml(summaryRaw);
           const pdfDownloadUrl = buildPdfDownloadUrl(audit);
           const resultActions = `
