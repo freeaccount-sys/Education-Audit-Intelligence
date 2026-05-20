@@ -1,4 +1,4 @@
-const sampleAudits = [
+﻿const sampleAudits = [
   {
     id: "audit-001",
     institution: "한빛사립대학교",
@@ -2393,89 +2393,76 @@ function updateOcrJobStatus(jobId, status, statusClass = "medium", error = "") {
 function renderStats(audits) {
   const statsGrid = $("#statsSection");
   if (!statsGrid) return;
-  
-  // 1. 기본 정보 계산
+
   const totalCount = audits.length;
   const baseDateLabel = formatFixedDateLabel(DASHBOARD_BASE_DATE);
 
-  // 2. 감사 구분별 비율 계산 (TOP 3)
   const typeCounts = {};
-  audits.forEach(audit => {
-    const t = audit.type || "기타";
-    typeCounts[t] = (typeCounts[t] || 0) + 1;
+  audits.forEach((audit) => {
+    const type = audit.type || "기타";
+    typeCounts[type] = (typeCounts[type] || 0) + 1;
   });
-  
-  const sortedTypes = Object.entries(typeCounts)
+
+  const topTypes = Object.entries(typeCounts)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3);
-    
-  let typesHtml = `<div class="infographic-list">`;
-  sortedTypes.forEach(([type, count]) => {
-    const pct = totalCount ? Math.round((count / totalCount) * 100) : 0;
-    let barColor = "var(--accent)";
-    if (type.includes("종합")) barColor = "var(--accent-2)";
-    else if (type.includes("특정")) barColor = "var(--warn)";
-    else if (type.includes("회계")) barColor = "var(--accent-3)";
-    else if (type.includes("재무")) barColor = "var(--good)";
 
-    typesHtml += `
-      <div class="infographic-item">
-        <div class="info-meta">
-          <span class="info-name">${escapeHtml(type)}</span>
-          <span class="info-val">${count}건 (${pct}%)</span>
-        </div>
-        <div class="info-bar-bg">
-          <div class="info-bar-fill" style="width: ${pct}%; background: ${barColor};"></div>
-        </div>
-      </div>
-    `;
-  });
-  if (sortedTypes.length === 0) {
-    typesHtml += `<div class="info-empty">데이터 없음</div>`;
-  }
-  typesHtml += `</div>`;
+  const typeListHtml = topTypes.length
+    ? topTypes
+        .map(([type, count]) => {
+          const pct = totalCount ? Math.round((count / totalCount) * 100) : 0;
+          return `
+            <div class="infographic-item">
+              <div class="info-meta">
+                <span class="info-name">${escapeHtml(type)}</span>
+                <span class="info-val">${count}건 (${pct}%)</span>
+              </div>
+              <div class="info-bar-bg">
+                <div class="info-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+            </div>
+          `;
+        })
+        .join("")
+    : `<div class="info-empty">데이터 없음</div>`;
 
-  // 3. 연도별 감사 추이 미니 막대그래프 계산 (최근 5개년)
   const yearCounts = {};
-  audits.forEach(audit => {
-    const y = Number(audit.year);
-    if (y && y > 2000) {
-      yearCounts[y] = (yearCounts[y] || 0) + 1;
+  audits.forEach((audit) => {
+    const year = Number(audit.year);
+    if (year && year > 2000) {
+      yearCounts[year] = (yearCounts[year] || 0) + 1;
     }
   });
-  
-  const sortedYears = Object.entries(yearCounts)
+
+  const recentYears = Object.entries(yearCounts)
     .sort((a, b) => Number(a[0]) - Number(b[0]))
     .slice(-5);
-    
-  const maxYearCount = sortedYears.length ? Math.max(...sortedYears.map(item => item[1])) : 1;
-  
-  let yearsHtml = `<div class="infographic-chart">`;
-  sortedYears.forEach(([year, count]) => {
-    const heightPct = maxYearCount ? Math.round((count / maxYearCount) * 70) : 0;
-    yearsHtml += `
-      <div class="chart-col">
-        <div class="chart-bar-container">
-          <div class="chart-bar-value">${count}</div>
-          <div class="chart-bar" style="height: ${Math.max(12, heightPct)}%;"></div>
-        </div>
-        <div class="chart-label">${year}년</div>
-      </div>
-    `;
-  });
-  if (sortedYears.length === 0) {
-    yearsHtml += `<div class="info-empty">데이터 없음</div>`;
-  }
-  yearsHtml += `</div>`;
+  const maxYearCount = recentYears.length ? Math.max(...recentYears.map((item) => item[1])) : 1;
 
-  // 4. 인포그래픽 그리드 바인딩
+  const yearChartHtml = recentYears.length
+    ? recentYears
+        .map(([year, count]) => {
+          const heightPct = Math.max(12, Math.round((count / maxYearCount) * 70));
+          return `
+            <div class="chart-col">
+              <div class="chart-bar-container">
+                <div class="chart-bar-value">${count}</div>
+                <div class="chart-bar" style="height: ${heightPct}%;"></div>
+              </div>
+              <div class="chart-label">${year}</div>
+            </div>
+          `;
+        })
+        .join("")
+    : `<div class="info-empty">데이터 없음</div>`;
+
   statsGrid.innerHTML = `
     <article class="stat info-stat-card">
       <div class="stat-icon-wrapper blue">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
       </div>
       <div class="stat-content">
-        <div class="stat-label">조회된 감사 건수</div>
+        <div class="stat-label">감사 건수</div>
         <div class="stat-value">${totalCount} <span class="stat-unit">건</span></div>
       </div>
     </article>
@@ -2492,20 +2479,14 @@ function renderStats(audits) {
 
     <article class="stat infographic-panel-card">
       <div class="stat-label" style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted);">감사 구분별 비율 (TOP 3)</div>
-      ${typesHtml}
+      <div class="infographic-list">${typeListHtml}</div>
     </article>
 
     <article class="stat infographic-panel-card">
       <div class="stat-label" style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted);">연도별 감사 건수 추이</div>
-      ${yearsHtml}
+      <div class="infographic-chart">${yearChartHtml}</div>
     </article>
   `;
-}</div>
-          <div class="stat-value">${escapeHtml(stat.value)}</div>
-        </article>
-      `
-    )
-    .join("");
 }
 
 function renderDashboardSource() {

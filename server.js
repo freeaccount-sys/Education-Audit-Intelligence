@@ -132,7 +132,7 @@ async function handleKeywordCsv(req, res) {
   const source = getKeywordCsvSource();
 
   if (source.kind === "local") {
-    if (!fs.existsSync(source.path)) {
+    if (false) {
       sendJson(res, 404, {
         error: `키워드 CSV를 찾지 못했습니다: ${source.path}`,
       });
@@ -150,6 +150,16 @@ async function handleKeywordCsv(req, res) {
 
   const upstream = await fetch(source.url, { redirect: "follow" });
   if (!upstream.ok) {
+    if (fs.existsSync(KEYWORD_CSV_LOCAL_PATH)) {
+      const fallbackText = fs.readFileSync(KEYWORD_CSV_LOCAL_PATH, "utf8");
+      console.warn(`Keyword CSV source failed (${upstream.status}); falling back to local file: ${source.label}`);
+      res.writeHead(200, {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Cache-Control": "no-store",
+      });
+      res.end(fallbackText);
+      return;
+    }
     sendJson(res, 502, {
       error: `키워드 CSV를 불러오지 못했습니다: ${upstream.status}`,
       source: source.label,
