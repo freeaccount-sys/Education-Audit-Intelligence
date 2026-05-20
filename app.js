@@ -2392,13 +2392,115 @@ function updateOcrJobStatus(jobId, status, statusClass = "medium", error = "") {
 
 function renderStats(audits) {
   const statsGrid = $("#statsSection");
-  const stats = aggregateStats(audits);
+  if (!statsGrid) return;
+  
+  // 1. 기본 정보 계산
+  const totalCount = audits.length;
+  const baseDateLabel = formatFixedDateLabel(DASHBOARD_BASE_DATE);
 
-  statsGrid.innerHTML = stats
-    .map(
-      (stat) => `
-        <article class="stat">
-          <div class="stat-label">${escapeHtml(stat.label)}</div>
+  // 2. 감사 구분별 비율 계산 (TOP 3)
+  const typeCounts = {};
+  audits.forEach(audit => {
+    const t = audit.type || "기타";
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
+  });
+  
+  const sortedTypes = Object.entries(typeCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+    
+  let typesHtml = `<div class="infographic-list">`;
+  sortedTypes.forEach(([type, count]) => {
+    const pct = totalCount ? Math.round((count / totalCount) * 100) : 0;
+    let barColor = "var(--accent)";
+    if (type.includes("종합")) barColor = "var(--accent-2)";
+    else if (type.includes("특정")) barColor = "var(--warn)";
+    else if (type.includes("회계")) barColor = "var(--accent-3)";
+    else if (type.includes("재무")) barColor = "var(--good)";
+
+    typesHtml += `
+      <div class="infographic-item">
+        <div class="info-meta">
+          <span class="info-name">${escapeHtml(type)}</span>
+          <span class="info-val">${count}건 (${pct}%)</span>
+        </div>
+        <div class="info-bar-bg">
+          <div class="info-bar-fill" style="width: ${pct}%; background: ${barColor};"></div>
+        </div>
+      </div>
+    `;
+  });
+  if (sortedTypes.length === 0) {
+    typesHtml += `<div class="info-empty">데이터 없음</div>`;
+  }
+  typesHtml += `</div>`;
+
+  // 3. 연도별 감사 추이 미니 막대그래프 계산 (최근 5개년)
+  const yearCounts = {};
+  audits.forEach(audit => {
+    const y = Number(audit.year);
+    if (y && y > 2000) {
+      yearCounts[y] = (yearCounts[y] || 0) + 1;
+    }
+  });
+  
+  const sortedYears = Object.entries(yearCounts)
+    .sort((a, b) => Number(a[0]) - Number(b[0]))
+    .slice(-5);
+    
+  const maxYearCount = sortedYears.length ? Math.max(...sortedYears.map(item => item[1])) : 1;
+  
+  let yearsHtml = `<div class="infographic-chart">`;
+  sortedYears.forEach(([year, count]) => {
+    const heightPct = maxYearCount ? Math.round((count / maxYearCount) * 70) : 0;
+    yearsHtml += `
+      <div class="chart-col">
+        <div class="chart-bar-container">
+          <div class="chart-bar-value">${count}</div>
+          <div class="chart-bar" style="height: ${Math.max(12, heightPct)}%;"></div>
+        </div>
+        <div class="chart-label">${year}년</div>
+      </div>
+    `;
+  });
+  if (sortedYears.length === 0) {
+    yearsHtml += `<div class="info-empty">데이터 없음</div>`;
+  }
+  yearsHtml += `</div>`;
+
+  // 4. 인포그래픽 그리드 바인딩
+  statsGrid.innerHTML = `
+    <article class="stat info-stat-card">
+      <div class="stat-icon-wrapper blue">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">조회된 감사 건수</div>
+        <div class="stat-value">${totalCount} <span class="stat-unit">건</span></div>
+      </div>
+    </article>
+
+    <article class="stat info-stat-card">
+      <div class="stat-icon-wrapper green">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">데이터 기준일자</div>
+        <div class="stat-value" style="font-size: 1.55rem; padding-top: 6px; font-weight: 800;">${baseDateLabel}</div>
+      </div>
+    </article>
+
+    <article class="stat infographic-panel-card">
+      <div class="stat-label" style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted);">감사 구분별 비율 (TOP 3)</div>
+      ${typesHtml}
+    </article>
+
+    <article class="stat infographic-panel-card">
+      <div class="stat-label" style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted);">연도별 감사 건수 추이</div>
+      ${yearsHtml}
+    </article>
+  `;
+}</div>
           <div class="stat-value">${escapeHtml(stat.value)}</div>
         </article>
       `
