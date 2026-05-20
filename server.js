@@ -104,11 +104,43 @@ function sendText(res, statusCode, text, contentType = "text/plain; charset=utf-
   res.end(text);
 }
 
+function normalizeKeywordCsvUrl(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(raw);
+    const isGoogleSheets = parsed.hostname.toLowerCase().includes("docs.google.com") && parsed.pathname.includes("/spreadsheets/d/");
+    if (!isGoogleSheets) {
+      return raw;
+    }
+
+    const match = parsed.pathname.match(/\/spreadsheets\/d\/([^/]+)/i);
+    if (!match) {
+      return raw;
+    }
+
+    const exportUrl = new URL(`https://docs.google.com/spreadsheets/d/${match[1]}/export`);
+    exportUrl.searchParams.set("format", "csv");
+
+    const gid = parsed.searchParams.get("gid");
+    if (gid) {
+      exportUrl.searchParams.set("gid", gid);
+    }
+
+    return exportUrl.toString();
+  } catch (_error) {
+    return raw;
+  }
+}
+
 function getKeywordCsvSource() {
   if (KEYWORD_CSV_URL) {
     return {
       kind: "remote",
-      url: KEYWORD_CSV_URL,
+      url: normalizeKeywordCsvUrl(KEYWORD_CSV_URL),
       label: KEYWORD_CSV_URL,
     };
   }
@@ -132,7 +164,7 @@ async function handleKeywordCsv(req, res) {
   const source = getKeywordCsvSource();
 
   if (source.kind === "local") {
-    if (false) {
+    if (!fs.existsSync(source.path)) {
       sendJson(res, 404, {
         error: `키워드 CSV를 찾지 못했습니다: ${source.path}`,
       });
@@ -168,6 +200,16 @@ async function handleKeywordCsv(req, res) {
   }
 
   const text = await upstream.text();
+  if (/^\s*</.test(text) && fs.existsSync(KEYWORD_CSV_LOCAL_PATH)) {
+    const fallbackText = fs.readFileSync(KEYWORD_CSV_LOCAL_PATH, "utf8");
+    console.warn(`Keyword CSV source returned HTML; falling back to local file: ${source.label}`);
+    res.writeHead(200, {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Cache-Control": "no-store",
+    });
+    res.end(fallbackText);
+    return;
+  }
   res.writeHead(200, {
     "Content-Type": "text/csv; charset=utf-8",
     "Cache-Control": "no-store",
