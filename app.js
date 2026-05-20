@@ -1,4 +1,4 @@
-﻿const sampleAudits = [
+const sampleAudits = [
   {
     id: "audit-001",
     institution: "한빛사립대학교",
@@ -1056,9 +1056,16 @@ function getKeywordSearchAudits() {
     return [];
   }
 
-  return state.keywordAudits.filter((audit) => {
+  const filtered = state.keywordAudits.filter((audit) => {
     const searchableText = buildKeywordTitleSearchText(audit);
     return keywordTerms.some((term) => searchableText.includes(term));
+  });
+
+  // 최근 연도 기준으로 내림차순 정렬
+  return filtered.sort((a, b) => {
+    const yearA = Number(a.year || 0);
+    const yearB = Number(b.year || 0);
+    return yearB - yearA;
   });
 }
 
