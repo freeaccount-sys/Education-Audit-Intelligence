@@ -39,3 +39,6 @@ This dashboard is deployed on Render and reads the keyword-search CSV from Googl
 2. Set that link as `KEYWORD_CSV_URL` in Render.
 3. If you prefer, you can set `KEYWORD_CSV_FILE_ID` instead.
 4. The server normalizes common Drive share links into a direct download URL, so the dashboard can read them without a separate manual export URL.
+
+Current linked CSV file:
+- `https://drive.google.com/file/d/1AskF7PeSJWKQO2BgR1jWCNMQmZW9h6QC/view?usp=drive_link`
