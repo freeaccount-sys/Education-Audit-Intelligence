@@ -118,6 +118,7 @@ const state = {
     keywordYear: "all",
   },
   selectedId: sampleAudits[0]?.id ?? null,
+  keywordExpandedId: null,
   ocrJobs: [],
   ocrText: "",
   ocrResult: null,
@@ -1141,7 +1142,7 @@ function buildKeywordResultCardsHtml(audits) {
     <div class="keyword-result-list">
       ${audits
         .map((audit) => {
-          const active = audit.id === state.selectedId ? "active" : "";
+          const active = audit.id === state.keywordExpandedId ? "active" : "";
           const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
           const yearBadge = audit.year ? `<span class="badge subdued year-badge">${escapeHtml(String(audit.year))}년</span>` : "";
           const eyebrowText = [escapeHtml(typeLabel), yearBadge]
@@ -1163,15 +1164,9 @@ function buildKeywordResultCardsHtml(audits) {
                   <p class="eyebrow keyword-result-eyebrow">${eyebrowText}</p>
                   <h4>${institutionLabel}</h4>
                 </div>
-                <p class="keyword-result-title">지적건명: ${escapeHtml(issueTitleText)}</p>
-                <span class="keyword-result-hint">
-                  ${active ? "지적내용이 펼쳐진 상태입니다." : "클릭하면 지적내용을 확인할 수 있습니다."}
-                </span>
+                <p class="keyword-result-title">${escapeHtml(issueTitleText)}</p>
               </button>
               <div id="${detailId}" class="keyword-result-detail ${active ? "is-open" : ""}">
-                <div class="keyword-findings-head">
-                  <span>지적내용</span>
-                </div>
                 ${detailHtml}
               </div>
             </article>
@@ -2848,7 +2843,7 @@ function renderList(audits) {
       const summaryButton = card.querySelector(".keyword-result-summary");
       if (summaryButton) {
         summaryButton.addEventListener("click", () => {
-          state.selectedId = card.dataset.id;
+          state.keywordExpandedId = state.keywordExpandedId === card.dataset.id ? null : card.dataset.id;
           render();
         });
       }
@@ -2857,7 +2852,7 @@ function renderList(audits) {
         if (event.target.closest("button")) {
           return;
         }
-        state.selectedId = card.dataset.id;
+        state.keywordExpandedId = state.keywordExpandedId === card.dataset.id ? null : card.dataset.id;
         render();
       });
     });
@@ -3171,7 +3166,11 @@ async function processQueuedPdfJobs() {
 function render() {
   const audits = getDisplayedAudits();
 
-  if (!audits.some((audit) => audit.id === state.selectedId)) {
+  if (isKeywordSearchMode()) {
+    if (!audits.some((audit) => audit.id === state.keywordExpandedId)) {
+      state.keywordExpandedId = null;
+    }
+  } else if (!audits.some((audit) => audit.id === state.selectedId)) {
     state.selectedId = audits[0]?.id ?? null;
   }
 
@@ -3240,6 +3239,7 @@ function bindEvents() {
   if (keywordSearchInput) {
     keywordSearchInput.addEventListener("input", (event) => {
       state.filters.keywordSearch = event.target.value;
+      state.keywordExpandedId = null;
       render();
     });
   }
@@ -3270,6 +3270,7 @@ function bindEvents() {
       state.filters.keywordSearch = "";
       state.filters.keywordType = "all";
       state.filters.keywordYear = "all";
+      state.keywordExpandedId = null;
       render();
     });
   }
@@ -3298,6 +3299,7 @@ function bindEvents() {
       state.filters.keywordType = "all";
       state.filters.keywordYear = "all";
       state.selectedId = sampleAudits[0]?.id ?? null;
+      state.keywordExpandedId = null;
       state.ocrResult = null;
       state.ocrText = "";
       state.ocrAnalysis = null;
@@ -3346,6 +3348,7 @@ function bindEvents() {
   if (keywordTypeFilter) {
     keywordTypeFilter.addEventListener("change", (event) => {
       state.filters.keywordType = event.target.value;
+      state.keywordExpandedId = null;
       render();
     });
   }
@@ -3354,6 +3357,7 @@ function bindEvents() {
   if (keywordYearFilter) {
     keywordYearFilter.addEventListener("change", (event) => {
       state.filters.keywordYear = event.target.value;
+      state.keywordExpandedId = null;
       render();
     });
   }
