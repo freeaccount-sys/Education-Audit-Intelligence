@@ -6,7 +6,7 @@ This dashboard is deployed on Render and reads the keyword-search CSV from Googl
 
 - `PORT=3000`
 - `HOST=0.0.0.0`
-- `KEYWORD_CSV_FILE_ID=...` or `KEYWORD_CSV_URL=...`
+- `KEYWORD_CSV_URL=...` or `KEYWORD_CSV_FILE_ID=...`
 
 ## Recommended environment variables
 
@@ -30,5 +30,12 @@ This dashboard is deployed on Render and reads the keyword-search CSV from Googl
 
 1. Google Sheets is the source of truth.
 2. Apps Script exports the sheet to `keyword-audit-source.csv` on Google Drive.
-3. Render reads the Drive file through `KEYWORD_CSV_FILE_ID` or `KEYWORD_CSV_URL`.
+3. Render reads the Drive file through `KEYWORD_CSV_URL` or `KEYWORD_CSV_FILE_ID`.
 4. The dashboard loads the CSV through `/api/keyword-audit-source.csv`.
+
+## Recommended setup
+
+1. Copy the Google Drive share link for the CSV file.
+2. Set that link as `KEYWORD_CSV_URL` in Render.
+3. If you prefer, you can set `KEYWORD_CSV_FILE_ID` instead.
+4. The server normalizes common Drive share links into a direct download URL, so the dashboard can read them without a separate manual export URL.

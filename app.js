@@ -114,6 +114,8 @@ const state = {
     keywordSearch: "",
     type: "all",
     year: "all",
+    keywordType: "all",
+    keywordYear: "all",
   },
   selectedId: sampleAudits[0]?.id ?? null,
   ocrJobs: [],
@@ -130,7 +132,6 @@ const state = {
   keywordAudits: [],
   keywordDataSourceLabel: "키워드 검색 원본",
   keywordDataSourceUrl: "",
-  currentStep: 1,
   sampleTableCache: {},
 };
 
@@ -892,7 +893,10 @@ function collectSearchableText(value, out = []) {
 
 function buildKeywordTitleSearchText(audit) {
   return collectSearchableText([
+    audit?.institution,
+    audit?.schoolName,
     audit?.summary,
+    audit?.title,
     audit?.issueTitles,
   ])
     .map((value) => normalizeKeywordSearchText(value))
@@ -939,20 +943,28 @@ function isRedundantAuditSummary(summaryText, audit) {
 function buildActiveFilterSummary() {
   const parts = [];
 
-  if (state.currentStep === 1) {
-    if (state.filters.institutionSearch.trim()) {
-      parts.push(`학교명: ${state.filters.institutionSearch.trim()}`);
-    }
+  if (state.filters.institutionSearch.trim()) {
+    parts.push(`대학명: ${state.filters.institutionSearch.trim()}`);
+  }
 
-    if (state.filters.type !== "all") {
-      parts.push(`감사구분: ${state.filters.type}`);
-    }
-
-    if (state.filters.year !== "all") {
-      parts.push(`연도: ${state.filters.year}`);
-    }
-  } else if (state.filters.keywordSearch.trim()) {
+  if (state.filters.keywordSearch.trim()) {
     parts.push(`키워드: ${state.filters.keywordSearch.trim()}`);
+  }
+
+  if (state.filters.type !== "all") {
+    parts.push(`대학 감사구분: ${state.filters.type}`);
+  }
+
+  if (state.filters.year !== "all") {
+    parts.push(`대학 연도: ${state.filters.year}`);
+  }
+
+  if (state.filters.keywordType !== "all") {
+    parts.push(`키워드 감사구분: ${state.filters.keywordType}`);
+  }
+
+  if (state.filters.keywordYear !== "all") {
+    parts.push(`키워드 연도: ${state.filters.keywordYear}`);
   }
 
   return parts.length ? `현재 필터: ${parts.join(" · ")}` : "현재 필터: 없음";
@@ -1033,9 +1045,17 @@ function reconcileKeywordSearchAudits() {
     };
   });
 
-  if (state.currentStep === 2 || state.filters.keywordSearch.trim()) {
+  if (isKeywordSearchMode()) {
     render();
   }
+}
+
+function isKeywordSearchMode() {
+  return Boolean(
+    state.filters.keywordSearch.trim() ||
+      state.filters.keywordType !== "all" ||
+      state.filters.keywordYear !== "all"
+  );
 }
 
 function getIntegratedSearchAudits() {
@@ -1052,13 +1072,13 @@ function getIntegratedSearchAudits() {
 function getKeywordSearchAudits() {
   const keywordTerms = parseKeywordSearchTerms(state.filters.keywordSearch);
 
-  if (!keywordTerms.length) {
-    return [];
-  }
-
   const filtered = state.keywordAudits.filter((audit) => {
     const searchableText = buildKeywordTitleSearchText(audit);
-    return keywordTerms.some((term) => searchableText.includes(term));
+    const matchesType =
+      state.filters.keywordType === "all" || normalizeSingleLineText(audit?.type ?? "") === state.filters.keywordType;
+    const matchesYear = state.filters.keywordYear === "all" || String(audit?.year ?? "") === state.filters.keywordYear;
+    const matchesTerms = !keywordTerms.length || keywordTerms.every((term) => searchableText.includes(term));
+    return matchesType && matchesYear && matchesTerms;
   });
 
   // 최근 연도 기준으로 내림차순 정렬
@@ -1070,11 +1090,11 @@ function getKeywordSearchAudits() {
 }
 
 function getDisplayedAudits() {
-  return state.currentStep === 1 ? getIntegratedSearchAudits() : getKeywordSearchAudits();
+  return isKeywordSearchMode() ? getKeywordSearchAudits() : getIntegratedSearchAudits();
 }
 
 function getStepResultLabel() {
-  return state.currentStep === 1 ? "통합검색 결과" : "키워드 검색 결과";
+  return isKeywordSearchMode() ? "키워드 검색 결과" : "대학 검색 결과";
 }
 
 function getKeywordIssueTitleText(audit) {
@@ -1089,55 +1109,75 @@ function getKeywordIssueTitleText(audit) {
   return titles.length ? titles.join(", ") : "지적건명 없음";
 }
 
-function renderKeywordDetailText(audit) {
+function renderKeywordFindingHtml(audit) {
   const findings = Array.isArray(audit?.findings) ? audit.findings : [];
+
   if (!findings.length) {
-    return escapeHtml(normalizeSingleLineText(audit?.summary ?? "") || "상세 내용 없음");
+    const fallback = normalizeSingleLineText(audit?.summary ?? "") || "상세 내용 없음";
+    return `<p class="keyword-empty-detail">${escapeHtml(fallback)}</p>`;
   }
 
-  return findings
-    .map((finding) => {
-      const detail = normalizeSingleLineText(finding?.detail ?? "");
-      return detail || "상세 내용 없음";
-    })
-    .join("<br />");
+  return `
+    <ul class="keyword-finding-list">
+      ${findings
+        .map((finding) => {
+          const title = normalizeSingleLineText(finding?.title ?? "");
+          const detail = normalizeSingleLineText(finding?.detail ?? "") || "상세 내용 없음";
+          const titleHtml = title ? `<strong>${escapeHtml(title)}</strong>` : "";
+          return `
+            <li>
+              ${titleHtml}
+              <span>${escapeHtml(detail)}</span>
+            </li>
+          `;
+        })
+        .join("")}
+    </ul>
+  `;
 }
 
-function buildKeywordResultTableHtml(audits) {
+function buildKeywordResultCardsHtml(audits) {
   return `
-    <div class="table-wrap">
-      <table class="audit-table sample-result-table keyword-result-table">
-        <thead>
-          <tr>
-            <th>감사구분</th>
-            <th>감사연도</th>
-            <th>학교명</th>
-            <th>지적건명</th>
-            <th>지적내용</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${audits
-            .map((audit) => {
-              const active = audit.id === state.selectedId ? "active" : "";
-              const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
-              const yearLabel = audit.year ? `${escapeHtml(String(audit.year))}년` : "";
-              const institutionLabel = escapeHtml(normalizeAuditInstitutionLabel(formatAuditTarget(audit)));
-              const issueTitleText = truncateText(getKeywordIssueTitleText(audit), 90);
-              const detailHtml = renderKeywordDetailText(audit);
-              return `
-                <tr class="${active}" data-id="${escapeHtml(audit.id)}">
-                  <td>${escapeHtml(typeLabel)}</td>
-                  <td>${yearLabel}</td>
-                  <td>${institutionLabel}</td>
-                  <td>${escapeHtml(issueTitleText)}</td>
-                  <td class="keyword-detail-cell"><div class="keyword-detail-text">${detailHtml}</div></td>
-                </tr>
-              `;
-            })
-            .join("")}
-        </tbody>
-      </table>
+    <div class="keyword-result-list">
+      ${audits
+        .map((audit) => {
+          const active = audit.id === state.selectedId ? "active" : "";
+          const typeLabel = normalizeSingleLineText(formatAuditTypeLabel(audit.type));
+          const yearBadge = audit.year ? `<span class="badge subdued year-badge">${escapeHtml(String(audit.year))}년</span>` : "";
+          const eyebrowText = [escapeHtml(typeLabel), yearBadge]
+            .filter(Boolean)
+            .join(" · ");
+          const institutionLabel = escapeHtml(normalizeAuditInstitutionLabel(formatAuditTarget(audit)));
+          const issueTitleText = truncateText(getKeywordIssueTitleText(audit), 110);
+          const detailId = `keyword-detail-${escapeHtml(audit.id)}`;
+          const detailHtml = renderKeywordFindingHtml(audit);
+          return `
+            <article class="keyword-result-card ${active}" data-id="${escapeHtml(audit.id)}">
+              <button
+                type="button"
+                class="keyword-result-summary"
+                aria-expanded="${active ? "true" : "false"}"
+                aria-controls="${detailId}"
+              >
+                <div class="keyword-result-head">
+                  <p class="eyebrow keyword-result-eyebrow">${eyebrowText}</p>
+                  <h4>${institutionLabel}</h4>
+                </div>
+                <p class="keyword-result-title">지적건명: ${escapeHtml(issueTitleText)}</p>
+                <span class="keyword-result-hint">
+                  ${active ? "지적내용이 펼쳐진 상태입니다." : "클릭하면 지적내용을 확인할 수 있습니다."}
+                </span>
+              </button>
+              <div id="${detailId}" class="keyword-result-detail ${active ? "is-open" : ""}">
+                <div class="keyword-findings-head">
+                  <span>지적내용</span>
+                </div>
+                ${detailHtml}
+              </div>
+            </article>
+          `;
+        })
+        .join("")}
     </div>
   `;
 }
@@ -2294,6 +2334,8 @@ async function loadAuditIndexFromJson(url = "audit-index.json") {
   state.filters.keywordSearch = "";
   state.filters.type = "all";
   state.filters.year = "all";
+  state.filters.keywordType = "all";
+  state.filters.keywordYear = "all";
   state.selectedId = state.audits[0]?.id ?? null;
   state.dataSource = "index";
   state.dataSourceLabel = url;
@@ -2390,12 +2432,8 @@ function updateOcrJobStatus(jobId, status, statusClass = "medium", error = "") {
   job.error = error;
 }
 
-function renderStats(audits) {
-  const statsGrid = $("#statsSection");
-  if (!statsGrid) return;
-
+function buildInfographicContent(audits) {
   const totalCount = audits.length;
-  const baseDateLabel = formatFixedDateLabel(DASHBOARD_BASE_DATE);
 
   const typeCounts = {};
   audits.forEach((audit) => {
@@ -2456,6 +2494,16 @@ function renderStats(audits) {
         .join("")
     : `<div class="info-empty">데이터 없음</div>`;
 
+  return { totalCount, typeListHtml, yearChartHtml };
+}
+
+function renderStats(audits) {
+  const statsGrid = $("#statsSection");
+  if (!statsGrid) return;
+
+  const { totalCount, typeListHtml, yearChartHtml } = buildInfographicContent(audits);
+  const baseDateLabel = formatFixedDateLabel(DASHBOARD_BASE_DATE);
+
   statsGrid.innerHTML = `
     <article class="stat info-stat-card">
       <div class="stat-icon-wrapper blue">
@@ -2492,7 +2540,7 @@ function renderStats(audits) {
 function renderDashboardSource() {
   const badge = $("#dataSourceBadge");
   const sourceLabel =
-    state.currentStep === 2
+    isKeywordSearchMode()
       ? state.keywordDataSourceLabel || "키워드 검색 원본"
       : state.dataSourceLabel ||
         (state.dataSource === "index" ? "audit-index.json" : state.dataSource === "ocr" ? "OCR 결과" : "샘플 데이터");
@@ -2500,7 +2548,7 @@ function renderDashboardSource() {
   if (badge) {
     badge.textContent = sourceLabel;
     badge.className = `badge ${
-      state.currentStep === 2
+      isKeywordSearchMode()
         ? "medium"
         : state.dataSource === "index"
           ? "low"
@@ -2524,6 +2572,112 @@ function syncOcrControls() {
   }
 }
 
+function harmonizeSearchPanels() {
+  const panels = document.querySelectorAll(".dashboard-controls > .panel");
+  const schoolPanel = panels[0];
+  const keywordPanel = panels[1];
+  const renderSearchHead = ({ icon, eyebrow, title, badge }) => `
+    <div class="search-head-copy">
+      <span class="search-head-icon ${icon}">
+        ${icon === "school"
+          ? `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M3 10.5 12 6l9 4.5-9 4.5-9-4.5Z"></path>
+              <path d="M7 12v5.5c0 .6.4 1.2 1 1.5l4 2 4-2c.6-.3 1-.9 1-1.5V12"></path>
+              <path d="M12 15v4"></path>
+            </svg>`
+          : `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="11" cy="11" r="6"></circle>
+              <path d="m16 16 4 4"></path>
+            </svg>`}
+      </span>
+      <div>
+        <p class="eyebrow">${eyebrow}</p>
+        <h2>${escapeHtml(title)}</h2>
+      </div>
+    </div>
+    <span class="badge medium">${badge}</span>
+  `;
+
+  if (schoolPanel) {
+    schoolPanel.classList.add("search-panel", "school-panel");
+
+    const title = schoolPanel.querySelector(":scope > h2");
+    if (title) {
+      const existingHead = schoolPanel.querySelector(":scope > .panel-head");
+      const head = existingHead || document.createElement("div");
+      head.className = "panel-head";
+      head.innerHTML = renderSearchHead({
+        icon: "school",
+        eyebrow: "University Search",
+        title: title.textContent || "",
+        badge: "대학 검색",
+      });
+      title.remove();
+      if (!existingHead) {
+        schoolPanel.insertBefore(head, schoolPanel.firstChild);
+      }
+    }
+  }
+
+  if (keywordPanel) {
+    keywordPanel.classList.add("search-panel");
+
+    const title = keywordPanel.querySelector(":scope > h2");
+    if (title) {
+      const existingHead = keywordPanel.querySelector(":scope > .panel-head");
+      const head = existingHead || document.createElement("div");
+      head.className = "panel-head";
+      head.innerHTML = renderSearchHead({
+        icon: "keyword",
+        eyebrow: "Keyword Search",
+        title: title.textContent || "",
+        badge: "키워드 검색",
+      });
+      title.remove();
+      if (!existingHead) {
+        keywordPanel.insertBefore(head, keywordPanel.firstChild);
+      }
+    }
+
+    if (!keywordPanel.querySelector(".keyword-shared-filters")) {
+      const keywordField = keywordPanel.querySelector(".keyword-field");
+      const description = keywordPanel.querySelector(".keyword-field .muted");
+      if (description) {
+        description.remove();
+      }
+      const filters = document.createElement("div");
+      filters.className = "keyword-shared-filters";
+      filters.innerHTML = `
+        <label class="field">
+          <span>감사구분</span>
+          <select id="keywordTypeFilter">
+            <option value="all">전체</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>연도</span>
+          <select id="keywordYearFilter">
+            <option value="all">전체</option>
+          </select>
+        </label>
+      `;
+
+      if (keywordField) {
+        keywordField.insertAdjacentElement("afterend", filters);
+      } else {
+        keywordPanel.appendChild(filters);
+      }
+
+      if (!keywordPanel.querySelector(".keyword-filter-summary")) {
+        const keywordSummary = document.createElement("p");
+        keywordSummary.id = "keywordFilterSummary";
+        keywordSummary.className = "muted filter-summary keyword-filter-summary";
+        keywordPanel.appendChild(keywordSummary);
+      }
+    }
+  }
+}
+
 function syncFilterControls() {
   const institutionSearchInput = $("#institutionSearchInput");
   if (institutionSearchInput) {
@@ -2535,49 +2689,77 @@ function syncFilterControls() {
     keywordSearchInput.value = state.filters.keywordSearch;
   }
 
+  for (const selector of ["#typeFilter", "#keywordTypeFilter"]) {
+    const select = $(selector);
+    if (select) {
+      select.value = select.id === "keywordTypeFilter" ? state.filters.keywordType : state.filters.type;
+    }
+  }
+
+  for (const selector of ["#yearFilter", "#keywordYearFilter"]) {
+    const select = $(selector);
+    if (select) {
+      select.value = select.id === "keywordYearFilter" ? state.filters.keywordYear : state.filters.year;
+    }
+  }
+
   const filterSummary = $("#filterSummary");
   if (filterSummary) {
     filterSummary.textContent = buildActiveFilterSummary();
   }
+
+  const keywordFilterSummary = $("#keywordFilterSummary");
+  if (keywordFilterSummary) {
+    keywordFilterSummary.textContent = buildActiveFilterSummary();
+  }
 }
 
 function populateTypeFilter(audits) {
-  const select = $("#typeFilter");
-  if (!select) {
+  const selects = ["#typeFilter", "#keywordTypeFilter"]
+    .map((selector) => $(selector))
+    .filter(Boolean);
+
+  if (!selects.length) {
     return;
   }
 
-  const currentValue = state.filters.type || "all";
   const types = [...new Set(
     audits
       .map((audit) => normalizeSingleLineText(audit?.type ?? ""))
       .filter(Boolean)
   )].sort((a, b) => a.localeCompare(b, "ko"));
 
-  select.innerHTML = [
+  const options = [
     '<option value="all">전체</option>',
     ...types.map((type) => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`),
   ].join("");
 
-  if ([...select.options].some((option) => option.value === currentValue)) {
-    select.value = currentValue;
-  } else {
-    state.filters.type = "all";
-    select.value = "all";
-  }
+  selects.forEach((select) => {
+    select.innerHTML = options;
+    const currentValue = select.id === "keywordTypeFilter" ? (state.filters.keywordType || "all") : (state.filters.type || "all");
+
+    if ([...select.options].some((option) => option.value === currentValue)) {
+      select.value = currentValue;
+    } else {
+      if (select.id === "keywordTypeFilter") {
+        state.filters.keywordType = "all";
+      } else {
+        state.filters.type = "all";
+      }
+      select.value = "all";
+    }
+  });
 }
 
-function populateYearFilter(audits) {
-  const select = $("#yearFilter");
+function populateYearFilterOptions(select, audits, minYear, currentValue, fallbackSetter) {
   if (!select) {
     return;
   }
 
-  const currentValue = state.filters.year || "all";
   const years = [...new Set(
     audits
       .map((audit) => Number(audit?.year))
-      .filter((year) => Number.isFinite(year) && year > 0)
+      .filter((year) => Number.isFinite(year) && year >= minYear)
   )].sort((a, b) => b - a);
 
   const options = ['<option value="all">전체</option>']
@@ -2589,9 +2771,31 @@ function populateYearFilter(audits) {
   if ([...select.options].some((option) => option.value === currentValue)) {
     select.value = currentValue;
   } else {
-    state.filters.year = "all";
+    fallbackSetter();
     select.value = "all";
   }
+}
+
+function populateYearFilter(audits, keywordAudits) {
+  populateYearFilterOptions(
+    $("#yearFilter"),
+    audits,
+    2017,
+    state.filters.year || "all",
+    () => {
+      state.filters.year = "all";
+    }
+  );
+
+  populateYearFilterOptions(
+    $("#keywordYearFilter"),
+    keywordAudits,
+    2005,
+    state.filters.keywordYear || "all",
+    () => {
+      state.filters.keywordYear = "all";
+    }
+  );
 }
 
 function formatAuditTypeLabel(value) {
@@ -2613,31 +2817,7 @@ function getAuditStatusClass(status) {
   return "medium";
 }
 
-function goToStep(step) {
-  const normalized = Math.max(1, Math.min(2, Number(step) || 1));
-  state.currentStep = normalized;
-}
-
-function renderStepLayout() {
-  const step1Btn = $("#step1Btn");
-  const step2Btn = $("#step2Btn");
-  const stepPrevBtn = $("#stepPrevBtn");
-  const stepNextBtn = $("#stepNextBtn");
-  const isStep1 = state.currentStep === 1;
-
-  if (step1Btn) {
-    step1Btn.classList.toggle("active", isStep1);
-  }
-  if (step2Btn) {
-    step2Btn.classList.toggle("active", !isStep1);
-  }
-  if (stepPrevBtn) {
-    stepPrevBtn.disabled = isStep1;
-  }
-  if (stepNextBtn) {
-    stepNextBtn.disabled = !isStep1;
-  }
-}
+function renderStepLayout() {}
 
 function renderList(audits) {
   const list = $("#auditList");
@@ -2651,12 +2831,9 @@ function renderList(audits) {
   resultCount.textContent = `${audits.length}건`;
 
   if (audits.length === 0) {
-    const emptyMessage =
-      state.currentStep === 2 && !state.filters.keywordSearch.trim()
-        ? "키워드를 입력하면 검색 결과가 표시됩니다."
-        : state.currentStep === 1
-          ? "통합검색 결과가 없습니다."
-          : "표시할 데이터가 없습니다.";
+    const emptyMessage = isKeywordSearchMode()
+      ? "검색 결과가 없습니다."
+      : "대학 검색 결과가 없습니다.";
     list.innerHTML = `
       <div class="empty-state">
         ${emptyMessage}
@@ -2665,11 +2842,22 @@ function renderList(audits) {
     return;
   }
 
-  if (state.currentStep === 2) {
-    list.innerHTML = buildKeywordResultTableHtml(audits);
-    list.querySelectorAll(".keyword-result-table tbody tr").forEach((row) => {
-      row.addEventListener("click", () => {
-        state.selectedId = row.dataset.id;
+  if (isKeywordSearchMode()) {
+    list.innerHTML = buildKeywordResultCardsHtml(audits);
+    list.querySelectorAll(".keyword-result-card").forEach((card) => {
+      const summaryButton = card.querySelector(".keyword-result-summary");
+      if (summaryButton) {
+        summaryButton.addEventListener("click", () => {
+          state.selectedId = card.dataset.id;
+          render();
+        });
+      }
+
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("button")) {
+          return;
+        }
+        state.selectedId = card.dataset.id;
         render();
       });
     });
@@ -2697,12 +2885,12 @@ function renderList(audits) {
           return `
             <article class="result-card ${active}" data-id="${escapeHtml(audit.id)}">
               <div class="result-card-head">
-                <div>
+                <div class="result-card-copy">
                   <p class="eyebrow">${eyebrowText}</p>
                   <h4>${escapeHtml(targetText)}</h4>
                 </div>
+                ${resultActions}
               </div>
-              ${resultActions}
             </article>
           `;
         })
@@ -2988,8 +3176,8 @@ function render() {
   }
 
   renderStepLayout();
-  populateTypeFilter(state.audits);
-  populateYearFilter(state.audits);
+  populateTypeFilter([...state.audits, ...state.keywordAudits]);
+  populateYearFilter(state.audits, state.keywordAudits);
   syncFilterControls();
   syncOcrControls();
   renderStats(audits);
@@ -3040,26 +3228,6 @@ function exportFilteredData() {
 }
 
 function bindEvents() {
-  $("#step1Btn").addEventListener("click", () => {
-    goToStep(1);
-    render();
-  });
-
-  $("#step2Btn").addEventListener("click", () => {
-    goToStep(2);
-    render();
-  });
-
-  $("#stepPrevBtn").addEventListener("click", () => {
-    goToStep(state.currentStep - 1);
-    render();
-  });
-
-  $("#stepNextBtn").addEventListener("click", () => {
-    goToStep(state.currentStep + 1);
-    render();
-  });
-
   const institutionSearchInput = $("#institutionSearchInput");
   if (institutionSearchInput) {
     institutionSearchInput.addEventListener("input", (event) => {
@@ -3072,9 +3240,6 @@ function bindEvents() {
   if (keywordSearchInput) {
     keywordSearchInput.addEventListener("input", (event) => {
       state.filters.keywordSearch = event.target.value;
-      if (event.target.value.trim()) {
-        state.currentStep = 2;
-      }
       render();
     });
   }
@@ -3093,9 +3258,18 @@ function bindEvents() {
   if (clearFiltersButton) {
     clearFiltersButton.addEventListener("click", () => {
       state.filters.institutionSearch = "";
-      state.filters.keywordSearch = "";
       state.filters.type = "all";
       state.filters.year = "all";
+      render();
+    });
+  }
+
+  const keywordClearFiltersButton = $("#keywordClearFiltersButton");
+  if (keywordClearFiltersButton) {
+    keywordClearFiltersButton.addEventListener("click", () => {
+      state.filters.keywordSearch = "";
+      state.filters.keywordType = "all";
+      state.filters.keywordYear = "all";
       render();
     });
   }
@@ -3110,21 +3284,6 @@ function bindEvents() {
     });
   }
 
-  const keywordChips = document.querySelectorAll(".keyword-chip");
-  keywordChips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const value = chip.textContent?.trim() ?? "";
-      if (!value || !keywordSearchInput) {
-        return;
-      }
-      state.filters.keywordSearch = value;
-      keywordSearchInput.value = value;
-      state.currentStep = 2;
-      render();
-      keywordSearchInput.focus();
-    });
-  });
-
   const resetButton = $("#resetButton");
   if (resetButton) {
     resetButton.addEventListener("click", () => {
@@ -3136,6 +3295,8 @@ function bindEvents() {
       state.filters.keywordSearch = "";
       state.filters.type = "all";
       state.filters.year = "all";
+      state.filters.keywordType = "all";
+      state.filters.keywordYear = "all";
       state.selectedId = sampleAudits[0]?.id ?? null;
       state.ocrResult = null;
       state.ocrText = "";
@@ -3178,6 +3339,22 @@ function bindEvents() {
         state.ocrEngine === "gemini" ? "Gemini 분석 준비됨" :
         state.ocrEngine === "upstage" ? "Upstage 파싱 준비됨" : "로컬 OCR 준비됨";
       renderOcr();
+    });
+  }
+
+  const keywordTypeFilter = $("#keywordTypeFilter");
+  if (keywordTypeFilter) {
+    keywordTypeFilter.addEventListener("change", (event) => {
+      state.filters.keywordType = event.target.value;
+      render();
+    });
+  }
+
+  const keywordYearFilter = $("#keywordYearFilter");
+  if (keywordYearFilter) {
+    keywordYearFilter.addEventListener("change", (event) => {
+      state.filters.keywordYear = event.target.value;
+      render();
     });
   }
 
@@ -3268,11 +3445,12 @@ async function initializeApp() {
     return;
   }
 
+  harmonizeSearchPanels();
   bindEvents();
   await loadComprehensiveIssueTitleMap();
   const keywordSearchDataPromise = loadKeywordSearchIndex()
     .then((keywordAudits) => {
-      if (state.currentStep === 2 || state.filters.keywordSearch.trim()) {
+      if (isKeywordSearchMode()) {
         render();
       }
       return keywordAudits;
@@ -3282,7 +3460,7 @@ async function initializeApp() {
       state.keywordAudits = [];
       state.keywordDataSourceLabel = "키워드 검색 원본";
       state.keywordDataSourceUrl = "";
-      if (state.currentStep === 2 || state.filters.keywordSearch.trim()) {
+      if (isKeywordSearchMode()) {
         render();
       }
       return state.keywordAudits;
@@ -3302,6 +3480,8 @@ async function initializeApp() {
     state.filters.keywordSearch = "";
     state.filters.type = "all";
     state.filters.year = "all";
+    state.filters.keywordType = "all";
+    state.filters.keywordYear = "all";
     reconcileKeywordSearchAudits();
     render();
     await keywordSearchDataPromise;
@@ -3329,6 +3509,12 @@ async function initializeApp() {
         state.dataSourceUrl = "";
         state.audits = sampleAudits;
         state.selectedId = sampleAudits[0]?.id ?? null;
+        state.filters.institutionSearch = "";
+        state.filters.keywordSearch = "";
+        state.filters.type = "all";
+        state.filters.year = "all";
+        state.filters.keywordType = "all";
+        state.filters.keywordYear = "all";
         reconcileKeywordSearchAudits();
         await keywordSearchDataPromise;
         render();

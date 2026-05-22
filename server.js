@@ -112,7 +112,22 @@ function normalizeKeywordCsvUrl(value) {
 
   try {
     const parsed = new URL(raw);
-    const isGoogleSheets = parsed.hostname.toLowerCase().includes("docs.google.com") && parsed.pathname.includes("/spreadsheets/d/");
+    const host = parsed.hostname.toLowerCase();
+
+    if (host.includes("drive.google.com")) {
+      const pathMatch = parsed.pathname.match(/\/file\/d\/([^/]+)/i);
+      const openId = parsed.searchParams.get("id");
+      const fileId = pathMatch?.[1] || openId;
+
+      if (fileId) {
+        const downloadUrl = new URL("https://drive.google.com/uc");
+        downloadUrl.searchParams.set("export", "download");
+        downloadUrl.searchParams.set("id", fileId);
+        return downloadUrl.toString();
+      }
+    }
+
+    const isGoogleSheets = host.includes("docs.google.com") && parsed.pathname.includes("/spreadsheets/d/");
     if (!isGoogleSheets) {
       return raw;
     }
