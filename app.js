@@ -971,7 +971,7 @@ function buildActiveFilterSummary() {
   return parts.length ? `현재 필터: ${parts.join(" · ")}` : "현재 필터: 없음";
 }
 
-const DASHBOARD_BASE_DATE = "2026-05-07";
+const DASHBOARD_BASE_DATE = "2026-05-27";
 
 function formatFixedDateLabel(isoDate) {
   const [year, month, day] = String(isoDate ?? "").split("-");
