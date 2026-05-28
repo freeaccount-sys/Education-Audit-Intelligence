@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --bg: #f7f8ff;
+  --bg: #f5f8fa;
   --bg-2: #ffffff;
   --panel: rgba(255, 255, 255, 0.98);
   --panel-strong: #ffffff;
@@ -8,10 +8,10 @@
   --text-muted: #55627a;
   --muted: #55627a;
   --line: rgba(77, 94, 123, 0.12);
-  --accent: #4b67e2;
-  --accent-light: #eef1ff;
-  --accent-2: #2d3f9d;
-  --accent-3: #6d7ff1;
+  --accent: #2874a6;
+  --accent-light: #edf4fa;
+  --accent-2: #1a5276;
+  --accent-3: #5dade2;
   --good: #10b981;
   --warn: #f59e0b;
   --bad: #ef4444;
@@ -37,9 +37,9 @@ body {
   font-family: "Noto Sans KR", "Inter", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at 0% 0%, rgba(75, 103, 226, 0.28) 0%, rgba(75, 103, 226, 0.12) 22%, transparent 44%),
-    radial-gradient(circle at 100% 0%, rgba(106, 92, 231, 0.18) 0%, rgba(106, 92, 231, 0.08) 18%, transparent 36%),
-    radial-gradient(circle at 50% 100%, rgba(73, 196, 213, 0.12) 0%, rgba(73, 196, 213, 0.05) 18%, transparent 40%),
+    radial-gradient(circle at 0% 0%, rgba(40, 116, 166, 0.18) 0%, rgba(40, 116, 166, 0.08) 22%, transparent 44%),
+    radial-gradient(circle at 100% 0%, rgba(14, 140, 127, 0.12) 0%, rgba(14, 140, 127, 0.05) 18%, transparent 36%),
+    radial-gradient(circle at 50% 100%, rgba(73, 196, 213, 0.10) 0%, rgba(73, 196, 213, 0.04) 18%, transparent 40%),
     linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -191,7 +191,7 @@ select {
 
 .panel:hover {
   box-shadow: var(--shadow);
-  border-color: rgba(75, 103, 226, 0.22);
+  border-color: rgba(40, 116, 166, 0.22);
 }
 
 .panel + .panel {
@@ -199,11 +199,11 @@ select {
 }
 
 .keyword-panel {
-  border: 2px solid rgba(120, 92, 231, 0.72);
+  border: 2px solid rgba(14, 140, 127, 0.72);
   background:
-    radial-gradient(circle at top right, rgba(120, 92, 231, 0.26), transparent 26%),
-    linear-gradient(180deg, rgba(247, 244, 255, 1), rgba(255, 254, 255, 0.98));
-  box-shadow: 0 18px 34px rgba(120, 92, 231, 0.12);
+    radial-gradient(circle at top right, rgba(14, 140, 127, 0.26), transparent 26%),
+    linear-gradient(180deg, rgba(238, 250, 248, 1), rgba(252, 255, 254, 0.98));
+  box-shadow: 0 18px 34px rgba(14, 140, 127, 0.12);
 }
 
 .keyword-panel .panel-head {
@@ -211,17 +211,17 @@ select {
 }
 
 .keyword-panel .panel-head .eyebrow {
-  color: #6f57d9;
+  color: #0e8c7f;
 }
 
 .keyword-panel .panel-head .badge.medium {
-  background: rgba(120, 92, 231, 0.18);
-  color: #6f57d9;
+  background: rgba(14, 140, 127, 0.18);
+  color: #0e8c7f;
 }
 
 .keyword-panel .search-head-icon {
-  background: rgba(120, 92, 231, 0.12);
-  color: #6f57d9;
+  background: rgba(14, 140, 127, 0.12);
+  color: #0e8c7f;
 }
 
 .keyword-field {
@@ -308,7 +308,7 @@ input[type="search"]:focus,
 select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(40, 116, 166, 0.1);
 }
 
 input[type="file"] {
@@ -335,13 +335,13 @@ input[type="file"] {
   color: #fff;
   background: var(--accent);
   font-weight: 600;
-  box-shadow: 0 6px 16px rgba(75, 103, 226, 0.28);
+  box-shadow: 0 6px 16px rgba(40, 116, 166, 0.28);
 }
 
 .upload-button:hover,
 .primary-button:hover {
-  background: #3d57cf;
-  box-shadow: 0 8px 20px rgba(75, 103, 226, 0.34);
+  background: #1f6b91;
+  box-shadow: 0 8px 20px rgba(40, 116, 166, 0.34);
 }
 
 .secondary-button {
@@ -349,7 +349,7 @@ input[type="file"] {
   margin-top: 10px;
   color: var(--text);
   background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(75, 103, 226, 0.16);
+  border-color: rgba(40, 116, 166, 0.16);
 }
 
 .upload-button:hover,
@@ -432,25 +432,25 @@ input[type="file"] {
 }
 
 .school-panel {
-  border: 2px solid rgba(75, 103, 226, 0.76);
+  border: 2px solid rgba(40, 116, 166, 0.76);
   background:
-    radial-gradient(circle at top left, rgba(75, 103, 226, 0.24), transparent 26%),
-    linear-gradient(180deg, rgba(236, 241, 255, 1), rgba(252, 253, 255, 0.98));
-  box-shadow: 0 18px 34px rgba(75, 103, 226, 0.12);
+    radial-gradient(circle at top left, rgba(40, 116, 166, 0.24), transparent 26%),
+    linear-gradient(180deg, rgba(236, 246, 250, 1), rgba(250, 254, 255, 0.98));
+  box-shadow: 0 18px 34px rgba(40, 116, 166, 0.12);
 }
 
 .school-panel .panel-head .eyebrow {
-  color: #3d57cf;
+  color: #1f6b91;
 }
 
 .school-panel .panel-head .badge.medium {
-  background: rgba(75, 103, 226, 0.18);
-  color: #3d57cf;
+  background: rgba(40, 116, 166, 0.18);
+  color: #1f6b91;
 }
 
 .school-panel .search-head-icon {
-  background: rgba(75, 103, 226, 0.12);
-  color: #3d57cf;
+  background: rgba(40, 116, 166, 0.12);
+  color: #1f6b91;
 }
 
 .search-panel .field:first-of-type {
@@ -464,25 +464,25 @@ input[type="file"] {
 .school-panel input[type="search"],
 .school-panel select {
   background: rgba(249, 251, 255, 0.99);
-  border-color: rgba(75, 103, 226, 0.18);
+  border-color: rgba(40, 116, 166, 0.18);
 }
 
 .school-panel input[type="search"]:focus,
 .school-panel select:focus {
-  border-color: rgba(75, 103, 226, 0.7);
-  box-shadow: 0 0 0 4px rgba(75, 103, 226, 0.16);
+  border-color: rgba(40, 116, 166, 0.7);
+  box-shadow: 0 0 0 4px rgba(40, 116, 166, 0.16);
 }
 
 .keyword-panel input[type="search"],
 .keyword-panel select {
-  background: rgba(251, 248, 255, 0.99);
-  border-color: rgba(120, 92, 231, 0.2);
+  background: rgba(245, 252, 251, 0.99);
+  border-color: rgba(14, 140, 127, 0.2);
 }
 
 .keyword-panel input[type="search"]:focus,
 .keyword-panel select:focus {
-  border-color: rgba(120, 92, 231, 0.7);
-  box-shadow: 0 0 0 4px rgba(120, 92, 231, 0.16);
+  border-color: rgba(14, 140, 127, 0.7);
+  box-shadow: 0 0 0 4px rgba(14, 140, 127, 0.16);
 }
 
 .notice-panel {
@@ -638,7 +638,7 @@ input[type="file"] {
 .hero-search input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 3px rgba(40, 116, 166, 0.12);
 }
 
 .hero-search button {
@@ -803,7 +803,7 @@ input[type="file"] {
 
 .keyword-result-table tbody tr:hover,
 .keyword-result-table tbody tr.active {
-  background: rgba(37, 99, 235, 0.05);
+  background: rgba(40, 116, 166, 0.05);
 }
 
 .keyword-detail-cell {
@@ -832,7 +832,7 @@ input[type="file"] {
 .result-card:hover,
 .result-card.active {
   transform: translateY(-1px);
-  border-color: rgba(37, 99, 235, 0.35);
+  border-color: rgba(40, 116, 166, 0.35);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
 }
 
@@ -877,7 +877,7 @@ input[type="file"] {
   margin: 0;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(37, 99, 235, 0.06);
+  background: rgba(40, 116, 166, 0.06);
   color: #1e3a8a;
   line-height: 1.5;
   font-size: 0.9rem;
@@ -1157,7 +1157,7 @@ textarea {
 textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(40, 116, 166, 0.1);
 }
 
 .button-row {
@@ -1307,8 +1307,8 @@ textarea:focus {
   align-items: center;
   padding: 8px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(75, 103, 226, 0.18);
-  background: rgba(75, 103, 226, 0.08);
+  border: 1px solid rgba(40, 116, 166, 0.18);
+  background: rgba(40, 116, 166, 0.08);
   color: var(--accent);
   font-size: 0.88rem;
   font-weight: 600;
@@ -1317,20 +1317,20 @@ textarea:focus {
 }
 
 .external-link:hover {
-  background: rgba(75, 103, 226, 0.14);
-  border-color: rgba(75, 103, 226, 0.3);
+  background: rgba(40, 116, 166, 0.14);
+  border-color: rgba(40, 116, 166, 0.3);
   transform: translateY(-1px);
 }
 
 .card-action-link.pdf-action {
-  color: #6f57d9;
-  border-color: rgba(120, 92, 231, 0.2);
-  background: rgba(120, 92, 231, 0.1);
+  color: #0e8c7f;
+  border-color: rgba(14, 140, 127, 0.2);
+  background: rgba(14, 140, 127, 0.1);
 }
 
 .card-action-link.pdf-action:hover {
-  background: rgba(120, 92, 231, 0.16);
-  border-color: rgba(120, 92, 231, 0.34);
+  background: rgba(14, 140, 127, 0.16);
+  border-color: rgba(14, 140, 127, 0.34);
 }
 
 .external-hint {
@@ -1405,7 +1405,7 @@ textarea:focus {
 }
 
 .issue:hover {
-  border-color: rgba(37, 99, 235, 0.3);
+  border-color: rgba(40, 116, 166, 0.3);
 }
 
 .issue h5 {
@@ -1492,7 +1492,7 @@ textarea:focus {
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   font-weight: 800 !important;
-  filter: drop-shadow(0 2px 8px rgba(79, 70, 229, 0.06));
+  filter: drop-shadow(0 2px 8px rgba(26, 82, 118, 0.06));
 }
 
 /* 2. Glassmorphism Panels & Hover Glows */
@@ -1500,25 +1500,25 @@ textarea:focus {
   background: var(--panel) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(99, 102, 241, 0.12) !important;
+  border: 1px solid rgba(40, 116, 166, 0.12) !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .panel:hover {
   transform: translateY(-4px) !important;
-  border-color: rgba(99, 102, 241, 0.25) !important;
-  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.15) !important;
+  border-color: rgba(40, 116, 166, 0.25) !important;
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(40, 116, 166, 0.15) !important;
 }
 
 /* 3. Inputs Focus Dynamic Shadow Ring */
 input[type="search"], select, textarea {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  border: 1px solid rgba(99, 102, 241, 0.16) !important;
+  border: 1px solid rgba(40, 116, 166, 0.16) !important;
 }
 
 input[type="search"]:focus, select:focus, textarea:focus {
   border-color: var(--accent-2) !important;
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12) !important;
+  box-shadow: 0 0 0 4px rgba(26, 82, 118, 0.12) !important;
   background: #fafcff !important;
 }
 
@@ -1526,7 +1526,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
 .stat {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(99, 102, 241, 0.08) !important;
+  border: 1px solid rgba(40, 116, 166, 0.08) !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
@@ -1543,7 +1543,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
 
 .stat:hover {
   transform: translateY(-4px) scale(1.02) !important;
-  border-color: rgba(99, 102, 241, 0.2) !important;
+  border-color: rgba(40, 116, 166, 0.2) !important;
   box-shadow: 0 20px 32px -8px rgba(15, 23, 42, 0.08) !important;
 }
 
@@ -1561,7 +1561,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
 
 .upload-button:hover, .primary-button:hover {
   transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(40, 116, 166, 0.3) !important;
 }
 
 .upload-button:active, .primary-button:active, .secondary-button:active {
@@ -1570,7 +1570,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
 
 .secondary-button:hover {
   background: #fff !important;
-  border-color: rgba(99, 102, 241, 0.3) !important;
+  border-color: rgba(40, 116, 166, 0.3) !important;
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05) !important;
   transform: translateY(-2px) !important;
 }
@@ -1580,7 +1580,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
   font-size: 1.02rem !important;
   font-weight: 550 !important;
   padding: 12px 14px 12px 50px !important;
-  border: 1px solid rgba(79, 70, 229, 0.08) !important;
+  border: 1px solid rgba(26, 82, 118, 0.08) !important;
   background: rgba(255, 255, 255, 0.7) !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02) !important;
@@ -1588,9 +1588,9 @@ input[type="search"]:focus, select:focus, textarea:focus {
 
 .notice-list li:hover {
   transform: translateY(-2px) scale(1.005) !important;
-  border-color: rgba(79, 70, 229, 0.18) !important;
+  border-color: rgba(26, 82, 118, 0.18) !important;
   background: rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.08) !important;
+  box-shadow: 0 8px 16px -4px rgba(26, 82, 118, 0.08) !important;
 }
 
 .notice-list li::before {
@@ -1600,7 +1600,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
   transform: translateY(-50%) !important;
   font-size: 0.8rem !important;
   background: linear-gradient(135deg, var(--accent-2), var(--accent)) !important;
-  box-shadow: 0 3px 8px rgba(79, 70, 229, 0.25) !important;
+  box-shadow: 0 3px 8px rgba(26, 82, 118, 0.25) !important;
 }
 
 /* 8. Audit Result List & Cards Premium Hover */
@@ -1641,7 +1641,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
 }
 
 .stat-icon-wrapper.blue {
-  background: rgba(37, 99, 235, 0.1);
+  background: rgba(40, 116, 166, 0.1);
   color: var(--accent);
 }
 
@@ -1757,7 +1757,7 @@ input[type="search"]:focus, select:focus, textarea:focus {
   background: linear-gradient(180deg, var(--accent-2) 0%, var(--accent-3) 100%);
   border-radius: 4px 4px 0 0;
   transition: height 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 4px 10px rgba(26, 82, 118, 0.2);
 }
 
 .chart-label {
@@ -1784,9 +1784,9 @@ input[type="search"]:focus, select:focus, textarea:focus {
   border: 1px solid rgba(16, 32, 51, 0.08);
   border-radius: 28px;
   background:
-    radial-gradient(circle at left top, rgba(75, 103, 226, 0.16), transparent 26%),
-    radial-gradient(circle at right bottom, rgba(120, 92, 231, 0.12), transparent 22%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(243, 247, 255, 0.99) 54%, rgba(250, 246, 255, 0.98));
+    radial-gradient(circle at left top, rgba(40, 116, 166, 0.12), transparent 26%),
+    radial-gradient(circle at right bottom, rgba(14, 140, 127, 0.08), transparent 22%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(240, 247, 250, 0.99) 54%, rgba(242, 250, 250, 0.98));
   box-shadow: var(--shadow);
 }
 
